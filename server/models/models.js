@@ -70,7 +70,7 @@ Rating.belongsTo(Sneaker);
 Sneaker.hasMany(BasketSneaker);
 BasketSneaker.belongsTo(Sneaker);
 
-Sneaker.hasMany(SneakerInfo);
+Sneaker.hasMany(SneakerInfo, {as: 'info'});
 SneakerInfo.belongsTo(Sneaker);
 
 Type.belongsToMany(Brand, {through: TypeBrand});
