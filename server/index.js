@@ -1,13 +1,14 @@
 require('dotenv').config();
 
 const express = require('express');
-const sequelize = require('./db');
-const models = require('./models/models');
 const cors = require('cors');
 const fileUpload = require('express-fileupload');
+const path = require('path');
+
+const sequelize = require('./db');
+const models = require('./models/models');
 const router = require('./routes/index');
 const errorHandler = require('./middleware/ErrorHandlerMiddleware');
-const path = require('path');
 
 const PORT = process.env.PORT || 5000;
 

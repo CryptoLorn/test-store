@@ -1,6 +1,8 @@
 const Router = require('express');
-const router = new Router();
+
 const sneakerController = require('../controllers/sneakerController');
+
+const router = new Router();
 
 router.get('/', sneakerController.getAll);
 router.get('/:id', sneakerController.getById);

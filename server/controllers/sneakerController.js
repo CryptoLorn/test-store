@@ -1,5 +1,6 @@
 const uuid = require('uuid');
 const path = require('path');
+
 const ApiError = require('../error/ApiError');
 const {Sneaker, SneakerInfo} = require('../models/models');
 
@@ -12,7 +13,7 @@ class SneakerController {
             img.mv(path.resolve(__dirname, '..', 'static', fileName));
 
             if (info) {
-                info = JSON.parse(info)
+                info = JSON.parse(info);
                 info.forEach(i =>
                     SneakerInfo.create({
                         title: i.title,
@@ -30,10 +31,10 @@ class SneakerController {
     }
 
     async getAll(req, res) {
-        let {brandId, typeId, limit, page} = req.query
-        page = page || 1
-        limit = limit || 9
-        let offset = page * limit - limit
+        let {brandId, typeId, limit, page} = req.query;
+        page = page || 1;
+        limit = limit || 9;
+        let offset = page * limit - limit;
         let sneakers;
 
         if (!brandId && !typeId) {
@@ -51,7 +52,6 @@ class SneakerController {
         if (brandId && typeId) {
             sneakers = await Sneaker.findAndCountAll({where: {typeId, brandId}, limit, offset});
         }
-
         return res.json(sneakers);
     };
 
