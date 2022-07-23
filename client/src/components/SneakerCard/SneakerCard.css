@@ -1,0 +1,34 @@
+.sneaker_card {
+    width: 200px;
+    height: 300px;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+}
+
+/*.sneaker_card_poster {*/
+/*    width: 50px;*/
+/*    height: 50px;*/
+/*}*/
+
+.sneaker_card_short_info {
+    margin: 10px;
+    border: 1px solid black;
+}
+
+.sneaker_card_short_info b {
+    cursor: pointer;
+}
+
+.sneaker_cars_price_basket {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 40px;
+}
+
+.sneaker_cars_price_basket span {
+    font-size: 20px;
+    font-weight: bold;
+    color: #e30000;
+}

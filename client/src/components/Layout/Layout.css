@@ -1,0 +1,45 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.layout {
+    height: 60px;
+    background-color: darkslategray;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.layout div {
+    margin: 10px;
+}
+
+.layout a {
+    text-decoration: none;
+    color: white;
+}
+
+.auth {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 5px;
+}
+
+.auth :hover {
+    background-color: black;
+}
+
+.auth div {
+    border: 1px solid black;
+    border-radius: 10px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    background-color: #2f7575;
+}
+
+.auth div a {
+    margin: 10px;
+}

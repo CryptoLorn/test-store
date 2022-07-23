@@ -1,0 +1,13 @@
+.sneaker_cards_wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    width: 70%;
+    margin: 30px;
+    padding-left: 10%;
+    column-gap: 30px;
+    row-gap: 30px;
+
+    border: 1px solid black;
+}
