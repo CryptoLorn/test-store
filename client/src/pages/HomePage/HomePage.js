@@ -3,7 +3,6 @@ import React, {useEffect, useState} from 'react';
 import {sneakersService} from "../../services/sneakers.service";
 import SneakerCard from "../../components/SneakerCard/SneakerCard";
 import "./HomePage.css";
-import {Link} from "react-router-dom";
 
 const HomePage = () => {
     const [sneakers, setSneakers] = useState([]);
