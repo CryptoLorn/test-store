@@ -4,12 +4,16 @@
     border: 1px solid black;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 
-/*.sneaker_card_poster {*/
-/*    width: 50px;*/
-/*    height: 50px;*/
-/*}*/
+.sneaker_card_poster {
+    transition: transform 300ms ease;
+}
+
+.sneaker_card_poster:hover {
+    transform: scale(1.05);
+}
 
 .sneaker_card_short_info {
     margin: 10px;

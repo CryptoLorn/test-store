@@ -29,10 +29,18 @@
     height: 25px;
 }
 
-.login_registration_button {
+.login_info {
     display: flex;
     align-items: center;
-    column-gap: 30px;
+    column-gap: 55px;
+    font-size: 14px;
+}
+
+.registration_info {
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+    font-size: 14px;
 }
 
 .login_button {
@@ -46,11 +54,25 @@
     cursor: pointer;
     background-color: #2f7575;
     color: white;
-    font-size: 20px;
+    font-size: 18px;
 }
 
-.login_button:hover {
+.login_button:hover, .registration_button:hover {
     border: 1px solid black;
-    background-color: white;
-    color: black;
+    background-color: black;
+    color: white;
+}
+
+.registration_button {
+    width: 150px;
+    height: 25px;
+    border: 1px solid black;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background-color: #2f7575;
+    color: white;
+    font-size: 18px;
 }

@@ -9,6 +9,11 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    transition: transform 700ms ease;
+}
+
+.layout h1:hover {
+    transform: scale(1.07);
 }
 
 .layout div {
@@ -20,26 +25,38 @@ body {
     color: white;
 }
 
-.auth {
+.auth, .auth_user, .logout {
+    display: flex;
+}
+
+.auth div, .logout {
     display: flex;
     justify-content: center;
     align-items: center;
-    column-gap: 5px;
+    height: 30px;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: #217375;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
 }
 
-.auth :hover {
+.auth div:hover, .logout:hover {
+    border: 1px solid white;
     background-color: black;
 }
 
-.auth div {
-    border: 1px solid black;
-    border-radius: 10px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    background-color: #2f7575;
+.auth a {
+    margin: 10px;
+    font-size: 18px;
 }
 
-.auth div a {
-    margin: 10px;
+.header_basket {
+    border: 1px solid black;
+}
+
+.logout {
+    cursor: pointer;
+    color: white;
+    font-size: 18px;
+    width: 70px;
 }
