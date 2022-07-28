@@ -1,13 +1,27 @@
+.home_wrapper {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+}
+
 .sneaker_cards_wrapper {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
     align-items: center;
     width: 70%;
-    margin: 30px;
     padding-left: 10%;
     column-gap: 30px;
     row-gap: 30px;
 
     border: 1px solid black;
+}
+
+.brands_menu {
+    width: 200px;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+    height: 200px;
 }

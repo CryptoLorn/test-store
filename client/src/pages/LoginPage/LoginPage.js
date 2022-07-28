@@ -1,9 +1,8 @@
 import React, {useState} from 'react';
 import {NavLink, useLocation, useNavigate} from "react-router-dom";
-import {observer} from "mobx-react-lite";
 
 import './LoginPage.css'
-import {login, registration} from "../../http/userApi";
+import {login, registration} from "../../services/users.service";
 import {useAuth} from "../../hooks/useAuth";
 
 const LoginPage = () => {

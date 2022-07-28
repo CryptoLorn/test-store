@@ -7,7 +7,7 @@ import "./SneakerCard.css";
 const SneakerCard = ({sneaker: {id, name, price, img}}) => {
     return (
         <>
-            <Link to={'/sneaker/' + id.toString()}>
+            <Link to={`/${name}/` + id.toString()}>
                 <div className={'sneaker_card'}>
                     <div className={'sneaker_card_poster'}><img width={200} src={baseURL + img} alt={'sneaker'}/></div>
                     <div className={'sneaker_card_short_info'}>

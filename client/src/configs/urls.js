@@ -5,7 +5,8 @@ export const urls = {
     login: 'api/login',
     admin: 'api/admin',
     basket: 'api/basket',
-    sneaker: 'api/sneaker'
+    sneaker: 'api/sneaker',
+    brand: 'api/brand'
 }
 
 export default baseURL;
