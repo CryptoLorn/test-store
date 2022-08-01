@@ -6,7 +6,7 @@ import {login, registration} from "../../services/users.service";
 import {useAuth} from "../../hooks/useAuth";
 
 const LoginPage = () => {
-    const {loginer} = useAuth();
+    const {setUser} = useAuth();
     const navigate = useNavigate();
 
     const location = useLocation()
@@ -14,14 +14,23 @@ const LoginPage = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
+    const logIn = (newUser, cb) => {
+        setUser(newUser)
+        cb()
+    }
+
     const click = async () => {
-        let data;
-        if (isLogin) {
-            data = await login(email, password)
-        } else {
-            data = await registration(email, password)
+        try {
+            let data;
+            if (isLogin) {
+                data = await login(email, password)
+            } else {
+                data = await registration(email, password)
+            }
+            logIn(data, () => navigate('/'))
+        } catch (e) {
+            alert(e.response.data.message)
         }
-        loginer(data, () => navigate('/'))
     }
 
     return (

@@ -3,11 +3,16 @@ import {Link, Outlet, useNavigate} from "react-router-dom";
 import "./Layout.css"
 import {useAuth} from "../../hooks/useAuth";
 import basket from "../img/white_basket.png"
+import Admin from "../Admin/Admin";
 
 const Layout = () => {
-    const {logOut} = useAuth();
-    const {user} = useAuth();
+    const {user, setUser} = useAuth();
     const navigate = useNavigate();
+
+    const logOut = (cb) => {
+        setUser(null);
+        cb();
+    }
 
     const logout = () => {
         logOut(() => navigate('/'), {replace: true})
@@ -19,9 +24,18 @@ const Layout = () => {
                 <div><Link to={"/"}><h1>Some Store</h1></Link></div>
                 <div>
                     {user?
-                        <div className={'auth_user'}>
-                            <div className={'header_basket'}><Link to={"/basket"}><img src={basket} alt={basket}/></Link></div>
-                            <div className={'logout'} onClick={logout}>Вийти</div>
+                        <div>
+                            {user.role === 'ADMIN'?
+                                <div className={'navigation'}>
+                                    <div className={'header_basket'}><Admin/></div>
+                                    <div className={'header_basket'}><Link to={"/basket"}><img src={basket} alt={basket}/></Link></div>
+                                    <div className={'logout'} onClick={logout}>Вийти</div>
+                                </div>
+                                :
+                                <div className={'auth_user'}>
+                                    <div className={'header_basket'}><Link to={"/basket"}><img src={basket} alt={basket}/></Link></div>
+                                    <div className={'logout'} onClick={logout}>Вийти</div>
+                                </div>}
                         </div>
                         :
                         <div className={'auth'}>
