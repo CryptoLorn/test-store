@@ -1,9 +1,8 @@
 import React, {useState} from 'react';
 import {Button, Col, Dropdown, Form, Modal, Row} from "react-bootstrap";
+import DropdownItem from "react-bootstrap/DropdownItem";
 
 import {useAuth} from "../../hooks/useAuth";
-import DropdownItem from "react-bootstrap/DropdownItem";
-import {authAxiosService} from "../../services/axios.service";
 import {sneakersService} from "../../services/sneakers.service";
 
 const AddProduct = ({show, onHide}) => {
@@ -36,7 +35,7 @@ const AddProduct = ({show, onHide}) => {
         formData.append('img', file)
         formData.append('brandId', selectedBrand.id)
         formData.append('typeId', selectedType.id)
-        // formData.append('info', JSON.stringify(info))
+        formData.append('info', JSON.stringify(info))
         sneakersService.create(formData).then(data => onHide())
     }
 

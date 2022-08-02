@@ -18,10 +18,10 @@ const Admin = () => {
                     Адмінпанель
                 </Dropdown.Toggle>
 
-                <Dropdown.Menu className={'color'}>
-                    <Dropdown.Item onClick={() => setProductVisible(true)} href="#/action-1">Добавити товар</Dropdown.Item>
-                    <Dropdown.Item onClick={() => setBrandVisible(true)} href="#/action-2">Добавити бренд</Dropdown.Item>
-                    <Dropdown.Item onClick={() => setTypeVisible(true)} href="#/action-3">Добавити тип</Dropdown.Item>
+                <Dropdown.Menu className={'bg'}>
+                    <Dropdown.Item onClick={() => setProductVisible(true)} href="#/product">Добавити товар</Dropdown.Item>
+                    <Dropdown.Item onClick={() => setBrandVisible(true)} href="#/brand">Добавити бренд</Dropdown.Item>
+                    <Dropdown.Item onClick={() => setTypeVisible(true)} href="#/type">Добавити тип</Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>
             <AddProduct show={productVisible} onHide={() => setProductVisible(false)}/>
