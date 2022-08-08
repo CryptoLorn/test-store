@@ -6,7 +6,7 @@ import {useAuth} from "../../hooks/useAuth";
 
 const Pages = () => {
     const {page, totalCount, setPage} = useAuth()
-    let limit = 4
+    let limit = 5
     const pageCount = Math.ceil(totalCount / limit)
     const pages = []
 

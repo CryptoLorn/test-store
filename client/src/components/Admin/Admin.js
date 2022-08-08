@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
+import Dropdown from 'react-bootstrap/Dropdown';
 
 import './Admin.css'
-import Dropdown from 'react-bootstrap/Dropdown';
 import AddProduct from "../Modals/AddProduct";
 import AddBrand from "../Modals/AddBrand";
 import AddType from "../Modals/AddType";

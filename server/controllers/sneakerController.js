@@ -33,7 +33,7 @@ class SneakerController {
     async getAll(req, res) {
         let {brandId, typeId, limit, page} = req.query
         page = page || 1
-        limit = limit || 23
+        limit = limit || 6
         let offset = page * limit - limit;
         let sneakers;
 
@@ -64,7 +64,9 @@ class SneakerController {
     };
 
     async deleteById(req, res) {
-
+        const {id} = req.params;
+        const sneaker = await Sneaker.destroy({where: {id}})
+        return res.json(sneaker);
     }
 }
 

@@ -1,35 +1,25 @@
 .home_wrapper {
     display: flex;
-    flex-direction: column;
     justify-content: space-between;
-    margin: 20px;
-    align-items: center;
+    margin: 100px;
+    column-gap: 70px;
 }
 
-.item {
+.home_type_cards {
     display: flex;
+    flex-direction: column;
+    row-gap: 20px;
     justify-content: space-between;
-    margin: 20px;
 }
 
-.sneaker_cards_wrapper {
+.sneaker_list {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
     align-items: center;
-    width: 70%;
-    padding-left: 10%;
     column-gap: 30px;
     row-gap: 30px;
+    width: 1000px;
 
     border: 1px solid black;
-}
-
-.brands_menu {
-    width: 200px;
-    border: 1px solid black;
-    display: flex;
-    flex-direction: column;
-    row-gap: 5px;
-    height: 200px;
 }
