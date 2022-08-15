@@ -5,7 +5,7 @@ import DropdownItem from "react-bootstrap/DropdownItem";
 import {useAuth} from "../../hooks/useAuth";
 import {sneakersService} from "../../services/sneakers.service";
 
-const AddProduct = ({show, onHide}) => {
+const AddSneaker = ({show, onHide}) => {
     const {brands, types, selectedType, selectedBrand, setSelectedType, setSelectedBrand} = useAuth()
     const [name, setName] = useState('')
     const [price, setPrice] = useState(0)
@@ -128,4 +128,4 @@ const AddProduct = ({show, onHide}) => {
     );
 };
 
-export default AddProduct;
+export default AddSneaker;

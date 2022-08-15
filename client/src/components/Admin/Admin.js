@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 
 import './Admin.css'
-import AddProduct from "../Modals/AddProduct";
+import AddSneaker from "../Modals/AddSneaker";
 import AddBrand from "../Modals/AddBrand";
 import AddType from "../Modals/AddType";
 
@@ -24,7 +24,7 @@ const Admin = () => {
                     <Dropdown.Item onClick={() => setTypeVisible(true)} href="#/type">Добавити тип</Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>
-            <AddProduct show={productVisible} onHide={() => setProductVisible(false)}/>
+            <AddSneaker show={productVisible} onHide={() => setProductVisible(false)}/>
             <AddBrand show={brandVisible} onHide={() => setBrandVisible(false)}/>
             <AddType show={typeVisible} onHide={() => setTypeVisible(false)}/>
         </div>

@@ -14,6 +14,7 @@ const AuthProvider = ({children}) => {
     const [totalCount, setTotalCount] = useState(0)
     const [selectedType, setSelectedType] = useState({})
     const [selectedBrand, setSelectedBrand] = useState({})
+    const [orders, setOrders] = useState([]);
 
     useEffect(() => {
         brandsService.getAll().then(data => setBrands([...data]))
@@ -34,7 +35,9 @@ const AuthProvider = ({children}) => {
         types,
         setBrands,
         setTypes,
-        brands
+        brands,
+        orders,
+        setOrders
     }
 
     return (

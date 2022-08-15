@@ -7,7 +7,8 @@ export const urls = {
     basket: 'api/basket',
     sneaker: 'api/sneaker',
     brand: 'api/brand',
-    type: 'api/type'
+    type: 'api/type',
+    size: 'api/sizes'
 }
 
 export default baseURL;

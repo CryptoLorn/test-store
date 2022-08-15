@@ -37,7 +37,7 @@ const LoginPage = () => {
         <>
             <div className={'login_wrapper'}>
                 <div className={'login_form'}>
-                    <div><h2>{isLogin? 'Авторизація' : 'Реєстрація'}</h2></div>
+                    <div><h2>{isLogin? 'test@gmail.com' : 'Реєстрація'}</h2></div>
                     <form>
                         <div className={'login'}>
                             <div><input type={'email'} placeholder={'Введіть ваш email...'} value={email}

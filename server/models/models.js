@@ -9,14 +9,6 @@ const User = sequelize.define('user', {
     role: {type: DataTypes.STRING, defaultValue: "USER"}
 });
 
-const Basket = sequelize.define('basket', {
-    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true}
-});
-
-const BasketSneaker = sequelize.define('basket_sneaker', {
-    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true}
-});
-
 const Sneaker = sequelize.define('sneaker', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     name: {type: DataTypes.STRING, unique: true, allowNull: true},
@@ -35,10 +27,23 @@ const Brand = sequelize.define('brand', {
     name: {type: DataTypes.STRING, unique: true, allowNull: false}
 });
 
-const Rating = sequelize.define('rating', {
+const Size = sequelize.define('size', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    rate: {type: DataTypes.INTEGER, allowNull: false}
+    name: {type: DataTypes.DOUBLE, unique: true, allowNull: false}
 });
+
+const Basket = sequelize.define('basket', {
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true}
+});
+
+const BasketSneaker = sequelize.define('basket_sneaker', {
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true}
+});
+
+// const Rating = sequelize.define('rating', {
+//     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+//     rate: {type: DataTypes.INTEGER, allowNull: false}
+// });
 
 const SneakerInfo = sequelize.define('sneaker_info', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
@@ -53,8 +58,8 @@ const TypeBrand = sequelize.define('type_brand', {
 User.hasOne(Basket);
 Basket.belongsTo(User);
 
-User.hasMany(Rating);
-Rating.belongsTo(User);
+// User.hasMany(Rating);
+// Rating.belongsTo(User);
 
 Basket.hasMany(BasketSneaker);
 BasketSneaker.belongsTo(Basket);
@@ -65,8 +70,11 @@ Sneaker.belongsTo(Type);
 Brand.hasMany(Sneaker);
 Sneaker.belongsTo(Brand);
 
-Sneaker.hasMany(Rating);
-Rating.belongsTo(Sneaker);
+// Size.hasMany(Sneaker);
+// Sneaker.belongsTo(Size);
+
+// Sneaker.hasMany(Rating);
+// Rating.belongsTo(Sneaker);
 
 Sneaker.hasMany(BasketSneaker);
 BasketSneaker.belongsTo(Sneaker);
@@ -84,7 +92,8 @@ module.exports = {
     Sneaker,
     Type,
     Brand,
-    Rating,
+    // Rating,
     TypeBrand,
-    SneakerInfo
+    SneakerInfo,
+    Size
 };

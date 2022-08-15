@@ -1,9 +1,10 @@
 import {Link, Outlet, useNavigate} from "react-router-dom";
+import {FaShoppingBag} from "react-icons/fa";
 
 import "./Layout.css"
 import {useAuth} from "../../hooks/useAuth";
-import basket from "../img/white_basket.png"
 import Admin from "../Admin/Admin";
+import BasketVisible from "../BasketVisible/BasketVisible";
 
 const Layout = () => {
     const {user, setUser} = useAuth();
@@ -28,12 +29,12 @@ const Layout = () => {
                             {user.role === 'ADMIN'?
                                 <div className={'navigation'}>
                                     <div className={'header_basket'}><Admin/></div>
-                                    <div className={'header_basket'}><Link to={"/basket"}><img src={basket} alt={basket}/></Link></div>
+                                    <div className={'shopping_bag'}><BasketVisible/></div>
                                     <div className={'logout'} onClick={logout}>Вийти</div>
                                 </div>
                                 :
                                 <div className={'auth_user'}>
-                                    <div className={'header_basket'}><Link to={"/basket"}><img src={basket} alt={basket}/></Link></div>
+                                    <div className={'shopping_bag'}><BasketVisible/></div>
                                     <div className={'logout'} onClick={logout}>Вийти</div>
                                 </div>}
                         </div>
