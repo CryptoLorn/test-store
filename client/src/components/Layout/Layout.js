@@ -1,16 +1,27 @@
 import {Link, Outlet, useNavigate} from "react-router-dom";
-import {FaShoppingBag} from "react-icons/fa";
 
 import "./Layout.css"
 import {useAuth} from "../../hooks/useAuth";
 import Admin from "../Admin/Admin";
 import BasketVisible from "../BasketVisible/BasketVisible";
+import Login from "../Modals/Login";
+import Registration from "../Modals/Registration";
+import React from "react";
 
 const Layout = () => {
-    const {user, setUser} = useAuth();
+    const {
+        user,
+        setUser,
+        loginVisible,
+        setLoginVisible,
+        registrationVisible,
+        setRegistrationVisible
+    } = useAuth();
+
     const navigate = useNavigate();
 
     const logOut = (cb) => {
+        setLoginVisible(false)
         setUser(null);
         cb();
     }
@@ -39,9 +50,14 @@ const Layout = () => {
                                 </div>}
                         </div>
                         :
-                        <div className={'auth'}>
-                            <div><Link to={"/login"}>Вхід</Link></div>
-                            <div><Link to={"/registration"}>Реєстрація</Link></div>
+                        //className={'auth'}
+                        <div>
+                            <div onClick={() => setLoginVisible(true)}>Login</div>
+                            <div onClick={() => setRegistrationVisible(true)}>Registration</div>
+                            <Login show={loginVisible} onHide={() => setLoginVisible(false)}/>
+                            <Registration show={registrationVisible} onHide={() => setRegistrationVisible(false)}/>
+                            {/*<div><Link to={"/login"}>Вхід</Link></div>*/}
+                            {/*<div><Link to={"/registration"}>Реєстрація</Link></div>*/}
                         </div>
                     }
                 </div>

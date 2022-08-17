@@ -26,6 +26,7 @@ const AddBrand = ({show, onHide}) => {
             <Modal.Body>
                 <Form>
                     <FormControl
+                        type={'text'}
                         value={value}
                         onChange={e => setValue(e.target.value)}
                         placeholder={'Назва бренду'}

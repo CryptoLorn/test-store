@@ -16,6 +16,9 @@ const AuthProvider = ({children}) => {
     const [selectedBrand, setSelectedBrand] = useState({})
     const [orders, setOrders] = useState([]);
 
+    const [loginVisible, setLoginVisible] = useState(false)
+    const [registrationVisible, setRegistrationVisible] = useState(false)
+
     useEffect(() => {
         brandsService.getAll().then(data => setBrands([...data]))
         typeService.getAll().then(data => setTypes([...data]))
@@ -37,7 +40,10 @@ const AuthProvider = ({children}) => {
         setTypes,
         brands,
         orders,
-        setOrders
+        setOrders,
+
+        loginVisible, setLoginVisible,
+        registrationVisible, setRegistrationVisible
     }
 
     return (
