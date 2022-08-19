@@ -5,7 +5,6 @@ import "./SneakerCard.css";
 import baseURL from "../../configs/urls";
 
 const SneakerCard = ({sneaker: {id, name, price, img, brandId}}) => {
-
     return (
         <div className={'sneaker_card_wrapper'}>
             <Link to={`/${name}/` + id.toString()}>

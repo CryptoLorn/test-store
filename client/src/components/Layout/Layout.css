@@ -38,16 +38,18 @@ body {
     border-radius: 10px;
     background-color: #217375;
     box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    font-size: 16px;
+    color: white;
+    cursor: pointer;
+}
+
+.auth span {
+    margin: 10px;
 }
 
 .auth div:hover, .logout:hover {
     border: 1px solid white;
     background-color: black;
-}
-
-.auth a {
-    margin: 10px;
-    font-size: 18px;
 }
 
 .header_basket {

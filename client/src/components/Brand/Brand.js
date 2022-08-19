@@ -4,8 +4,8 @@ import "./Brand.css"
 import {useAuth} from "../../hooks/useAuth";
 
 const Brand = () => {
-    const {brands, setSelectedBrand, setPage} = useAuth()
-    const [element, setElement] = useState(null)
+    const {brands, setSelectedBrand, setPage} = useAuth();
+    const [element, setElement] = useState(null);
 
     const handleClick = (brand, e) => {
         if (element === e) {

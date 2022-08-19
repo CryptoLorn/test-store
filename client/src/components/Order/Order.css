@@ -1,0 +1,33 @@
+.order_wrapper {
+    display: flex;
+
+    border: 1px solid black;
+}
+
+.order_title_price {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin: 10px;
+}
+
+.order_title_price span {
+    color: #ff0900;
+    font-weight: bold;
+}
+
+.order_title{
+    display: flex;
+    column-gap: 5px;
+}
+
+.order_price_del {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+}
+
+.order_price_del div {
+    margin-top: 30px;
+    cursor: pointer;
+}

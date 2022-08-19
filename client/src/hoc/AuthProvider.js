@@ -15,7 +15,6 @@ const AuthProvider = ({children}) => {
     const [selectedType, setSelectedType] = useState({})
     const [selectedBrand, setSelectedBrand] = useState({})
     const [orders, setOrders] = useState([]);
-
     const [loginVisible, setLoginVisible] = useState(false)
     const [registrationVisible, setRegistrationVisible] = useState(false)
 
@@ -41,9 +40,10 @@ const AuthProvider = ({children}) => {
         brands,
         orders,
         setOrders,
-
-        loginVisible, setLoginVisible,
-        registrationVisible, setRegistrationVisible
+        loginVisible,
+        setLoginVisible,
+        registrationVisible,
+        setRegistrationVisible
     }
 
     return (

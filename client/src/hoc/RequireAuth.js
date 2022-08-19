@@ -4,10 +4,11 @@ import {Navigate} from "react-router-dom";
 import {useAuth} from "../hooks/useAuth";
 
 const RequireAuth = ({children}) => {
-    const {user} = useAuth();
+    const {user, setLoginVisible} = useAuth();
 
     if (!user) {
-        return <Navigate to={'/login'}/>
+        setLoginVisible(true)
+        return <Navigate to={'/'}/>
     }
 
     return children

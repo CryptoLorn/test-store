@@ -2,9 +2,9 @@ import React, {useState} from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 
 import './Admin.css'
-import AddSneaker from "../Modals/AddSneaker";
-import AddBrand from "../Modals/AddBrand";
-import AddType from "../Modals/AddType";
+import AddSneaker from "../Modals/AddSneaker/AddSneaker";
+import AddBrand from "../Modals/AddBrand/AddBrand";
+import AddType from "../Modals/AddType/AddType";
 
 const Admin = () => {
     const [productVisible, setProductVisible] = useState(false)

@@ -4,8 +4,8 @@ import "./Layout.css"
 import {useAuth} from "../../hooks/useAuth";
 import Admin from "../Admin/Admin";
 import BasketVisible from "../BasketVisible/BasketVisible";
-import Login from "../Modals/Login";
-import Registration from "../Modals/Registration";
+import Login from "../Modals/Login/Login";
+import Registration from "../Modals/Registration/Registration";
 import React from "react";
 
 const Layout = () => {
@@ -22,6 +22,7 @@ const Layout = () => {
 
     const logOut = (cb) => {
         setLoginVisible(false)
+        setRegistrationVisible(false)
         setUser(null);
         cb();
     }
@@ -50,18 +51,18 @@ const Layout = () => {
                                 </div>}
                         </div>
                         :
-                        //className={'auth'}
-                        <div>
-                            <div onClick={() => setLoginVisible(true)}>Login</div>
-                            <div onClick={() => setRegistrationVisible(true)}>Registration</div>
+                        <div className={'auth'}>
+                            <div onClick={() => setLoginVisible(true)}><span>Log In</span></div>
+                            <div onClick={() => setRegistrationVisible(true)}><span>Register</span></div>
                             <Login show={loginVisible} onHide={() => setLoginVisible(false)}/>
                             <Registration show={registrationVisible} onHide={() => setRegistrationVisible(false)}/>
-                            {/*<div><Link to={"/login"}>Вхід</Link></div>*/}
-                            {/*<div><Link to={"/registration"}>Реєстрація</Link></div>*/}
+                            {/*<div><Link to={"/login"}>Log In</Link></div>*/}
+                            {/*<div><Link to={"/registration"}>Register</Link></div>*/}
                         </div>
                     }
                 </div>
             </div>
+
             <Outlet/>
         </>
     );

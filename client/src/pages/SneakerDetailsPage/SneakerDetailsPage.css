@@ -1,0 +1,39 @@
+.sizes {
+    display: flex;
+    column-gap: 10px;
+}
+
+.size {
+    border: 1px solid #8c8c8c;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: gray;
+    font-size: 18px;
+}
+
+.size:hover {
+    border: 1px solid darkslategray;
+    color: black;
+}
+
+.size_active {
+    border: 1px solid #8c8c8c;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: white;
+    font-size: 18px;
+    background-color: cadetblue;
+}
+
+.size_active:hover {
+    border: 1px solid darkslategray;
+    color: white;
+}

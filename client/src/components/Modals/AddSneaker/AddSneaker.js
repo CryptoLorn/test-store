@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import {Button, Col, Dropdown, Form, Modal, Row} from "react-bootstrap";
 import DropdownItem from "react-bootstrap/DropdownItem";
 
-import {useAuth} from "../../hooks/useAuth";
-import {sneakersService} from "../../services/sneakers.service";
+import {useAuth} from "../../../hooks/useAuth";
+import {sneakersService} from "../../../services/sneakers.service";
 
 const AddSneaker = ({show, onHide}) => {
     const {brands, types, selectedType, selectedBrand, setSelectedType, setSelectedBrand} = useAuth()

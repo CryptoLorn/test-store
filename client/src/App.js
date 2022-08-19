@@ -19,12 +19,16 @@ function App() {
                     {/*<Route path={'/login'} element={<LoginPage/>}/>*/}
                     {/*<Route path={'/registration'} element={<LoginPage/>}/>*/}
                     <Route path={'/:name/:id'} element={<SneakerDetailsPage/>}/>
-                    <Route path={'/admin'} element={<Admin/>}/>
-                    <Route path={'/basket'} element={
+                    <Route path={'/admin'} element={
                         <RequireAuth>
-                            <BasketPage/>
+                            <Admin/>
                         </RequireAuth>
                     }/>
+                    {/*<Route path={'/basket'} element={*/}
+                    {/*    <RequireAuth>*/}
+                    {/*        <BasketPage/>*/}
+                    {/*    </RequireAuth>*/}
+                    {/*}/>*/}
                     <Route path={'*'} element={<NotFoundPage/>}/>
                 </Route>
             </Routes>

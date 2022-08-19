@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Button, Form, Modal} from "react-bootstrap";
 
-import {typeService} from "../../services/type.service";
+import {typeService} from "../../../services/type.service";
 
 const AddType = ({show, onHide}) => {
     const [value, setValue] = useState('')

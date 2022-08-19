@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Button, Form, FormControl, Modal} from "react-bootstrap";
 
-import {brandsService} from "../../services/brands.service";
+import {brandsService} from "../../../services/brands.service";
 
 const AddBrand = ({show, onHide}) => {
     const [value, setValue] = useState('')
