@@ -17,6 +17,7 @@ const AuthProvider = ({children}) => {
     const [orders, setOrders] = useState([]);
     const [loginVisible, setLoginVisible] = useState(false)
     const [registrationVisible, setRegistrationVisible] = useState(false)
+    const [isAuth, setIsAuth] = useState(false);
 
     useEffect(() => {
         brandsService.getAll().then(data => setBrands([...data]))
@@ -43,7 +44,9 @@ const AuthProvider = ({children}) => {
         loginVisible,
         setLoginVisible,
         registrationVisible,
-        setRegistrationVisible
+        setRegistrationVisible,
+        isAuth,
+        setIsAuth
     }
 
     return (

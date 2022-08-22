@@ -17,7 +17,8 @@ const Login = ({show, onHide}) => {
         setUser,
         setLoginVisible,
         registrationVisible,
-        setRegistrationVisible
+        setRegistrationVisible,
+        setIsAuth
     } = useAuth();
 
     const {register, handleSubmit, formState: {errors}} = useForm({resolver: joiResolver(LoginValidator)})
@@ -32,15 +33,15 @@ const Login = ({show, onHide}) => {
         cb()
     }
 
-    const click = async () => {
-        try {
-            let data = await login(email, password)
-
-            logIn(data, () => navigate('/'))
-        } catch (e) {
-            alert(e.response.data.message)
-        }
-    }
+    // const click = async () => {
+    //     try {
+    //         let data = await login(email, password)
+    //
+    //         logIn(data, () => navigate('/'))
+    //     } catch (e) {
+    //         alert(e.response.data.message)
+    //     }
+    // }
 
     const registrationRedirect = () => {
         setLoginVisible(false)
@@ -52,6 +53,7 @@ const Login = ({show, onHide}) => {
             let data = await login(email, password)
 
             logIn(data, () => navigate('/'))
+            setIsAuth(true)
         } catch (e) {
             setFormError(e.response.data.message)
         }

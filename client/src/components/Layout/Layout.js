@@ -15,20 +15,22 @@ const Layout = () => {
         loginVisible,
         setLoginVisible,
         registrationVisible,
-        setRegistrationVisible
+        setRegistrationVisible,
+        setIsAuth
     } = useAuth();
 
     const navigate = useNavigate();
 
-    const logOut = (cb) => {
+    const logOutActions = (cb) => {
         setLoginVisible(false)
         setRegistrationVisible(false)
         setUser(null);
+        localStorage.removeItem('token')
         cb();
     }
 
-    const logout = () => {
-        logOut(() => navigate('/'), {replace: true})
+    const logOut = () => {
+        logOutActions(() => navigate('/'), {replace: true})
     }
 
     return (
@@ -42,12 +44,12 @@ const Layout = () => {
                                 <div className={'navigation'}>
                                     <div className={'header_basket'}><Admin/></div>
                                     <div className={'shopping_bag'}><BasketVisible/></div>
-                                    <div className={'logout'} onClick={logout}>Вийти</div>
+                                    <div className={'logout'} onClick={logOut}>Вийти</div>
                                 </div>
                                 :
                                 <div className={'auth_user'}>
                                     <div className={'shopping_bag'}><BasketVisible/></div>
-                                    <div className={'logout'} onClick={logout}>Вийти</div>
+                                    <div className={'logout'} onClick={logOut}>Вийти</div>
                                 </div>}
                         </div>
                         :

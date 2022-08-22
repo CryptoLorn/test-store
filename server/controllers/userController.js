@@ -14,6 +14,9 @@ class UserController {
         if(!email || !password) {
             return next(ApiError.badRequest('Invalid email or password'));
         }
+        if (password.length < 3 || password.length > 15) {
+            return next(ApiError.badRequest('"password" length must be from 3-15 characters'))
+        }
         const candidate = await User.findOne({where: {email}});
         if (candidate) {
             return next(ApiError.badRequest('User with this email already exists'));
