@@ -15,7 +15,7 @@ const Admin = () => {
         <div>
             <Dropdown>
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
-                    Адмінпанель
+                    Admin
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu className={'bg'}>

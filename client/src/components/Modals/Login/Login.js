@@ -7,21 +7,28 @@ import {joiResolver} from "@hookform/resolvers/joi";
 
 import "./Login.css"
 import {useAuth} from "../../../hooks/useAuth";
-import {login} from "../../../services/users.service";
+import {login} from "../../../services/user.service";
 import Registration from "../Registration/Registration";
-import {LoginValidator} from "../../../validators/login.validator";
+import {AuthValidator} from "../../../validators/auth.validator";
 
+import {setUser, setIsAuth} from "../../../store/user.slice";
+import {setLoginVisible, setRegistrationVisible} from "../../../store/visible.slice";
+import {useDispatch, useSelector} from "react-redux";
 
 const Login = ({show, onHide}) => {
-    const {
-        setUser,
-        setLoginVisible,
-        registrationVisible,
-        setRegistrationVisible,
-        setIsAuth
-    } = useAuth();
+    // const {
+    //     setUser,
+    //     setLoginVisible,
+    //     registrationVisible,
+    //     setRegistrationVisible,
+    //     setIsAuth
+    // } = useAuth();
 
-    const {register, handleSubmit, formState: {errors}} = useForm({resolver: joiResolver(LoginValidator)})
+    const {registrationVisible} = useSelector(state => state.visibleReducer);
+
+    const dispatch = useDispatch();
+
+    const {register, handleSubmit, formState: {errors}} = useForm({resolver: joiResolver(AuthValidator)});
     const [formError, setFormError] = useState(null)
 
     const [email, setEmail] = useState('')
@@ -29,7 +36,7 @@ const Login = ({show, onHide}) => {
     const navigate = useNavigate();
 
     const logIn = (newUser, cb) => {
-        setUser(newUser)
+        dispatch(setUser(newUser))
         cb()
     }
 
@@ -44,8 +51,8 @@ const Login = ({show, onHide}) => {
     // }
 
     const registrationRedirect = () => {
-        setLoginVisible(false)
-        setRegistrationVisible(true)
+        dispatch(setLoginVisible(false))
+        dispatch(setRegistrationVisible(true))
     }
 
     const submit = async () => {
@@ -53,7 +60,6 @@ const Login = ({show, onHide}) => {
             let data = await login(email, password)
 
             logIn(data, () => navigate('/'))
-            setIsAuth(true)
         } catch (e) {
             setFormError(e.response.data.message)
         }
@@ -88,7 +94,7 @@ const Login = ({show, onHide}) => {
 
                                     <div className={'login_info'}>
                                         <div>No account? <span onClick={() => registrationRedirect()}>Registration</span></div>
-                                        <Registration show={registrationVisible} onHide={() => setRegistrationVisible(false)}/>
+                                        <Registration show={registrationVisible} onHide={() => dispatch(setRegistrationVisible(false))}/>
 
                                         <div className={'login_button'} onClick={handleSubmit(submit)}>Log In</div>
                                     </div>

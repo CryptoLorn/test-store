@@ -36,8 +36,11 @@ const Basket = sequelize.define('basket', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true}
 });
 
-const BasketSneaker = sequelize.define('basket_sneaker', {
-    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true}
+const Orders = sequelize.define('orders', {
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    name: {type: DataTypes.STRING, unique: false, allowNull: false},
+    price: {type: DataTypes.INTEGER, allowNull: false},
+    img: {type: DataTypes.STRING, allowNull: false}
 });
 
 // const Rating = sequelize.define('rating', {
@@ -61,8 +64,8 @@ Basket.belongsTo(User);
 // User.hasMany(Rating);
 // Rating.belongsTo(User);
 
-Basket.hasMany(BasketSneaker);
-BasketSneaker.belongsTo(Basket);
+Basket.hasMany(Orders);
+Orders.belongsTo(Basket);
 
 Type.hasMany(Sneaker);
 Sneaker.belongsTo(Type);
@@ -70,14 +73,17 @@ Sneaker.belongsTo(Type);
 Brand.hasMany(Sneaker);
 Sneaker.belongsTo(Brand);
 
+Brand.hasMany(Orders);
+Orders.belongsTo(Brand);
+
 // Size.hasMany(Sneaker);
 // Sneaker.belongsTo(Size);
 
 // Sneaker.hasMany(Rating);
 // Rating.belongsTo(Sneaker);
 
-Sneaker.hasMany(BasketSneaker);
-BasketSneaker.belongsTo(Sneaker);
+Sneaker.hasMany(Orders);
+Orders.belongsTo(Sneaker);
 
 Sneaker.hasMany(SneakerInfo, {as: 'info'});
 SneakerInfo.belongsTo(Sneaker);
@@ -88,7 +94,7 @@ Brand.belongsToMany(Type, {through: TypeBrand});
 module.exports = {
     User,
     Basket,
-    BasketSneaker,
+    Orders,
     Sneaker,
     Type,
     Brand,

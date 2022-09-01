@@ -1,44 +1,57 @@
 import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import {Button} from "react-bootstrap";
+import {useDispatch, useSelector} from "react-redux";
 
-import "./SneakerDetailsPage.css"
-import {sneakersService} from "../../services/sneakers.service";
+import "./SneakerDetailsPage.css";
 import baseURL from "../../configs/urls";
-import {useAuth} from "../../hooks/useAuth";
 import {sizesService} from "../../services/size.services";
+import {createOrders} from "../../store/orders.slice";
+import {getById} from "../../store/sneaker.slice";
 
 const SneakerDetailsPage = () => {
     const {id} = useParams();
-    const [sneaker, setSneaker] = useState(null);
     const [sizes, setSizes] = useState([]);
     const [selectedOrderSizes, setSelectedOrderSizes] = useState(null);
 
-    const {orders, setOrders} = useAuth();
+    const {sneaker, sneakerId} = useSelector(state => state.sneakerReducer);
+    const {basketId} = useSelector(state => state.basketReducer);
+
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        sneakersService.getById(id).then(value => setSneaker({...value}))
-
+        dispatch(getById({data: id}))
         sizesService.getAll().then(data => setSizes([...data]))
     }, [])
+
+    const addOrders = () => {
+        const data = new FormData();
+        data.append('basketId', basketId)
+        data.append('sneakerId', sneakerId)
+        data.append('brandId', sneaker.brandId)
+        data.append('name', sneaker.name)
+        data.append('price', sneaker.price)
+        data.append('img', sneaker.img)
+        dispatch(createOrders({data}))
+    }
 
     // const deleteSneaker = async () => {
     //     await sneakersService.deleteById(id)
     // }
 
-    const addOrder = (item) => {
-        let isOrder = false;
-
-        orders.forEach(order => {
-            if (order.id === item.id) {
-                isOrder = true;
-            }
-        });
-
-        if (!isOrder) {
-            setOrders([...orders, item]);
-        }
-    }
+    // const addOrder = (item) => {
+    //     let isOrder = false;
+    //
+    //     orders.forEach(order => {
+    //         if (order.id === item.id) {
+    //             isOrder = true;
+    //         }
+    //     });
+    //
+    //     if (!isOrder) {
+    //         dispatch(setOrders([...orders, item]));
+    //     }
+    // }
 
     return (
         <div>
@@ -69,7 +82,7 @@ const SneakerDetailsPage = () => {
                                             : null
                         }
                     </div>
-                    <Button onClick={() => addOrder(sneaker)}>Order</Button>
+                    <Button onClick={() => addOrders()}>Order</Button>
                 </div>
             )}
         </div>

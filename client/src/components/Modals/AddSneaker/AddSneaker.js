@@ -3,14 +3,29 @@ import {Button, Col, Dropdown, Form, Modal, Row} from "react-bootstrap";
 import DropdownItem from "react-bootstrap/DropdownItem";
 
 import {useAuth} from "../../../hooks/useAuth";
-import {sneakersService} from "../../../services/sneakers.service";
+import {sneakersService} from "../../../services/sneaker.service";
+import {useDispatch, useSelector} from "react-redux";
+
+import {setSelectedBrand} from "../../../store/brand.slice";
+import {setSelectedType} from "../../../store/type.slice";
+import {useNavigate} from "react-router-dom";
+import {createSneaker} from "../../../store/sneaker.slice";
 
 const AddSneaker = ({show, onHide}) => {
-    const {brands, types, selectedType, selectedBrand, setSelectedType, setSelectedBrand} = useAuth()
+    // const {brands, types, selectedBrand, selectedType, setSelectedBrand, setSelectedType} = useAuth();
     const [name, setName] = useState('')
     const [price, setPrice] = useState(0)
     const [file, setFile] = useState(null)
     const [info, setInfo] = useState([])
+
+    const [selectedTypeAdd, setSelectedTypeAdd] = useState(null)
+    const [selectedBrandAdd, setSelectedBrandAdd] = useState(null)
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const {brands, selectedBrand} = useSelector(state => state.brandReducer);
+    const {types, selectedType} = useSelector(state => state.typeReducer);
 
     const addInfo = () => {
         setInfo([...info, {title: '', description: '', number: Date.now()}])
@@ -28,15 +43,30 @@ const AddSneaker = ({show, onHide}) => {
         setFile(e.target.files[0])
     }
 
+    // const addProduct = () => {
+    //     const formData = new FormData()
+    //     formData.append('name', name)
+    //     formData.append('price', `${price}`)
+    //     formData.append('img', file)
+    //     formData.append('brandId', selectedBrandAdd.id)
+    //     formData.append('typeId', selectedTypeAdd.id)
+    //     formData.append('info', JSON.stringify(info))
+    //     sneakersService.create(formData).then(data => {
+    //         navigate('/')
+    //         onHide()
+    //     })
+    // }
+
     const addProduct = () => {
         const formData = new FormData()
         formData.append('name', name)
         formData.append('price', `${price}`)
         formData.append('img', file)
-        formData.append('brandId', selectedBrand.id)
-        formData.append('typeId', selectedType.id)
-        formData.append('info', JSON.stringify(info))
-        sneakersService.create(formData).then(data => onHide())
+        formData.append('brandId', selectedBrandAdd.id)
+        formData.append('typeId', selectedTypeAdd.id)
+        dispatch(createSneaker({data: formData}))
+        navigate('/')
+        onHide()
     }
 
     return (
@@ -48,18 +78,18 @@ const AddSneaker = ({show, onHide}) => {
         >
             <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-vcenter">
-                    Добавити продукт
+                    Add Sneaker
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form>
                     <Dropdown className={'mt-2 mb-2'}>
-                        <Dropdown.Toggle>{selectedType.name || 'Виберіть тип'}</Dropdown.Toggle>
+                        <Dropdown.Toggle>{selectedTypeAdd?.name || 'Виберіть тип'}</Dropdown.Toggle>
                         <Dropdown.Menu>
                             {types.map(type =>
                                 <DropdownItem
                                     key={type.id}
-                                    onClick={() => setSelectedType(type)}
+                                    onClick={() => setSelectedTypeAdd(type)}
                                 >
                                     {type.name}
                                 </DropdownItem>
@@ -68,12 +98,12 @@ const AddSneaker = ({show, onHide}) => {
                     </Dropdown>
 
                     <Dropdown className={'mt-2 mb-2'}>
-                        <Dropdown.Toggle>{selectedBrand.name || 'Виберіть бренд'}</Dropdown.Toggle>
+                        <Dropdown.Toggle>{selectedBrandAdd?.name || 'Виберіть бренд'}</Dropdown.Toggle>
                         <Dropdown.Menu>
                             {brands.map(brand =>
                                 <DropdownItem
                                     key={brand.id}
-                                    onClick={() => setSelectedBrand(brand)}
+                                    onClick={() => setSelectedBrandAdd(brand)}
                                 >
                                     {brand.name}
                                 </DropdownItem>

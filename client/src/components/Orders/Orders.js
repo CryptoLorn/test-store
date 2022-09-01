@@ -1,10 +1,10 @@
 import React from 'react';
 import {FaTrashAlt} from "react-icons/fa";
 
-import './Order.css'
+import './Orders.css'
 import baseURL from "../../configs/urls";
 
-const Order = ({order: {id, name, price, img, brandId}}) => {
+const Orders = ({order: {id, name, price, img, brandId}}) => {
 
     return (
         <div className={'order_wrapper'}>
@@ -35,4 +35,4 @@ const Order = ({order: {id, name, price, img, brandId}}) => {
     );
 };
 
-export default Order;
+export default Orders;

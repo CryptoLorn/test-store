@@ -9,17 +9,19 @@ import RequireAuth from "./hoc/RequireAuth";
 import BasketPage from "./pages/BasketPage/BasketPage";
 import Admin from "./components/Admin/Admin";
 import AuthProvider from "./hoc/AuthProvider";
-import {useAuth} from "./hooks/useAuth";
 import {useEffect} from "react";
-import {checkIsAuth} from "./services/users.service";
+import {checkIsAuth} from "./services/user.service";
+
+import {setUser, setIsAuth} from "./store/user.slice";
+import {useDispatch} from "react-redux";
 
 function App() {
-    const {user, setUser, setIsAuth} = useAuth();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         checkIsAuth().then(data => {
-            setUser(data)
-            setIsAuth(true)
+            dispatch(setUser(data))
+            dispatch(setIsAuth(true))
         })
     }, [])
 

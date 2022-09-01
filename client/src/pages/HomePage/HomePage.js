@@ -1,37 +1,32 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
+import {useDispatch, useSelector} from "react-redux";
 
 import "./HomePage.css";
-import {sneakersService} from "../../services/sneakers.service";
 import SneakerCard from "../../components/SneakerCard/SneakerCard";
-import Brand from "../../components/Brand/Brand";
+import Brands from "../../components/Brands/Brands";
 import Pages from "../../components/Pages/Pages";
-import {useAuth} from "../../hooks/useAuth";
-import Type from "../../components/Type/Type";
+import Type from "../../components/Types/Types";
+import {getAll, getAllWithParams} from "../../store/sneaker.slice";
 
 const HomePage = () => {
-    const [sneakers, setSneakers] = useState([]);
-    const {setTotalCount, page, selectedType, selectedBrand} = useAuth()
+    const {selectedBrand} = useSelector(state => state.brandReducer);
+    const {selectedType} = useSelector(state => state.typeReducer);
+    const {sneakers} = useSelector(state => state.sneakerReducer);
+    const {page} = useSelector(state => state.pageReducer);
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        sneakersService.getAll(null, null, 1).then(data => {
-                setSneakers([...data.rows])
-                setTotalCount(data.count)
-            }
-        )
+        dispatch(getAll())
     }, [])
 
     useEffect(() => {
-        sneakersService.getAll(selectedType.id, selectedBrand.id, page).then(data => {
-                setSneakers([...data.rows])
-                setTotalCount(data.count)
-            }
-        )
+        dispatch(getAllWithParams({data: {selectedType: selectedType.id, selectedBrand: selectedBrand.id, page}}))
     }, [page, selectedType, selectedBrand])
 
     return (
         <div className={'home_wrapper'}>
             <div>
-                <Brand/>
+                <Brands/>
             </div>
             <div className={'home_type_cards'}>
                 <div>

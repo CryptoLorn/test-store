@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const {validationResult} = require('express-validator');
 
 const ApiError = require('../error/ApiError');
 const {User, Basket} = require('../models/models');
@@ -10,10 +11,17 @@ const generateJwt = (id, email, role) => {
 
 class UserController {
     async registration(req, res, next) {
+        //Validation email
+        const errors = validationResult(req);
+        if(!errors.isEmpty()) {
+            return next(ApiError.badRequest('Invalid email', errors.array()));
+        }
+
         const {email, password, role} = req.body;
         if(!email || !password) {
             return next(ApiError.badRequest('Invalid email or password'));
         }
+        //Validation password
         if (password.length < 3 || password.length > 15) {
             return next(ApiError.badRequest('"password" length must be from 3-15 characters'))
         }
@@ -29,6 +37,12 @@ class UserController {
     };
 
     async login(req, res, next) {
+        //Validation email
+        const errors = validationResult(req);
+        if(!errors.isEmpty()) {
+            return next(ApiError.badRequest('Invalid email', errors.array()));
+        }
+
         const {email, password} = req.body;
         const user = await User.findOne({where: {email}});
         if (!user) {

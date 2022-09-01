@@ -1,12 +1,14 @@
-import React, {useEffect} from 'react';
+import React from 'react';
+import {useSelector} from "react-redux";
 import {Button, Modal} from "react-bootstrap";
 
-import {useAuth} from "../../../hooks/useAuth";
-import Order from "../../Order/Order";
-
+import Orders from "../../Orders/Orders";
 
 const Basket = ({show, onHide}) => {
-    const {orders} = useAuth();
+    const {orders} = useSelector(state => state.ordersReducer);
+
+    let sum = 0;
+    orders.forEach(el => sum += Number.parseFloat(el.price));
 
     return (
         <Modal
@@ -23,9 +25,15 @@ const Basket = ({show, onHide}) => {
             <Modal.Body>
                 {orders&& (
                     <div>
-                        {orders.map(order => <Order key={order.id} order={order}/>)}
+                        {orders.map(order => <Orders key={order.id} order={order}/>)}
                     </div>
                 )}
+                {
+                    sum?
+                        <p>To pay: {new Intl.NumberFormat().format(sum)}$</p>
+                    :
+                        null
+                }
             </Modal.Body>
             <Modal.Footer>
                 <Button>Orders</Button>

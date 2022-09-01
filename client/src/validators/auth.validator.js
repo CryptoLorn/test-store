@@ -1,6 +1,6 @@
 import Joi from "joi";
 
-export const RegistrationValidator = Joi.object({
+export const AuthValidator = Joi.object({
     email: Joi.string()
         .regex(new RegExp('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$'))
         .required()

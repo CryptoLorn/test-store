@@ -1,12 +1,26 @@
 import React from 'react';
 import {Link} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
 
 import "./SneakerCard.css";
 import baseURL from "../../configs/urls";
+import {setSneakerId} from "../../store/sneaker.slice";
 
 const SneakerCard = ({sneaker: {id, name, price, img, brandId}}) => {
+    const {user} = useSelector(state => state.userReducer);
+    const {baskets} = useSelector(state => state.basketReducer);
+    const dispatch = useDispatch();
+
+    const setCurrentSneakerId = () => {
+        for (let i = 0; i < baskets.length; i++) {
+            if (user?.id === i) {
+                dispatch(setSneakerId(id))
+            }
+        }
+    }
+
     return (
-        <div className={'sneaker_card_wrapper'}>
+        <div onClick={() => setCurrentSneakerId()} className={'sneaker_card_wrapper'}>
             <Link to={`/${name}/` + id.toString()}>
                 <div className={'sneaker_card'}>
                     <div className={'sneaker_card_poster'}><img src={baseURL + img} alt={name}/></div>
