@@ -1,10 +1,17 @@
 import React from 'react';
+import {useDispatch} from "react-redux";
 import {FaTrashAlt} from "react-icons/fa";
 
 import './Orders.css'
 import baseURL from "../../configs/urls";
+import {deleteById} from "../../store/orders.slice";
 
 const Orders = ({order: {id, name, price, img, brandId}}) => {
+    const dispatch = useDispatch();
+
+    const deleteOrders = () => {
+        dispatch(deleteById({id}));
+    }
 
     return (
         <div className={'order_wrapper'}>
@@ -28,7 +35,7 @@ const Orders = ({order: {id, name, price, img, brandId}}) => {
                 </div>
                 <div className={'order_price_del'}>
                     <span>{price}$</span>
-                    <div><FaTrashAlt/></div>
+                    <div onClick={() => deleteOrders()}><FaTrashAlt/></div>
                 </div>
             </div>
         </div>

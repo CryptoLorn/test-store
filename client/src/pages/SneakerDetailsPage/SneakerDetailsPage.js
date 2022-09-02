@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {Button} from "react-bootstrap";
 import {useDispatch, useSelector} from "react-redux";
 
@@ -7,7 +7,7 @@ import "./SneakerDetailsPage.css";
 import baseURL from "../../configs/urls";
 import {sizesService} from "../../services/size.services";
 import {createOrders} from "../../store/orders.slice";
-import {getById} from "../../store/sneaker.slice";
+import {deleteById, getById} from "../../store/sneaker.slice";
 
 const SneakerDetailsPage = () => {
     const {id} = useParams();
@@ -16,6 +16,7 @@ const SneakerDetailsPage = () => {
 
     const {sneaker, sneakerId} = useSelector(state => state.sneakerReducer);
     const {basketId} = useSelector(state => state.basketReducer);
+    const navigate = useNavigate();
 
     const dispatch = useDispatch();
 
@@ -35,9 +36,10 @@ const SneakerDetailsPage = () => {
         dispatch(createOrders({data}))
     }
 
-    // const deleteSneaker = async () => {
-    //     await sneakersService.deleteById(id)
-    // }
+    const deleteSneaker = () => {
+        dispatch(deleteById({id}))
+        navigate('/')
+    }
 
     // const addOrder = (item) => {
     //     let isOrder = false;
@@ -83,6 +85,7 @@ const SneakerDetailsPage = () => {
                         }
                     </div>
                     <Button onClick={() => addOrders()}>Order</Button>
+                    <Button onClick={() => deleteSneaker()}>Delete</Button>
                 </div>
             )}
         </div>

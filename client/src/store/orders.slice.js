@@ -21,10 +21,23 @@ export const createOrders = createAsyncThunk(
     }
 )
 
+export const deleteById = createAsyncThunk(
+    'ordersSlice/deleteById',
+    async ({id}, {dispatch}) => {
+        try {
+            await ordersService.deleteById(id);
+            dispatch(deleteOrders({id}));
+        } catch (e) {
+            console.log(e);
+        }
+    }
+)
+
 const ordersSlice = createSlice({
     name: 'ordersSlice',
     initialState: {
-        orders: []
+        orders: [],
+        errors: null
     },
     reducers: {
         setOrders: (state, action) => {
@@ -32,11 +45,14 @@ const ordersSlice = createSlice({
         },
         addOrders: (state, action) => {
             state.orders.push(action.payload.data);
+        },
+        deleteOrders: (state, action) => {
+            state.orders = state.orders.filter(order => order.id !== action.payload.id)
         }
     }
 })
 
 const orderReducer = ordersSlice.reducer;
 
-export const {setOrders, addOrders} = ordersSlice.actions;
+export const {setOrders, addOrders, deleteOrders} = ordersSlice.actions;
 export default orderReducer;

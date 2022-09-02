@@ -41,6 +41,19 @@ export const getById = createAsyncThunk(
     }
 )
 
+export const deleteById = createAsyncThunk(
+    'sneakerSlice/deleteById',
+    async ({id}, {dispatch}) => {
+        try {
+            await sneakersService.deleteById(id);
+            dispatch(deleteSneaker({id}));
+        } catch (e) {
+            console.log(e);
+        }
+
+}
+)
+
 const sneakerSlice = createSlice({
     name: 'sneakerSlice',
     initialState: {
@@ -63,24 +76,25 @@ const sneakerSlice = createSlice({
         addSneaker: (state, action) => {
             state.sneakers.push(action.payload.data);
         },
+        deleteSneaker: (state, action) => {
+            state.sneakers = state.sneakers.filter(sneaker => sneaker.id !== action.payload.id)
+        },
         setSneakerId: (state, action) => {
             state.sneakerId = (action.payload)
         }
-    },
-    extraReducers: (builder) =>
-        builder
-            .addCase(getAll.fulfilled, (state, action) => {
-            state.errors = null
-            state.sneakers = action.payload
-        })
-            .addCase(getAll.rejected, (state, action) =>{
-                state.errors = action.payload
-            })
+    }
 })
 
-const {reducer: sneakerReducer, actions} = sneakerSlice;
+const {reducer: sneakerReducer} = sneakerSlice;
 
-export const {setSneakers, setSneaker, setTotalCount, addSneaker, setSneakerId} = sneakerSlice.actions;
+export const {
+    setSneakers,
+    setSneaker,
+    setTotalCount,
+    addSneaker,
+    deleteSneaker,
+    setSneakerId
+} = sneakerSlice.actions;
 
 export {
     sneakerReducer

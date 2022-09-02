@@ -20,11 +20,14 @@ class OrdersController {
         if (basketId) {
             orders = await Orders.findAll({where: {basketId}});
         }
-
-
-        // const orders = await Orders.findAll();
         return res.json(orders);
     };
+
+    async deleteById(req, res) {
+        let {id} = req.params;
+        const orders = await Orders.destroy({where: {id}});
+        return res.json(orders);
+    }
 }
 
 module.exports = new OrdersController();

@@ -56,7 +56,7 @@ class SneakerController {
     };
 
     async getById(req, res) {
-        const {id} = req.params;
+        let {id} = req.params;
         const sneaker = await Sneaker.findOne(
             {where: {id}, include: [{model: SneakerInfo, as: 'info'}]}
         )
@@ -64,7 +64,7 @@ class SneakerController {
     };
 
     async deleteById(req, res) {
-        const {id} = req.params;
+        let {id} = req.params;
         const sneaker = await Sneaker.destroy({where: {id}})
         return res.json(sneaker);
     }
