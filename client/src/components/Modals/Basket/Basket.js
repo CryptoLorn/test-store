@@ -2,6 +2,7 @@ import React from 'react';
 import {useSelector} from "react-redux";
 import {Button, Modal} from "react-bootstrap";
 
+import "./Basket.css";
 import Orders from "../../Orders/Orders";
 
 const Basket = ({show, onHide}) => {
@@ -24,19 +25,21 @@ const Basket = ({show, onHide}) => {
             </Modal.Header>
             <Modal.Body>
                 {orders&& (
-                    <div>
+                    <div className={'orders'}>
                         {orders.map(order => <Orders key={order.id} order={order}/>)}
                     </div>
                 )}
-                {
-                    sum?
-                        <p>To pay: {new Intl.NumberFormat().format(sum)}$</p>
-                    :
-                        null
-                }
+                <div className={'to_pay'}>
+                    {
+                        sum ?
+                            <span>To pay: <span>{new Intl.NumberFormat().format(sum)}</span><span>$</span></span>
+                            :
+                            null
+                    }
+                </div>
             </Modal.Body>
             <Modal.Footer>
-                <Button>Orders</Button>
+                <Button className={'order_button'} onClick={() => alert('Sorry, this functionality is not implemented!')}>Order</Button>
             </Modal.Footer>
         </Modal>
     );

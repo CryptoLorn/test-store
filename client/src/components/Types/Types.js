@@ -1,32 +1,26 @@
-import React from 'react';
-import {useState, useEffect} from "react";
+import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 
-import "./Types.css"
-import {useAuth} from "../../hooks/useAuth";
+import "./Types.css";
 import {setPage} from "../../store/page.slice";
 import {getAll, setSelectedType, setElementType} from "../../store/type.slice";
 
 const Type = () => {
-    // const {types, setSelectedType, setPage} = useAuth();
-    // const [element, setElement] = useState(null);
     const {types, elementType, status, error} = useSelector(state => state.typeReducer);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getAll())
+        dispatch(getAll());
     }, [])
 
     const handleClick = (type, e) => {
         if (elementType === e) {
-            // setSelectedType([])
-            dispatch(setSelectedType({}))
-            dispatch(setElementType(null))
+            dispatch(setSelectedType({}));
+            dispatch(setElementType(null));
         } else {
-            // setSelectedType(type)
-            dispatch(setSelectedType(type))
-            dispatch(setPage(1))
-            dispatch(setElementType(e))
+            dispatch(setSelectedType(type));
+            dispatch(setPage(1));
+            dispatch(setElementType(e));
         }
     }
 

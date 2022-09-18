@@ -2,30 +2,26 @@ import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 
 import {basketService} from "../services/basket.service";
 
-export const getAllBaskets = createAsyncThunk(
-    'basketSlice/getAllBaskets',
-    async (_, {dispatch}) => {
-        await basketService.getAll().then(data => dispatch(setBaskets([...data])))
+export const getBasketById = createAsyncThunk(
+    'basketSlice/getBasketById',
+    async ({id}, {dispatch}) => {
+        await basketService.getById(id).then(data => dispatch(setBasket({...data})));
     }
 )
 
 const basketSlice = createSlice({
     name: 'basketSlice',
     initialState: {
-        baskets: [],
-        basketId: null
+        basket: {}
     },
     reducers: {
-        setBaskets: (state, action) => {
-            state.baskets = action.payload
-        },
-        setBasketId: (state, action) => {
-            state.basketId = (action.payload)
+        setBasket: (state, action) => {
+            state.basket = action.payload;
         }
     }
 })
 
 const basketReducer = basketSlice.reducer;
 
-export const {setBaskets, setBasketId} = basketSlice.actions;
+export const {setBasket} = basketSlice.actions;
 export default basketReducer;

@@ -4,13 +4,13 @@ export const urls = {
     registration: 'api/user/registration',
     login: 'api/user/login',
     auth: 'api/user/auth',
-    admin: 'api/admin',
-    basket: 'api/basket',
-    sneaker: 'api/sneaker',
-    brand: 'api/brand',
-    type: 'api/type',
-    size: 'api/sizes',
-    orders: 'api/orders'
+    baskets: 'api/basket',
+    sneakers: 'api/sneakers',
+    brands: 'api/brands',
+    types: 'api/types',
+    orders: 'api/orders',
+    sizes: 'api/sizes',
+    search: 'api/search'
 }
 
 export default baseURL;

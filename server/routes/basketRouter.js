@@ -1,9 +1,9 @@
 const Router = require('express');
 
-const basketController = require('../controllers/basketController');
+const basketController = require('../controllers/basket.controller');
 
 const router = new Router();
 
-router.get('/', basketController.getAll);
+router.get('/:id', basketController.getById);
 
 module.exports = router;

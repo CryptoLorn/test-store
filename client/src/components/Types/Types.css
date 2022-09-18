@@ -1,7 +1,7 @@
 .type_menu {
     display: flex;
     align-items: center;
-    column-gap: 20px;
+    column-gap: 5px;
     height: 40px;
     box-shadow: 0 1px 5px rgba(0,0,0,0.2), 0 4px 6px rgba(0,0,0,0.2);
 }
@@ -12,6 +12,7 @@
     height: 40px;
     display: flex;
     align-items: center;
+    margin-left: 20px;
 }
 
 .type_item:hover, .active_type:hover {

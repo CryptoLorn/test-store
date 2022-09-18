@@ -1,43 +1,108 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
+import {useSearchParams} from "react-router-dom";
+import {useForm} from "react-hook-form";
+import {joiResolver} from "@hookform/resolvers/joi/dist/joi";
 
 import "./HomePage.css";
-import SneakerCard from "../../components/SneakerCard/SneakerCard";
+import "../../validators/validator.css";
+import SneakersCard from "../../components/SneakersCard/SneakersCard";
 import Brands from "../../components/Brands/Brands";
 import Pages from "../../components/Pages/Pages";
 import Type from "../../components/Types/Types";
-import {getAll, getAllWithParams} from "../../store/sneaker.slice";
+import {getAllSneakers, getAllSneakersWithParams, getAllFromSearch, setSneakersFound} from "../../store/sneakers.slice";
+import {SearchValidator} from "../../validators/search.validator";
 
 const HomePage = () => {
     const {selectedBrand} = useSelector(state => state.brandReducer);
     const {selectedType} = useSelector(state => state.typeReducer);
-    const {sneakers} = useSelector(state => state.sneakerReducer);
+    const {sneakers, sneakersFound} = useSelector(state => state.sneakersReducer);
     const {page} = useSelector(state => state.pageReducer);
     const dispatch = useDispatch();
+    const [notFoundMessageVisible, setNotFoundMessageVisible] = useState(false);
+    const [query, setQuery] = useSearchParams();
+    const {handleSubmit, register, reset, formState: {errors}} = useForm({resolver: joiResolver(SearchValidator)});
+
 
     useEffect(() => {
-        dispatch(getAll())
-    }, [])
+        dispatch(getAllSneakers());
+
+        if (query.get('title') && query.get('title') !== '') {
+            dispatch(getAllFromSearch()).then(value => {
+                const title = query.get('title');
+                let filter = [...value.payload];
+
+                if (title) {
+                    filter = (value.payload).filter(sneaker => sneaker.model.includes(title));
+                }
+
+                (dispatch(setSneakersFound(filter)));
+            })
+        }
+    }, [query])
 
     useEffect(() => {
-        dispatch(getAllWithParams({data: {selectedType: selectedType.id, selectedBrand: selectedBrand.id, page}}))
-    }, [page, selectedType, selectedBrand])
+        dispatch(getAllSneakersWithParams({data: {selectedType: selectedType.id, selectedBrand: selectedBrand.id, page}}));
+    }, [page, selectedType, selectedBrand]);
+
+    const submit = (data) => {
+        setQuery({title: data.search});
+        setNotFoundMessageVisible(true);
+        reset();
+    }
 
     return (
-        <div className={'home_wrapper'}>
-            <div>
-                <Brands/>
-            </div>
-            <div className={'home_type_cards'}>
+        <>
+            <div className={'search'}>
                 <div>
-                    <Type/>
+                    <form>
+                        <input
+                            className={'search_input'}
+                            type="search"
+                            placeholder={'Air Max, Revolution...'}
+                            {...register('search')}
+                        />
+                        <button
+                            className={'search_button'}
+                            onClick={handleSubmit(submit)}
+                        >
+                            Search
+                        </button>
+                    </form>
+                    {errors.search ? <span className={'validation'}>{errors.search.message}</span> : null}
+                    {
+                        notFoundMessageVisible === true
+                            ?
+                            <span>{sneakersFound.length === 0 ? <span>not found</span> : null}</span>
+                            :
+                            null
+                    }
                 </div>
-                <div className={'sneaker_list'}>
-                    {sneakers.map(sneaker => <SneakerCard key={sneaker.id} sneaker={sneaker}/>)}
-                </div>
-                <div><Pages/></div>
             </div>
-        </div>
+
+            <div className={'home_wrapper'}>
+                <div>
+                    <Brands/>
+                </div>
+                <div className={'home_type_cards'}>
+                    <div>
+                        <Type/>
+                    </div>
+                    <div className={'home_sneakers_list'}>
+                        {sneakersFound.length !== 0 ?
+                            <div className={'sneakers_list'}>
+                                {sneakersFound.map(sneaker => <SneakersCard key={sneaker.id} sneaker={sneaker}/>)}
+                            </div>
+                            :
+                            <div className={'sneakers_list'}>
+                                {sneakers.map(sneaker => <SneakersCard key={sneaker.id} sneaker={sneaker}/>)}
+                            </div>
+                        }
+                    </div>
+                    <div><Pages/></div>
+                </div>
+            </div>
+        </>
     );
 };
 

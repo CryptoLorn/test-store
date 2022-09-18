@@ -1,32 +1,35 @@
-import React, {useState} from 'react';
-import {Button, Form, FormControl, Modal} from "react-bootstrap";
-
-import {typeService} from "../../../services/type.service";
+import React from 'react';
 import {useDispatch} from "react-redux";
-import {createType} from "../../../store/type.slice";
 import {useForm} from "react-hook-form";
-import {createBrand} from "../../../store/brand.slice";
+import {Button, Form, FormControl, Modal} from "react-bootstrap";
+import {joiResolver} from "@hookform/resolvers/joi/dist/joi";
+import {useNavigate} from "react-router-dom";
+
+import "../../../validators/validator.css";
+import {createType} from "../../../store/type.slice";
+import {TypeBrandValidator} from "../../../validators/typeBrand.validator";
 
 const AddType = ({show, onHide}) => {
-    const [value, setValue] = useState('')
-
-    const {handleSubmit, register} = useForm();
+    const {handleSubmit, register, reset, formState: {errors}} = useForm({resolver: joiResolver(TypeBrandValidator)});
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-    const submit = (data) => {
-        dispatch(createType({data}))
-        onHide()
+    const addType = (data) => {
+        dispatch(createType({data}));
+        onHide();
+        reset();
     }
 
-    // const addType = () => {
-    //     typeService.create({name: value}).then(data => setValue(''))
-    //     onHide()
-    // }
+    const hide = () => {
+        onHide();
+        reset();
+        navigate('/');
+    }
 
     return (
         <Modal
             show={show}
-            onHide={onHide}
+            onHide={hide}
             size="lg"
             centered
         >
@@ -36,22 +39,13 @@ const AddType = ({show, onHide}) => {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                {/*<Form>*/}
-                {/*    <Form.Control*/}
-                {/*        type='text'*/}
-                {/*        value={value}*/}
-                {/*        onChange={e => setValue(e.target.value)}*/}
-                {/*        placeholder={'Назва типу'}*/}
-                {/*    />*/}
-                {/*</Form>*/}
-
                 <Form>
-                    <FormControl type='text' placeholder='Type name' {...register('name')}/>
+                    <FormControl type={'text'} placeholder={'name'} {...register('name')}/>
                 </Form>
+                {errors.name && <span className={'validation'}>{errors.name.message}</span>}
             </Modal.Body>
             <Modal.Footer>
-                <Button onClick={handleSubmit(submit)}>Add</Button>
-                {/*<Button onClick={addType}>Добавити</Button>*/}
+                <Button onClick={handleSubmit(addType)}>Add</Button>
             </Modal.Footer>
         </Modal>
     );

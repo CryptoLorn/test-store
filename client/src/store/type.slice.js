@@ -1,4 +1,5 @@
-import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
+
 import {typeService} from "../services/type.service";
 
 export const getAll = createAsyncThunk(
@@ -7,19 +8,19 @@ export const getAll = createAsyncThunk(
         try {
             return await typeService.getAll();
         } catch (e) {
-            return rejectWithValue(e.message)
+            return rejectWithValue(e.message);
         }
     }
 )
 
 export const createType = createAsyncThunk(
-    'typeSlice/createBrand',
-    async ({data}, {dispatch}) => {
+    'typeSlice/createType',
+    async ({data}, {dispatch, rejectWithValue}) => {
         try {
             const newType = await typeService.create(data);
             dispatch(addType({data: newType}));
         } catch (e) {
-            console.log(e);
+            return rejectWithValue(e.response.data.message);
         }
     }
 )
@@ -38,24 +39,28 @@ const typeSlice = createSlice({
             state.types.push(action.payload.data);
         },
         setSelectedType: (state, action) => {
-            state.selectedType = action.payload
+            state.selectedType = action.payload;
         },
         setElementType: (state, action) => {
-            state.elementType = action.payload
+            state.elementType = action.payload;
         }
     },
     extraReducers: {
         [getAll.pending]: (state, action) => {
-            state.status = 'pending'
-            state.error = null
+            state.status = 'pending';
+            state.error = null;
         },
         [getAll.fulfilled]: (state, action) => {
-            state.status = 'fulfilled'
-            state.types = action.payload
+            state.status = 'fulfilled';
+            state.types = action.payload;
         },
         [getAll.rejected]: (state, action) => {
-            state.status = 'rejected'
-            state.error = action.payload
+            state.status = 'rejected';
+            state.error = action.payload;
+        },
+        [createType.rejected]: (state, action) => {
+            state.status = 'rejected';
+            state.error = action.payload;
         }
     }
 })

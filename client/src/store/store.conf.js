@@ -6,8 +6,9 @@ import typeReducer from "./type.slice";
 import pageReducer from "./page.slice";
 import visibleReducer from "./visible.slice";
 import ordersReducer from "./orders.slice";
-import {sneakerReducer} from "./sneaker.slice";
+import sneakersReducer from "./sneakers.slice";
 import basketReducer from "./basket.slice";
+import sizeReducer from "./size.slice";
 
 const store = configureStore({
     reducer: {
@@ -17,8 +18,9 @@ const store = configureStore({
         pageReducer,
         visibleReducer,
         ordersReducer,
-        sneakerReducer,
-        basketReducer
+        sneakersReducer,
+        basketReducer,
+        sizeReducer
     }
 })
 

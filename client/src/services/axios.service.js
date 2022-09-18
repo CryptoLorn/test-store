@@ -10,6 +10,6 @@ const authInterceptor = config => {
     return config;
 }
 
-authAxiosService.interceptors.request.use(authInterceptor)
+authAxiosService.interceptors.request.use(authInterceptor);
 
-export {axiosService, authAxiosService}
+export {axiosService, authAxiosService};

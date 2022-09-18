@@ -5,18 +5,18 @@ import {ordersService} from "../services/orders.service";
 export const getAllOrdersByBasketId = createAsyncThunk(
     'ordersSlice/getAllOrdersByBasketId',
     async ({data}, {dispatch}) => {
-        await ordersService.getAllById(data).then(data => dispatch(setOrders([...data])))
+        await ordersService.getAllById(data).then(data => dispatch(setOrders([...data])));
     }
 )
 
 export const createOrders = createAsyncThunk(
     'ordersSlice/createOrders',
-    async ({data}, {dispatch}) => {
+    async ({data}, {dispatch, rejectWithValue}) => {
         try {
             const newOrders = await ordersService.create(data);
             dispatch(addOrders({data: newOrders}));
         } catch (e) {
-            console.log(e);
+            return rejectWithValue(e.response.data.message);
         }
     }
 )
@@ -37,22 +37,39 @@ const ordersSlice = createSlice({
     name: 'ordersSlice',
     initialState: {
         orders: [],
-        errors: null
+        selectedSize: null,
+        error: null
     },
     reducers: {
         setOrders: (state, action) => {
-            state.orders = action.payload
+            state.orders = action.payload;
         },
         addOrders: (state, action) => {
             state.orders.push(action.payload.data);
         },
         deleteOrders: (state, action) => {
-            state.orders = state.orders.filter(order => order.id !== action.payload.id)
+            state.orders = state.orders.filter(order => order.id !== action.payload.id);
+        },
+        setSelectedSize: (state, action) => {
+            state.selectedSize = action.payload;
+
+            if (state.selectedSize !== null) {
+                state.error = null;
+            }
+        },
+        setError: (state, action) => {
+            state.error = null;
+        }
+    },
+    extraReducers: {
+        [createOrders.rejected]: (state, action) => {
+            state.status = 'rejected';
+            state.error = 'Please specify size!';
         }
     }
 })
 
-const orderReducer = ordersSlice.reducer;
+const ordersReducer = ordersSlice.reducer;
 
-export const {setOrders, addOrders, deleteOrders} = ordersSlice.actions;
-export default orderReducer;
+export const {setOrders, addOrders, deleteOrders, setSelectedSize, setError} = ordersSlice.actions;
+export default ordersReducer;

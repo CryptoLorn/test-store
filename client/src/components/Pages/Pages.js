@@ -1,23 +1,21 @@
 import React from 'react';
-import {Pagination} from "react-bootstrap";
 import {useDispatch, useSelector} from "react-redux";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import {Pagination} from "react-bootstrap";
 
-import {useAuth} from "../../hooks/useAuth";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import {setPage} from "../../store/page.slice";
 
 const Pages = () => {
-    // const {page, setPage, totalCount} = useAuth()
-    const {page} = useSelector(state => state.pageReducer); //totalCount
-    const {totalCount} = useSelector(state => state.sneakerReducer);
+    const {page} = useSelector(state => state.pageReducer);
+    const {totalCount} = useSelector(state => state.sneakersReducer);
     const dispatch = useDispatch();
 
-    let limit = 5
-    const pageCount = Math.ceil(totalCount / limit)
-    const pages = []
+    let limit = 5;
+    const pageCount = Math.ceil(totalCount / limit);
+    const pages = [];
 
     for (let i = 0; i < pageCount; i++) {
-        pages.push(i + 1)
+        pages.push(i + 1);
     }
 
     return (

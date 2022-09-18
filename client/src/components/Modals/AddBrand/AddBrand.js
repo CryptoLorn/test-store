@@ -1,31 +1,35 @@
-import React, {useState} from 'react';
-import {Button, Form, FormControl, Modal} from "react-bootstrap";
-
-import {brandsService} from "../../../services/brand.service";
+import React from 'react';
 import {useDispatch} from "react-redux";
-import {createBrand} from "../../../store/brand.slice";
 import {useForm} from "react-hook-form";
+import {Button, Form, FormControl, Modal} from "react-bootstrap";
+import {joiResolver} from "@hookform/resolvers/joi";
+import {useNavigate} from "react-router-dom";
+
+import "../../../validators/validator.css";
+import {createBrand} from "../../../store/brand.slice";
+import {TypeBrandValidator} from "../../../validators/typeBrand.validator";
 
 const AddBrand = ({show, onHide}) => {
-    const [value, setValue] = useState('')
-
-    const {handleSubmit, register} = useForm();
+    const {handleSubmit, register, reset, formState: {errors}} = useForm({resolver: joiResolver(TypeBrandValidator)});
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-    const submit = (data) => {
-        dispatch(createBrand({data}))
-        onHide()
+    const addBrand = (data) => {
+        dispatch(createBrand({data}));
+        onHide();
+        reset();
     }
 
-    // const addBrand = () => {
-    //     brandsService.create({name: value}).then(data => setValue(''))
-    //     onHide()
-    // }
+    const hide = () => {
+        onHide();
+        reset();
+        navigate('/');
+    }
 
     return (
         <Modal
             show={show}
-            onHide={onHide}
+            onHide={hide}
             size="lg"
             centered
         >
@@ -35,22 +39,13 @@ const AddBrand = ({show, onHide}) => {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                {/*<Form>*/}
-                {/*    <FormControl*/}
-                {/*        type='text'*/}
-                {/*        value={value}*/}
-                {/*        onChange={e => setValue(e.target.value)}*/}
-                {/*        placeholder={'Назва бренду'}*/}
-                {/*    />*/}
-                {/*</Form>*/}
-
                 <Form>
-                    <FormControl type='text' placeholder='Brand name' {...register('name')}/>
+                    <FormControl type={'text'} placeholder={'name'} {...register('name')}/>
                 </Form>
+                {errors.name && <span className={'validation'}>{errors.name.message}</span>}
             </Modal.Body>
             <Modal.Footer>
-                <Button onClick={handleSubmit(submit)}>Add</Button>
-                {/*<Button onClick={addBrand}>Добавити</Button>*/}
+                <Button onClick={handleSubmit(addBrand)}>Add</Button>
             </Modal.Footer>
         </Modal>
     );
