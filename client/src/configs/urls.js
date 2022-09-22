@@ -1,7 +1,7 @@
 const baseURL = 'http://localhost:5000/'
 
 export const urls = {
-    registration: '/user/registration',
+    registration: 'api/user/registration',
     login: 'api/user/login',
     auth: 'api/user/auth',
     baskets: 'api/basket',
