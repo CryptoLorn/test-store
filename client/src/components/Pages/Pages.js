@@ -10,7 +10,7 @@ const Pages = () => {
     const {totalCount} = useSelector(state => state.sneakersReducer);
     const dispatch = useDispatch();
 
-    let limit = 5;
+    let limit = 8;
     const pageCount = Math.ceil(totalCount / limit);
     const pages = [];
 
