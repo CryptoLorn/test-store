@@ -1,7 +1,7 @@
 const baseURL = 'http://localhost:5000/'
 
 export const urls = {
-    registration: 'api/user/registration',
+    registration: '/user/registration',
     login: 'api/user/login',
     auth: 'api/user/auth',
     baskets: 'api/basket',
@@ -9,7 +9,6 @@ export const urls = {
     brands: 'api/brands',
     types: 'api/types',
     orders: 'api/orders',
-    sizes: 'api/sizes',
     search: 'api/search'
 }
 

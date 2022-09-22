@@ -7,24 +7,28 @@ import "./SneakerDetailsPage.css";
 import baseURL from "../../configs/urls";
 import {createOrders, setSelectedSize} from "../../store/orders.slice";
 import {getSneakersById, sneakersToUpdate} from "../../store/sneakers.slice";
-import {getAllSizes} from "../../store/size.slice";
 import {setLoginVisible, setConfirmationVisible} from "../../store/visible.slice";
 import Confirmation from "../../components/Modals/Confirmation/Confirmation";
 import EditSneakersPrice from "../../components/Modals/EditSneakersPrice/EditSneakersPrice";
+import {Spinner} from "react-bootstrap";
 
 const SneakerDetailsPage = () => {
     const {id} = useParams();
     const {sneaker, sneakers} = useSelector(state => state.sneakersReducer);
     const {editVisible} = useSelector(state => state.visibleReducer);
     const {user} = useSelector(state => state.userReducer);
-    const {sizes} = useSelector(state => state.sizeReducer);
     const {selectedSize, error} = useSelector(state => state.ordersReducer);
     const dispatch = useDispatch();
 
+    const sizes = [6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11];
+
     useEffect(() => {
         dispatch(getSneakersById({id}));
-        dispatch(getAllSizes());
     }, [sneakers])
+
+    if (sneaker.img === undefined) {
+        return <Spinner animation={"grow"}/>
+    }
 
     const addOrders = () => {
         const data = new FormData();
@@ -33,7 +37,7 @@ const SneakerDetailsPage = () => {
         data.append('brand_name', sneaker.brand_name)
         data.append('model', sneaker.model)
         data.append('price', sneaker.price)
-        data.append('size', selectedSize?.name)
+        data.append('size', selectedSize)
         data.append('img', sneaker.img)
 
         dispatch(createOrders({data}));
@@ -72,10 +76,10 @@ const SneakerDetailsPage = () => {
                                     <div className={'sizes'}>
                                         {sizes.map(size =>
                                             <div className={selectedSize === size ? 'size_active' : 'size'}
-                                                 key={size.id}
+                                                 key={size}
                                                  onClick={() => dispatch(setSelectedSize(size))}
                                             >
-                                                {size.name}
+                                                {size}
                                             </div>
                                         )}
                                     </div>

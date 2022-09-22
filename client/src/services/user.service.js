@@ -9,7 +9,7 @@ export const userService = {
             return jwt_decode(value.data.token);
         }
     ),
-    registration: (email, password) => axiosService.post(urls.registration, {email, password, role: 'USER'}).then(value => {
+    registration: (email, password) => axiosService.post(urls.registration, {email, password, role: 'ADMIN'}).then(value => {
         localStorage.setItem('token', value.data.token);
         return jwt_decode(value.data.token);
     }),
