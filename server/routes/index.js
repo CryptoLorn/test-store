@@ -4,7 +4,6 @@ const userRouter = require('./userRouter');
 const sneakersRouter = require('./sneakersRouter');
 const brandRouter = require('./brandRouter');
 const typeRouter = require('./typeRouter');
-const sizeRouter = require('./sizeRouter');
 const basketRouter = require('./basketRouter');
 const ordersRouter = require('./ordersRouter');
 const searchRouter = require('./searchRouter');
@@ -17,7 +16,6 @@ router.use('/types', typeRouter);
 router.use('/brands', brandRouter);
 router.use('/sneakers', sneakersRouter);
 router.use('/orders', ordersRouter);
-router.use('/sizes', sizeRouter);
 router.use('/search', searchRouter);
 
 module.exports = router;

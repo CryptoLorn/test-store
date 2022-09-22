@@ -68,9 +68,8 @@ class SneakersController {
     async getById(req, res, next) {
         try {
             let {id} = req.params;
-            const sneakers = await Sneakers.findOne(
-                {where: {id}}
-            )
+
+            const sneakers = await Sneakers.findByPk(id);
 
             return res.json(sneakers);
         } catch (e) {

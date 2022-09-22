@@ -1,4 +1,4 @@
-const {Basket} = require("../models/dependencies");
+const {Basket} = require("../models/Basket/basket.model");
 
 class BasketController {
     async getById(req, res) {
