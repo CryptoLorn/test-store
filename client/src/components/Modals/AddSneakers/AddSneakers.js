@@ -9,6 +9,9 @@ import DropdownItem from "react-bootstrap/DropdownItem";
 import "../../../validators/validator.css";
 import {createSneakers} from "../../../store/sneakers.slice";
 import {SneakersValidator} from "../../../validators/sneakers.validator";
+import AddType from "../AddType/AddType";
+import AddBrand from "../AddBrand/AddBrand";
+import {setTypeVisible, setBrandVisible} from "../../../store/visible.slice";
 
 const AddSneakers = ({show, onHide}) => {
     const [selectedTypeAdd, setSelectedTypeAdd] = useState(null);
@@ -16,8 +19,8 @@ const AddSneakers = ({show, onHide}) => {
     const [file, setFile] = useState(null);
     const {brands} = useSelector(state => state.brandReducer);
     const {types} = useSelector(state => state.typeReducer);
+    const {typeVisible, brandVisible} = useSelector(state => state.visibleReducer);
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const {handleSubmit, register, reset, formState: {errors}} = useForm({resolver: joiResolver(SneakersValidator)});
 
     const selectFile = e => {
@@ -36,21 +39,14 @@ const AddSneakers = ({show, onHide}) => {
         formData.append('brandId', selectedBrandAdd.id);
         formData.append('typeId', selectedTypeAdd.id);
         dispatch(createSneakers({data: formData}));
-        navigate('/');
         onHide();
         reset();
-    }
-
-    const hide = () => {
-        onHide();
-        reset();
-        navigate('/');
     }
 
     return (
         <Modal
             show={show}
-            onHide={hide}
+            onHide={onHide}
             size="lg"
             centered
         >
@@ -64,6 +60,8 @@ const AddSneakers = ({show, onHide}) => {
                     <Dropdown className={'mt-2 mb-2'}>
                         <Dropdown.Toggle>{selectedTypeAdd?.name || 'Select type'}</Dropdown.Toggle>
                         <Dropdown.Menu>
+                            <DropdownItem onClick={() => dispatch(setTypeVisible(true))}>+ Type</DropdownItem>
+                            <hr/>
                             {types.map(type =>
                                 <DropdownItem
                                     key={type.id}
@@ -78,6 +76,8 @@ const AddSneakers = ({show, onHide}) => {
                     <Dropdown className={'mt-2 mb-2'}>
                         <Dropdown.Toggle>{selectedBrandAdd?.name || 'Select brand'}</Dropdown.Toggle>
                         <Dropdown.Menu>
+                            <DropdownItem onClick={() => dispatch(setBrandVisible(true))}>+ Brand</DropdownItem>
+                            <hr/>
                             {brands.map(brand =>
                                 <DropdownItem
                                     key={brand.id}
@@ -133,6 +133,8 @@ const AddSneakers = ({show, onHide}) => {
             <Modal.Footer>
                 <Button onClick={handleSubmit(addSneakers)}>Add</Button>
             </Modal.Footer>
+            <AddType show={typeVisible} onHide={() => setTypeVisible(false)}/>
+            <AddBrand show={brandVisible} onHide={() => setBrandVisible(false)}/>
         </Modal>
     );
 };

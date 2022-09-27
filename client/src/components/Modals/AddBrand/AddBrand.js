@@ -3,27 +3,27 @@ import {useDispatch} from "react-redux";
 import {useForm} from "react-hook-form";
 import {Button, Form, FormControl, Modal} from "react-bootstrap";
 import {joiResolver} from "@hookform/resolvers/joi";
-import {useNavigate} from "react-router-dom";
 
 import "../../../validators/validator.css";
 import {createBrand} from "../../../store/brand.slice";
 import {TypeBrandValidator} from "../../../validators/typeBrand.validator";
+import {setBrandVisible} from "../../../store/visible.slice";
 
 const AddBrand = ({show, onHide}) => {
     const {handleSubmit, register, reset, formState: {errors}} = useForm({resolver: joiResolver(TypeBrandValidator)});
     const dispatch = useDispatch();
-    const navigate = useNavigate();
 
     const addBrand = (data) => {
         dispatch(createBrand({data}));
         onHide();
+        dispatch(setBrandVisible(false));
         reset();
     }
 
     const hide = () => {
         onHide();
+        dispatch(setBrandVisible(false));
         reset();
-        navigate('/');
     }
 
     return (

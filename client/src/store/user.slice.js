@@ -45,24 +45,51 @@ export const isAuth = createAsyncThunk(
     }
 )
 
+export const getAllUsers = createAsyncThunk(
+    'userSlice/getAllUsers',
+    async (_, {dispatch}) => {
+        await userService.getAll().then(data => dispatch(setUsers([...data])))
+    }
+)
+
+export const updateUserById = createAsyncThunk(
+    'userSlice/updateUserById',
+    async ({id, user}, {dispatch}) => {
+        const newUser = await userService.updateById(id, user);
+        dispatch(updateUser({user: newUser}));
+    }
+)
+
 const userSlice = createSlice({
     name: 'userSlice',
     initialState: {
         user: null,
+        users: [],
         isAuth: null,
         basketId: null,
         status: null,
-        error: null
+        error: null,
+        userForUpdate: null
     },
     reducers: {
         setUser: (state, action) => {
             state.user = action.payload;
+        },
+        setUsers: (state, action) => {
+            state.users = action.payload;
         },
         setIsAuth: (state, action) => {
             state.isAuth = action.payload;
         },
         setBasketId: (state, action) => {
             state.basketId = action.payload;
+        },
+        userToUpdate: (state, action) => {
+            state.userForUpdate = action.payload;
+        },
+        updateUser: (state, action) => {
+            const index = state.users.findIndex(user => user.id === action.payload.user.id);
+            state.users[index] = action.payload.user;
         }
     },
     extraReducers: {
@@ -83,5 +110,5 @@ const userSlice = createSlice({
 
 const userReducer = userSlice.reducer;
 
-export const {setUser, setIsAuth, setBasketId} = userSlice.actions;
+export const {setUser, setUsers, setIsAuth, setBasketId, updateUser, userToUpdate} = userSlice.actions;
 export default userReducer;

@@ -1,5 +1,5 @@
 import React from 'react';
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useForm} from "react-hook-form";
 import {Button, Form, FormControl, Modal} from "react-bootstrap";
 import {joiResolver} from "@hookform/resolvers/joi/dist/joi";
@@ -9,6 +9,8 @@ import "../../../validators/validator.css";
 import {createType} from "../../../store/type.slice";
 import {TypeBrandValidator} from "../../../validators/typeBrand.validator";
 
+import {setTypeVisible} from "../../../store/visible.slice";
+
 const AddType = ({show, onHide}) => {
     const {handleSubmit, register, reset, formState: {errors}} = useForm({resolver: joiResolver(TypeBrandValidator)});
     const dispatch = useDispatch();
@@ -17,13 +19,14 @@ const AddType = ({show, onHide}) => {
     const addType = (data) => {
         dispatch(createType({data}));
         onHide();
+        dispatch(setTypeVisible(false));
         reset();
     }
 
     const hide = () => {
         onHide();
+        dispatch(setTypeVisible(false));
         reset();
-        navigate('/');
     }
 
     return (

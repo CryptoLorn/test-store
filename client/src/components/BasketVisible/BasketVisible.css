@@ -1,3 +1,12 @@
-.basket_visible {
+.shopping_bag {
     position: relative;
+    color: white;
+    font-size: 25px;
+    cursor: pointer;
+    transition: transform 500ms ease;
+}
+
+.shopping_bag:hover {
+    color: cadetblue;
+    transform: scale(1.2);
 }

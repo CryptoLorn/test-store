@@ -9,12 +9,14 @@ export const userService = {
             return jwt_decode(value.data.token);
         }
     ),
-    registration: (email, password) => axiosService.post(urls.registration, {email, password, role: 'ADMIN'}).then(value => {
+    registration: (email, password) => axiosService.post(urls.registration, {email, password, role: 'USER'}).then(value => {
         localStorage.setItem('token', value.data.token);
         return jwt_decode(value.data.token);
     }),
     checkIsAuth: () => authAxiosService.get(urls.auth).then(value => {
         localStorage.setItem('token', value.data.token);
         return jwt_decode(value.data.token);
-    })
+    }),
+    getAll: () => authAxiosService.get(urls.users).then(value => value.data),
+    updateById: (id, user) => authAxiosService.put(`${urls.users}/${id}`, user).then(value => value.data)
 }

@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import {useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {FaShoppingBag, FaTrashAlt, FaEdit} from "react-icons/fa";
+import {Spinner} from "react-bootstrap";
 
 import "./SneakerDetailsPage.css";
 import baseURL from "../../configs/urls";
@@ -10,7 +11,6 @@ import {getSneakersById, sneakersToUpdate} from "../../store/sneakers.slice";
 import {setLoginVisible, setConfirmationVisible} from "../../store/visible.slice";
 import Confirmation from "../../components/Modals/Confirmation/Confirmation";
 import EditSneakersPrice from "../../components/Modals/EditSneakersPrice/EditSneakersPrice";
-import {Spinner} from "react-bootstrap";
 
 const SneakerDetailsPage = () => {
     const {id} = useParams();

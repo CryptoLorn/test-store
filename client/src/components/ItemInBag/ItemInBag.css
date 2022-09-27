@@ -9,7 +9,7 @@
     align-items: center;
     font-size: 15px;
     color: white;
-    z-index: 2;
+    z-index: 1;
     left: 6px;
     top: -6px;
 }

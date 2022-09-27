@@ -9,9 +9,11 @@ const BasketVisible = () => {
     const [basketVisible, setBasketVisible] = useState(false);
 
     return (
-        <div className={'basket_visible'}>
-            <ItemInBag/>
-            <FaShoppingBag onClick={() => setBasketVisible(true)}/>
+        <div>
+            <div className={'shopping_bag'} onClick={() => setBasketVisible(true)}>
+                <ItemInBag/>
+                <FaShoppingBag/>
+            </div>
             <Basket show={basketVisible} onHide={() => setBasketVisible(false)}/>
         </div>
     );

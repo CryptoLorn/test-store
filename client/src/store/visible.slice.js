@@ -6,7 +6,9 @@ const visibleSlice = createSlice({
         loginVisible: false,
         registrationVisible: false,
         confirmationVisible: false,
-        editVisible: false
+        editVisible: false,
+        typeVisible: false,
+        brandVisible: false
     },
     reducers: {
         setLoginVisible: (state, action) => {
@@ -20,6 +22,12 @@ const visibleSlice = createSlice({
         },
         setEditVisible: (state, action) => {
             state.editVisible = action.payload;
+        },
+        setTypeVisible: (state, action) => {
+            state.typeVisible = action.payload;
+        },
+        setBrandVisible: (state, action) => {
+            state.brandVisible = action.payload;
         }
     },
 })
@@ -30,7 +38,9 @@ export const {
     setLoginVisible,
     setRegistrationVisible,
     setConfirmationVisible,
-    setEditVisible
+    setEditVisible,
+    setTypeVisible,
+    setBrandVisible
 } = visibleSlice.actions;
 
 export default visibleReducer;

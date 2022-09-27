@@ -71,14 +71,37 @@ body {
     align-items: center;
 }
 
-.shopping_bag {
-    color: white;
-    font-size: 25px;
-    cursor: pointer;
-    transition: transform 500ms ease;
+.dropdown_toggle {
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
 }
 
-.shopping_bag:hover {
-    color: cadetblue;
-    transform: scale(1.2);
+.dropdown_toggle::after {
+    display: none;
+}
+
+.dropdown_toggle:read-only {
+    background-color: transparent;
+    border-radius: 100px;
+}
+
+.dropdown_toggle:hover {
+    background-color: #000000;
+}
+
+.user {
+    font-size: 40px;
+}
+
+.user:hover {
+    color: #eeeaea;
+}
+
+.dropdown_menu {
+    background-color: black;
 }

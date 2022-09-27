@@ -12,12 +12,16 @@ class SneakersController {
             let fileName = uuid.v4() + '.jpg';
             img.mv(path.resolve(__dirname, '..', 'poster', fileName));
 
+            let reg = /^[a-zA-Z0-9-:!#$%^&*() ]+$/.test(model);
+
             if (typeId === null || brandId === null || brand_name === null) {
                 return next(ApiError.badRequest('no type or brand specified'));
             } else if (model.length < 2 || model.length > 30) {
                 return next(ApiError.badRequest('model length must be from 2-30 characters'));
             } else if (price < 0 || price > 100000) {
                 return next(ApiError.badRequest('price can be from 0 to 100000'));
+            } else if (reg === false) {
+                return next(ApiError.badRequest('Please use only Latin letters'));
             }
 
             const sneakers = await Sneakers.create(
