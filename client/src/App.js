@@ -12,6 +12,7 @@ import AboutPage from "./pages/AboutPage/AboutPage";
 import AdminPage from "./pages/AdminPage/AdminPage";
 import Users from "./components/Users/Users";
 import Analytics from "./components/Analytics/Analytics";
+import RequireAuth from "./hooc/RequireAuth";
 
 function App() {
     const [loading, setLoading] = useState(true);
@@ -29,10 +30,14 @@ function App() {
         <Routes>
             <Route path={'/'} element={<Layout/>}>
                 <Route path={'/'} element={<HomePage/>}/>
-                <Route path={'admin'} element={<AdminPage/>}>
-                    <Route path={'users'} element={<Users/>}/>
-                    <Route path={'analytics'} element={<Analytics/>}/>
-                </Route>
+                    <Route path={'admin'} element={
+                        <RequireAuth>
+                            <AdminPage/>
+                        </RequireAuth>
+                    }>
+                        <Route path={'users'} element={<Users/>}/>
+                        <Route path={'analytics'} element={<Analytics/>}/>
+                    </Route>
                 <Route path={':name/:id'} element={<SneakerDetailsPage/>}/>
                 <Route path={'about'} element={<AboutPage/>}/>
                 <Route path={'*'} element={<NotFoundPage/>}/>
