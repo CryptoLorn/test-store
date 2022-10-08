@@ -11,6 +11,7 @@ import {getSneakersById, sneakersToUpdate} from "../../store/sneakers.slice";
 import {setLoginVisible, setConfirmationVisible} from "../../store/visible.slice";
 import Confirmation from "../../components/Modals/Confirmation/Confirmation";
 import EditSneakersPrice from "../../components/Modals/EditSneakersPrice/EditSneakersPrice";
+import {Role} from "../../enum/enum";
 
 const SneakerDetailsPage = () => {
     const {id} = useParams();
@@ -39,7 +40,6 @@ const SneakerDetailsPage = () => {
         data.append('price', sneaker.price)
         data.append('size', selectedSize)
         data.append('img', sneaker.img)
-
         dispatch(createOrders({data}));
     }
 
@@ -108,7 +108,7 @@ const SneakerDetailsPage = () => {
                             {
                                 user ?
                                     <div className={'options'}>
-                                        {user.role === 'ADMIN' ?
+                                        {user.role === Role.ADMIN ?
                                             <div className={'admin_options'}>
                                                 <div className={'update_price_button'}
                                                      onClick={() => dispatch(sneakersToUpdate(sneaker))}>

@@ -23,12 +23,12 @@ export const createOrders = createAsyncThunk(
 
 export const deleteById = createAsyncThunk(
     'ordersSlice/deleteById',
-    async ({id}, {dispatch}) => {
+    async ({id}, {dispatch, rejectWithValue}) => {
         try {
             await ordersService.deleteById(id);
             dispatch(deleteOrders({id}));
         } catch (e) {
-            console.log(e);
+            return rejectWithValue(e.response.data.message);
         }
     }
 )

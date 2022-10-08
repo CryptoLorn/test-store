@@ -6,6 +6,7 @@ const {User} = require("../models/User/user.model");
 const {Basket} = require("../models/Basket/basket.model");
 const ApiError = require('../error/ApiError');
 const {Role} = require("../enum/enum");
+const {isEmpty} = require("validator");
 
 const generateJwt = (id, email, role) => {
     return jwt.sign({id, email, role}, process.env.SECRET_KEY, {expiresIn: '24h'});
@@ -32,7 +33,6 @@ class UserController {
         if (candidate) {
             return next(ApiError.badRequest('User with this email already exists'));
         }
-
 
         const hashPassword = await bcrypt.hash(password, 5);
         const isAdmin = await User.findOne({where: {role: Role.ADMIN}});
@@ -92,6 +92,16 @@ class UserController {
         try {
             let {id} = req.params;
             const {email, role} = req.body;
+
+            let isValid = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(email);
+
+            if (!isValid) {
+                return next(ApiError.internal('Invalid email'));
+            } else if (isEmpty(role)) {
+                return next(ApiError.internal('Role cannot be empty'));
+            } else if (role !== Role.ADMIN && role !== Role.USER) {
+                return next(ApiError.internal('Can\'t save'));
+            }
 
             const user = await User.update({email, role}, {where: {id}});
 

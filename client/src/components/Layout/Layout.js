@@ -17,6 +17,7 @@ import {getAllOrdersByBasketId, setSelectedSize, setError} from "../../store/ord
 import {setSneakersFound} from "../../store/sneakers.slice";
 import Footer from "../Footer/Footer";
 import Dropdown from "react-bootstrap/Dropdown";
+import {Role} from "../../enum/enum";
 
 const Layout = () => {
     const {user, basketId} = useSelector(state => state.userReducer);
@@ -62,7 +63,7 @@ const Layout = () => {
                     {user?
                         <div>
                             {
-                                user.role === 'ADMIN'?
+                                user.role === Role.ADMIN?
                                 <div className={'navigation'}>
                                     <BasketVisible/>
                                     <div>
@@ -104,34 +105,6 @@ const Layout = () => {
                         </div>
                     }
                 </>
-
-
-                {/*<>*/}
-                {/*    {user?*/}
-                {/*        <div>*/}
-                {/*            {*/}
-                {/*                user.role === 'ADMIN'?*/}
-                {/*                <div className={'navigation'}>*/}
-                {/*                    <div><Admin/></div>*/}
-                {/*                    <BasketVisible/>*/}
-                {/*                    <div className={'logout'} onClick={logOut}>Log Out</div>*/}
-                {/*                </div>*/}
-                {/*                :*/}
-                {/*                <div className={'auth_user'}>*/}
-                {/*                    <BasketVisible/>*/}
-                {/*                    <div className={'logout'} onClick={logOut}>Log Out</div>*/}
-                {/*                </div>*/}
-                {/*            }*/}
-                {/*        </div>*/}
-                {/*        :*/}
-                {/*        <div className={'auth'}>*/}
-                {/*            <div onClick={() => dispatch(setLoginVisible(true))}><span>Log In</span></div>*/}
-                {/*            <div onClick={() => dispatch(setRegistrationVisible(true))}><span>Register</span></div>*/}
-                {/*            <Login show={loginVisible} onHide={() => dispatch(setLoginVisible(false))}/>*/}
-                {/*            <Registration show={registrationVisible} onHide={() => dispatch(setRegistrationVisible(false))}/>*/}
-                {/*        </div>*/}
-                {/*    }*/}
-                {/*</>*/}
             </div>
             <Outlet/>
             <Footer/>

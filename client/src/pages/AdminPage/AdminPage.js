@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Link, Outlet} from "react-router-dom";
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -8,19 +8,11 @@ import AddSneaker from "../../components/Modals/AddSneakers/AddSneakers";
 import AddBrand from "../../components/Modals/AddBrand/AddBrand";
 import AddType from "../../components/Modals/AddType/AddType";
 import {setTypeVisible, setBrandVisible} from "../../store/visible.slice";
-import {getAllUsers} from "../../store/user.slice";
-import Users from "../../components/Users/Users";
 
 const Admin = () => {
     const {typeVisible, brandVisible} = useSelector(state => state.visibleReducer);
     const [productVisible, setProductVisible] = useState(false);
     const dispatch = useDispatch();
-
-    const {users} = useSelector(state => state.userReducer);
-
-    useEffect(() => {
-
-    }, [])
 
     return (
         <div className={'admin_page_wrapper'}>
@@ -42,10 +34,9 @@ const Admin = () => {
                     <AddType show={typeVisible} onHide={() => setTypeVisible(false)}/>
                 </div>
                 <Link to={'/admin/users'}><div className={'admin_page_button'}>Show all users</div></Link>
-                <Link to={'/admin/statistics'}><div className={'admin_page_button'}>Show statistics</div></Link>
+                <Link to={'/admin/analytics'}><div className={'admin_page_button'}>Show statistics</div></Link>
             </div>
             <hr/>
-            {/*{users&& users.map(user => <Users key={user.id} user={user}/>)}*/}
             <div className={'admin_page_outlet'}><Outlet/></div>
         </div>
     );

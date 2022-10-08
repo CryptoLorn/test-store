@@ -8,6 +8,7 @@ import visibleReducer from "./visible.slice";
 import ordersReducer from "./orders.slice";
 import sneakersReducer from "./sneakers.slice";
 import basketReducer from "./basket.slice";
+import analyticsReducer from "./analytics.slice";
 
 const store = configureStore({
     reducer: {
@@ -18,7 +19,8 @@ const store = configureStore({
         visibleReducer,
         ordersReducer,
         sneakersReducer,
-        basketReducer
+        basketReducer,
+        analyticsReducer
     }
 })
 

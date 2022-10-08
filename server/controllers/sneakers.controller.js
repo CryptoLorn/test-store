@@ -3,6 +3,7 @@ const path = require('path');
 
 const {Sneakers} = require("../models/Sneakers/sneakers.model");
 const ApiError = require('../error/ApiError');
+const {Analytics} = require("../models/Analytics/analytics.model");
 
 class SneakersController {
     async create(req, res, next) {
@@ -36,6 +37,8 @@ class SneakersController {
                     typeId,
                     img: fileName
                 });
+
+            const analytics = await Analytics.create({sneakerId: sneakers.id});
 
             return res.json(sneakers);
         } catch (e) {
@@ -97,6 +100,9 @@ class SneakersController {
     async deleteById(req, res, next) {
         try {
             let {id} = req.params;
+
+            const analytics = await Analytics.findByPk(id);
+            await analytics.destroy({where: {id}});
 
             const sneakers = await Sneakers.destroy({where: {id}});
 

@@ -7,6 +7,7 @@ const typeRouter = require('./typeRouter');
 const basketRouter = require('./basketRouter');
 const ordersRouter = require('./ordersRouter');
 const searchRouter = require('./searchRouter');
+const analyticsRouter = require('./analyticsRouter');
 
 const router = new Router();
 
@@ -17,5 +18,6 @@ router.use('/brands', brandRouter);
 router.use('/sneakers', sneakersRouter);
 router.use('/orders', ordersRouter);
 router.use('/search', searchRouter);
+router.use('/analytics', analyticsRouter);
 
 module.exports = router;

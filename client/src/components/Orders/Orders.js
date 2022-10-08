@@ -1,16 +1,26 @@
-import React from 'react';
-import {useDispatch} from "react-redux";
+import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from "react-redux";
 import {FaTrashAlt} from "react-icons/fa";
 
 import './Orders.css';
 import baseURL from "../../configs/urls";
 import {deleteById} from "../../store/orders.slice";
+import {getAllAnalytics, updateAnalyticsById} from "../../store/analytics.slice";
 
-const Orders = ({order: {id, brand_name, model, price, img, size}}) => {
+const Orders = ({order: {id, brand_name, model, price, img, size, sneakerId}}) => {
+    // const {analytics} = useSelector(state => state.analyticsReducer);
     const dispatch = useDispatch();
 
     const deleteOrders = () => {
         dispatch(deleteById({id}));
+
+        // analytics.forEach(analytic => {
+        //     if (analytic.sneakerId === sneakerId) {
+        //         let newBought = analytic.bought - 1;
+        //         let bought = {bought: newBought};
+        //         dispatch(updateAnalyticsById({id: analytic.sneakerId, analytic: bought}));
+        //     }
+        // })
     }
 
     return (

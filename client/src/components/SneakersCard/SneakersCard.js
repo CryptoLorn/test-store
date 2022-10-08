@@ -1,13 +1,27 @@
 import React from 'react';
+import {useDispatch, useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 
 import "./SneakersCard.css";
 import baseURL from "../../configs/urls";
+import {updateAnalyticsById} from "../../store/analytics.slice";
 
 const SneakersCard = ({sneaker: {id, model, price, img, brand_name}}) => {
+    const {analytics} = useSelector(state => state.analyticsReducer);
+    const dispatch = useDispatch();
+
+    const reviewed = () => {
+        analytics.forEach(analytic => {
+            if (analytic.sneakerId === id) {
+                let newViews = analytic.views + 1;
+                let views = {views: newViews};
+                dispatch(updateAnalyticsById({id: analytic.sneakerId, analytic: views}));
+            }
+        })
+    }
 
     return (
-        <div className={'sneakers_card_wrapper'}>
+        <div onClick={reviewed} className={'sneakers_card_wrapper'}>
             <Link to={`/${model}/` + id.toString()}>
                 <div className={'sneakers_card'}>
                     <div className={'sneakers_card_poster'}><img src={baseURL + img} alt={brand_name}/></div>

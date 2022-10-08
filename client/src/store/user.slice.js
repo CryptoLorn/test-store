@@ -48,15 +48,23 @@ export const isAuth = createAsyncThunk(
 export const getAllUsers = createAsyncThunk(
     'userSlice/getAllUsers',
     async (_, {dispatch}) => {
-        await userService.getAll().then(data => dispatch(setUsers([...data])))
+        await userService.getAll().then(data => dispatch(setUsers([...data])));
     }
 )
 
 export const updateUserById = createAsyncThunk(
     'userSlice/updateUserById',
-    async ({id, user}, {dispatch}) => {
-        const newUser = await userService.updateById(id, user);
-        dispatch(updateUser({user: newUser}));
+    async ({id, user}, {dispatch, rejectWithValue}) => {
+        try {
+            const newUser = await userService.updateById(id, user);
+            dispatch(updateUser({user: newUser}));
+
+            if (newUser) {
+                dispatch(setError(null));
+            }
+        } catch (e) {
+            return rejectWithValue(e.response.data.message);
+        }
     }
 )
 
@@ -90,6 +98,9 @@ const userSlice = createSlice({
         updateUser: (state, action) => {
             const index = state.users.findIndex(user => user.id === action.payload.user.id);
             state.users[index] = action.payload.user;
+        },
+        setError: (state, action) => {
+            state.error = action.payload;
         }
     },
     extraReducers: {
@@ -104,11 +115,15 @@ const userSlice = createSlice({
         [isAuth.rejected]: (state, action) => {
             state.status = 'rejected';
             state.error = action.payload;
+        },
+        [updateUserById.rejected]: (state, action) => {
+            state.status = 'rejected';
+            state.error = action.payload;
         }
     }
 })
 
 const userReducer = userSlice.reducer;
 
-export const {setUser, setUsers, setIsAuth, setBasketId, updateUser, userToUpdate} = userSlice.actions;
+export const {setUser, setUsers, setIsAuth, setBasketId, updateUser, userToUpdate, setError} = userSlice.actions;
 export default userReducer;

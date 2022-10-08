@@ -5,6 +5,7 @@ const {Sneakers} = require("./Sneakers/sneakers.model");
 const {Type} = require("./Type/type.model");
 const {Orders} = require("./Orders/orders.model");
 const {TypeBrand} = require("./TypeBrand/typeBrand.model");
+const {Analytics} = require("./Analytics/analytics.model");
 
 User.hasOne(Basket);
 Basket.belongsTo(User);
@@ -20,6 +21,9 @@ Sneakers.belongsTo(Brand);
 
 Sneakers.hasMany(Orders);
 Orders.belongsTo(Sneakers);
+
+Sneakers.hasOne(Analytics);
+Analytics.belongsTo(Sneakers);
 
 Type.belongsToMany(Brand, {through: TypeBrand});
 Brand.belongsToMany(Type, {through: TypeBrand});

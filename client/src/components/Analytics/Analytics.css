@@ -1,0 +1,18 @@
+.analytics_name_tables {
+    width: 601px;
+    display: flex;
+    border: 1px solid black;
+}
+
+.analytics_name {
+    width: 400px;
+    border-right: 1px solid black;
+}
+
+.analytics_views, .analytics_bought {
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-right: 1px solid black;
+}

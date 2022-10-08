@@ -4,28 +4,28 @@ import {sneakersService} from "../services/sneaker.service";
 
 export const getAllSneakers = createAsyncThunk(
     'sneakersSlice/getAllSneakers',
-    async (_, {dispatch}) => {
+    async (_, {dispatch, rejectWithValue}) => {
         try {
             const {dataSneakers} = await sneakersService.getAll(null, null, 1).then(data => {
                 dispatch(setSneakers([...data.rows]));
                 dispatch(setTotalCount(data.count));
             })
         } catch (e) {
-            return e.message;
+            return rejectWithValue(e.response.data.message);
         }
     }
 )
 
 export const getAllSneakersWithParams = createAsyncThunk(
     'sneakersSlice/getAllSneakersWithParams',
-    async ({data}, {dispatch}) => {
+    async ({data}, {dispatch, rejectWithValue}) => {
         try {
             await sneakersService.getAll(data.selectedType, data.selectedBrand, data.page).then(data => {
                 dispatch(setSneakers([...data.rows]));
                 dispatch(setTotalCount(data.count));
             })
         } catch (e) {
-            return e.message;
+            return rejectWithValue(e.response.data.message);
         }
     }
 )
@@ -55,25 +55,25 @@ export const createSneakers = createAsyncThunk(
 
 export const getSneakersById = createAsyncThunk(
     'sneakersSlice/getSneakersById',
-    async ({id}, {dispatch}) => {
+    async ({id}, {dispatch, rejectWithValue}) => {
         try {
             await sneakersService.getById(id).then(value => {
                 dispatch(setSneaker({...value}));
             })
         } catch (e) {
-            return e.message;
+            return rejectWithValue(e.response.data.message);
         }
     }
 )
 
 export const deleteSneakersById = createAsyncThunk(
     'sneakersSlice/deleteSneakersById',
-    async ({id}, {dispatch}) => {
+    async ({id}, {dispatch, rejectWithValue}) => {
         try {
             await sneakersService.deleteById(id);
             dispatch(deleteSneaker({id}));
         } catch (e) {
-            return e.message;
+            return rejectWithValue(e.response.data.message);
         }
 
     }
@@ -81,9 +81,13 @@ export const deleteSneakersById = createAsyncThunk(
 
 export const updateSneakersById = createAsyncThunk(
     'sneakersSlice/updateSneakersById',
-    async ({id, sneaker}, {dispatch}) => {
-        const newSneakers = await sneakersService.updateById(id, sneaker);
-        dispatch(updateSneakers({sneaker: newSneakers}));
+    async ({id, sneaker}, {dispatch, rejectWithValue}) => {
+        try {
+            const newSneakers = await sneakersService.updateById(id, sneaker);
+            dispatch(updateSneakers({sneaker: newSneakers}));
+        } catch (e) {
+            return rejectWithValue(e.response.data.message);
+        }
     }
 )
 

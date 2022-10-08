@@ -10,7 +10,8 @@ export const urls = {
     brands: 'api/brands',
     types: 'api/types',
     orders: 'api/orders',
-    search: 'api/search'
+    search: 'api/search',
+    analytics: 'api/analytics'
 }
 
 export default baseURL;
