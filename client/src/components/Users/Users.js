@@ -40,7 +40,7 @@ const Users = () => {
                         <option value={Role.USER}>USER</option>
                     </select>
                     {errors.role && <span className={'validation'}>{errors.role.message}</span>}<br/>
-                    <button onClick={handleSubmit(updateUser)}>Update</button>
+                    <div className={'user_edit_button'} onClick={handleSubmit(updateUser)}>Update</div>
                 </form>
                 {error&& <span className={'validation'}>{error}</span>}
 
