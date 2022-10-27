@@ -1,11 +1,12 @@
 const Router = require('express');
 
-const ordersController = require('../controllers/orders.controller');
-
 const router = new Router();
 
+const ordersController = require('../controllers/orders.controller');
+const {checkIsAuth} = require("../middlewares/auth.middleware");
+
 router.get('/', ordersController.getAll);
-router.post('/', ordersController.create);
-router.delete('/:id', ordersController.deleteById);
+router.post('/', checkIsAuth, ordersController.create);
+router.delete('/:id', checkIsAuth, ordersController.deleteById);
 
 module.exports = router;

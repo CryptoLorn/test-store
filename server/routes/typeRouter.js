@@ -1,7 +1,7 @@
 const Router = require('express');
 
 const typeController = require('../controllers/type.controller');
-const checkRole = require('../middlewares/checkRole');
+const {checkRole} = require("../middlewares/checkRole");
 const {Role} = require("../enum/enum");
 
 const router = new Router();

@@ -5,17 +5,17 @@ import {FaEdit} from "react-icons/fa";
 import {joiResolver} from "@hookform/resolvers/joi/dist/joi";
 
 import "./Users.css";
-import {getAllUsers, updateUserById, userToUpdate} from "../../store/user.slice";
+import {getAllUsers, updateUserById, userToUpdate, setError} from "../../store/user.slice";
 import {Role} from "../../enum/enum";
 import {EditUserValidator} from "../../validators/editUser.validator";
 
 const Users = () => {
-    const {users, userForUpdate, error} = useSelector(state => state.userReducer);
+    const {users, user, userForUpdate, error} = useSelector(state => state.userReducer);
     const dispatch = useDispatch();
     const {handleSubmit, register, setValue, reset, formState: {errors}} = useForm({resolver: joiResolver(EditUserValidator)});
 
     useEffect(() => {
-        dispatch(getAllUsers());
+        dispatch(getAllUsers({id: user.id}));
 
         if (userForUpdate) {
             setValue('email', userForUpdate.email);
@@ -27,6 +27,16 @@ const Users = () => {
         await dispatch(updateUserById({id: userForUpdate.id, user: email, role}));
         dispatch(userToUpdate(null));
         reset();
+
+        // if (user.id === userForUpdate.id) {
+        //     dispatch(setError('Unable to edit use'))
+        //     dispatch(userToUpdate(null));
+        //     reset();
+        // } else {
+        //     await dispatch(updateUserById({id: userForUpdate.id, user: email, role}));
+        //     dispatch(userToUpdate(null));
+        //     reset();
+        // }
     }
 
     return (

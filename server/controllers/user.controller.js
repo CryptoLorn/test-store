@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const {validationResult} = require('express-validator');
+const Op = require('sequelize').Op;
 
 const {User} = require("../models/User/user.model");
 const {Basket} = require("../models/Basket/basket.model");
@@ -15,6 +16,7 @@ const generateJwt = (id, email, role) => {
 class UserController {
     async registration(req, res, next) {
         const errors = validationResult(req);
+
         if(!errors.isEmpty()) {
             return next(ApiError.badRequest('Invalid email', errors.array()));
         }
@@ -27,11 +29,6 @@ class UserController {
 
         if (password.length < 3 || password.length > 15) {
             return next(ApiError.badRequest('"password" length must be from 3-15 characters'));
-        }
-
-        const candidate = await User.findOne({where: {email}});
-        if (candidate) {
-            return next(ApiError.badRequest('User with this email already exists'));
         }
 
         const hashPassword = await bcrypt.hash(password, 5);
@@ -57,7 +54,7 @@ class UserController {
         const errors = validationResult(req);
 
         if(!errors.isEmpty()) {
-            return next(ApiError.badRequest('Invalid email', errors.array()));
+            return next(ApiError.badRequest('Invalid email or password', errors.array()));
         }
 
         const {email, password} = req.body;
@@ -84,7 +81,10 @@ class UserController {
     };
 
     async getAll(req, res) {
-        const users = await User.findAll();
+        const {id} = req.params
+
+        const users = await User.findAll({where: {id: {[Op.ne]: id }}});
+
         return res.json(users);
     }
 

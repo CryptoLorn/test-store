@@ -18,6 +18,6 @@ export const userService = {
         localStorage.setItem('token', value.data.token);
         return jwt_decode(value.data.token);
     }),
-    getAll: () => authAxiosService.get(urls.users).then(value => value.data),
+    getAll: (id) => authAxiosService.get(`${urls.users}/${id}`).then(value => value.data),
     updateById: (id, user) => authAxiosService.put(`${urls.users}/${id}`, user).then(value => value.data)
 }

@@ -9,6 +9,10 @@ export const login = createAsyncThunk(
             await userService.login(data.email, data.password).then(data => {
                 dispatch(setUser(data));
                 dispatch(setBasketId(data.id));
+
+                if (data) {
+                    dispatch(setError(null));
+                }
             })
         } catch (e) {
             return rejectWithValue(e.response.data.message);
@@ -23,6 +27,10 @@ export const registration = createAsyncThunk(
             await userService.registration(data.email, data.password).then(data => {
                 dispatch(setUser(data));
                 dispatch(setBasketId(data.id));
+
+                if (data) {
+                    dispatch(setError(null));
+                }
             })
         } catch (e) {
             return rejectWithValue(e.response.data.message);
@@ -47,8 +55,8 @@ export const isAuth = createAsyncThunk(
 
 export const getAllUsers = createAsyncThunk(
     'userSlice/getAllUsers',
-    async (_, {dispatch}) => {
-        await userService.getAll().then(data => dispatch(setUsers([...data])));
+    async ({id}, {dispatch}) => {
+        await userService.getAll(id).then(data => dispatch(setUsers([...data])));
     }
 )
 
@@ -112,10 +120,10 @@ const userSlice = createSlice({
             state.status = 'rejected';
             state.error = action.payload;
         },
-        [isAuth.rejected]: (state, action) => {
-            state.status = 'rejected';
-            state.error = action.payload;
-        },
+        // [isAuth.rejected]: (state, action) => {
+        //     state.status = 'rejected';
+        //     state.error = action.payload;
+        // },
         [updateUserById.rejected]: (state, action) => {
             state.status = 'rejected';
             state.error = action.payload;
