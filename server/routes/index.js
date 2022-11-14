@@ -1,13 +1,13 @@
 const Router = require('express');
 
-const userRouter = require('./userRouter');
-const sneakersRouter = require('./sneakersRouter');
-const brandRouter = require('./brandRouter');
-const typeRouter = require('./typeRouter');
-const basketRouter = require('./basketRouter');
-const ordersRouter = require('./ordersRouter');
-const searchRouter = require('./searchRouter');
-const analyticsRouter = require('./analyticsRouter');
+const userRouter = require('./user.router');
+const sneakersRouter = require('./sneakers.router');
+const brandRouter = require('./brand.router');
+const typeRouter = require('./type.router');
+const basketRouter = require('./basket.router');
+const ordersRouter = require('./orders.router');
+const searchRouter = require('./search.router');
+const analyticsRouter = require('./analytics.router');
 
 const router = new Router();
 

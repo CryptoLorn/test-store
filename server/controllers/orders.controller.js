@@ -1,5 +1,5 @@
-const {Orders} = require("../models/Orders/orders.model");
-const ApiError = require('../error/ApiError');
+const {Orders} = require("../models/orders.model");
+const ApiError = require('../error/apiError');
 
 class OrdersController {
     async create(req, res, next) {

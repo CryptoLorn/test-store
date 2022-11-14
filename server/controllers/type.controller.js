@@ -1,5 +1,5 @@
-const {Type} = require("../models/Type/type.model");
-const ApiError = require("../error/ApiError");
+const {Type} = require("../models/type.model");
+const ApiError = require("../error/apiError");
 
 class TypeController {
     async create(req, res, next) {

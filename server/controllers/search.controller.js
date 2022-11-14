@@ -1,4 +1,4 @@
-const {Sneakers} = require("../models/Sneakers/sneakers.model");
+const {Sneakers} = require("../models/sneakers.model");
 
 class SearchController {
     async getAllFromSearch(req, res) {

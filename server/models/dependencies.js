@@ -1,11 +1,15 @@
-const {Brand} = require("./Brand/brand.model");
-const {User} = require("./User/user.model");
-const {Basket} = require("./Basket/basket.model");
-const {Sneakers} = require("./Sneakers/sneakers.model");
-const {Type} = require("./Type/type.model");
-const {Orders} = require("./Orders/orders.model");
-const {TypeBrand} = require("./TypeBrand/typeBrand.model");
-const {Analytics} = require("./Analytics/analytics.model");
+const {Brand} = require("./brand.model");
+const {User} = require("./user.model");
+const {Basket} = require("./basket.model");
+const {Sneakers} = require("./sneakers.model");
+const {Type} = require("./type.model");
+const {Orders} = require("./orders.model");
+const {TypeBrand} = require("./typeBrand.model");
+const {Analytics} = require("./analytics.model");
+const {Auth} = require("./auth.model");
+
+User.hasOne(Auth);
+Auth.belongsTo(User);
 
 User.hasOne(Basket);
 Basket.belongsTo(User);

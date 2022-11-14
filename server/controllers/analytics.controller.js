@@ -1,5 +1,5 @@
-const {Analytics} = require("../models/Analytics/analytics.model");
-const ApiError = require("../error/ApiError");
+const {Analytics} = require("../models/analytics.model");
+const ApiError = require("../error/apiError");
 
 class AnalyticsController {
     async getAll(req, res) {

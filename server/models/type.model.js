@@ -1,10 +1,10 @@
 const {DataTypes} = require("sequelize");
 
-const sequelize = require("../../db");
+const sequelize = require("../db");
 
-const Brand = sequelize.define('brand', {
+const Type = sequelize.define('type', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     name: {type: DataTypes.STRING, unique: true, allowNull: false}
 });
 
-module.exports = {Brand};
+module.exports = {Type};

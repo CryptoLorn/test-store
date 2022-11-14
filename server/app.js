@@ -8,9 +8,9 @@ const path = require('path');
 const sequelize = require('./db');
 const models = require('./models/dependencies');
 const router = require('./routes/index');
-const errorHandler = require('./error/ErrorHandler');
+const {PORT} = require('./configs/config');
+const errorHandler = require('./error/errorHandler');
 
-const PORT = process.env.PORT || 5000;
 const app = express();
 
 app.use(cors());

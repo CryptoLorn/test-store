@@ -6,7 +6,7 @@ const axiosService = axios.create({baseURL});
 const authAxiosService = axios.create({baseURL});
 
 const authInterceptor = config => {
-    config.headers.authorization = `Bearer ${localStorage.getItem('token')}`
+    config.headers.authorization = `Bearer ${localStorage.getItem('access_token')}`
     return config;
 }
 

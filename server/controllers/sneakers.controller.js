@@ -1,9 +1,9 @@
 const uuid = require('uuid');
 const path = require('path');
 
-const {Sneakers} = require("../models/Sneakers/sneakers.model");
-const ApiError = require('../error/ApiError');
-const {Analytics} = require("../models/Analytics/analytics.model");
+const {Sneakers} = require("../models/sneakers.model");
+const ApiError = require('../error/apiError');
+const {Analytics} = require("../models/analytics.model");
 
 class SneakersController {
     async create(req, res, next) {

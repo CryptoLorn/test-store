@@ -45,7 +45,7 @@ const Layout = () => {
         dispatch(setLoginVisible(false));
         dispatch(setRegistrationVisible(false));
         dispatch(setUser(null));
-        localStorage.removeItem('token');
+        localStorage.removeItem('access_token');
         defaultValue();
         navigate('/');
     }
