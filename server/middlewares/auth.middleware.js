@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 
 const {ACCESS_KEY} = require('../configs/config');
+const {tokenService} = require("../services/token.service");
 
 module.exports = {
     checkIsAuth: async (req, res, next) => {
@@ -11,8 +12,14 @@ module.exports = {
                 return res.status(401).json({message: "Unauthorized"});
             }
 
-            const decoded = jwt.verify(token, ACCESS_KEY);
-            req.user = decoded;
+            const userData = tokenService.validateAccessToken(token);
+
+            if (!userData) {
+                return res.status(401).json({message: "Unauthorized"});
+            }
+
+            // const decoded = jwt.verify(token, ACCESS_KEY);
+            req.user = userData;
 
             next();
         } catch (e) {

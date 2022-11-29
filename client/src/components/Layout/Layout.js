@@ -18,6 +18,7 @@ import {setSneakersFound} from "../../store/sneakers.slice";
 import Footer from "../Footer/Footer";
 import Dropdown from "react-bootstrap/Dropdown";
 import {Role} from "../../enum/enum";
+import {userService} from "../../services/user.service";
 
 const Layout = () => {
     const {user, basketId} = useSelector(state => state.userReducer);
@@ -41,11 +42,12 @@ const Layout = () => {
         dispatch(setPage(1));
     }
 
-    const logOut = () => {
+    const logOut = async () => {
+        await userService.logout();
         dispatch(setLoginVisible(false));
         dispatch(setRegistrationVisible(false));
         dispatch(setUser(null));
-        localStorage.removeItem('access_token');
+        // localStorage.removeItem('access_token');
         defaultValue();
         navigate('/');
     }

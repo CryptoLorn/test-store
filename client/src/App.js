@@ -19,7 +19,10 @@ function App() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(isAuth()).finally(() => setLoading(false));
+        if (localStorage.getItem('access_token')) {
+            dispatch(isAuth()).finally(() => setLoading(false));
+        }
+        setLoading(false);
     }, [])
 
     if (loading) {

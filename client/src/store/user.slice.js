@@ -42,10 +42,10 @@ export const isAuth = createAsyncThunk(
     'userSlice/isAuth',
     async (_, {dispatch, rejectWithValue}) => {
         try {
-            await userService.checkIsAuth().then(data => {
-                dispatch(setUser(data));
+            await userService.checkIsAuth().then(value => {
+                dispatch(setUser(value.data.user));
                 dispatch(setIsAuth(true));
-                dispatch(setBasketId(data.id));
+                dispatch(setBasketId(value.data.user.id));
             })
         } catch (e) {
             return rejectWithValue(e.response.data.message);
@@ -120,10 +120,6 @@ const userSlice = createSlice({
             state.status = 'rejected';
             state.error = action.payload;
         },
-        // [isAuth.rejected]: (state, action) => {
-        //     state.status = 'rejected';
-        //     state.error = action.payload;
-        // },
         [updateUserById.rejected]: (state, action) => {
             state.status = 'rejected';
             state.error = action.payload;
