@@ -7,9 +7,13 @@ const {Orders} = require("./orders.model");
 const {TypeBrand} = require("./typeBrand.model");
 const {Analytics} = require("./analytics.model");
 const {Auth} = require("./auth.model");
+const {ActionToken} = require("./actionToken.model");
 
 User.hasOne(Auth);
 Auth.belongsTo(User);
+
+User.hasOne(ActionToken);
+ActionToken.belongsTo(User);
 
 User.hasOne(Basket);
 Basket.belongsTo(User);

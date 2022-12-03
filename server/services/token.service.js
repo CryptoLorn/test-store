@@ -2,8 +2,9 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const ApiError = require("../error/apiError");
-const {ACCESS_KEY, REFRESH_KEY} = require('../configs/config');
+const {ACCESS_KEY, REFRESH_KEY, ACTION_TOKEN_SECRET} = require('../configs/config');
 const {Auth} = require("../models/auth.model");
+const {FORGOT_PASSWORD_TOKEN} = require("../constants/tokenType.enum");
 
 const tokenService = {
     hashPassword: async (password) => await bcrypt.hash(password, 10),
@@ -24,49 +25,50 @@ const tokenService = {
         }
     },
 
-    checkToken: (token, tokenType) => {
+    createActionToken: (tokenType, payload = {}) => {
+        let expiresIn = '1d';
+
+        if (tokenType === FORGOT_PASSWORD_TOKEN) {
+            expiresIn = '7d';
+        }
+
+        return jwt.sign(payload, ACTION_TOKEN_SECRET, {expiresIn});
+    },
+
+    checkToken: (token) => {
         try {
-            let word;
-
-            if (tokenType === 'access') word = ACCESS_KEY;
-            if(tokenType === 'refresh') word = REFRESH_KEY;
-
-            return jwt.verify(token, word);
+            return jwt.verify(token, ACTION_TOKEN_SECRET);
         } catch (e) {
-            throw ApiError('Token not valid');
+            throw ApiError.internal('Token not valid');
         }
     },
     
     removeToken: async (refreshToken) => {
-        const tokenData = await Auth.destroy({where: {refresh_token: refreshToken}});
+        return await Auth.destroy({where: {refresh_token: refreshToken}});
+    },
 
-        return tokenData;
+    deleteMany: (id) => {
+        return Auth.destroy({where: {userId: id}});
     },
 
     validateAccessToken: (token) => {
         try {
-            const userData = jwt.verify(token, ACCESS_KEY);
-
-            return userData;
+            return jwt.verify(token, ACCESS_KEY);
         } catch (e) {
-            return null;
+            throw ApiError.internal('Token not valid');
         }
     },
 
     validateRefreshToken: (token) => {
         try {
-            const userData = jwt.verify(token, REFRESH_KEY);
-
-            return userData;
+            return jwt.verify(token, REFRESH_KEY);
         } catch (e) {
-            return null;
+            throw ApiError.internal('Token not valid');
         }
     },
 
     findToken: async (refreshToken) => {
-        const tokenData = await Auth.findOne({where: {refresh_token: refreshToken}});
-
-        return tokenData;
+        return await Auth.findOne({where: {refresh_token: refreshToken}});
     }
 }
 

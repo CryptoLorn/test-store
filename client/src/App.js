@@ -13,6 +13,7 @@ import AdminPage from "./pages/AdminPage/AdminPage";
 import Users from "./components/Users/Users";
 import Analytics from "./components/Analytics/Analytics";
 import RequireAuth from "./hooc/RequireAuth";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage/ForgotPasswordPage";
 
 function App() {
     const [loading, setLoading] = useState(true);
@@ -21,8 +22,9 @@ function App() {
     useEffect(() => {
         if (localStorage.getItem('access_token')) {
             dispatch(isAuth()).finally(() => setLoading(false));
+        } else {
+            setLoading(false);
         }
-        setLoading(false);
     }, [])
 
     if (loading) {
@@ -42,6 +44,7 @@ function App() {
                         <Route path={'analytics'} element={<Analytics/>}/>
                     </Route>
                 <Route path={':name/:id'} element={<SneakerDetailsPage/>}/>
+                <Route path={'password/forgot/:token'} element={<ForgotPasswordPage/>}/>
                 <Route path={'about'} element={<AboutPage/>}/>
                 <Route path={'*'} element={<NotFoundPage/>}/>
             </Route>

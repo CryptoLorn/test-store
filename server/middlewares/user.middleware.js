@@ -1,8 +1,9 @@
 const {isEmpty} = require("validator");
 
 const ApiError = require("../error/apiError");
-const {ADMIN, USER, REGEX} = require('../configs/config');
 const {userService} = require("../services/user.service");
+const {REGEX} = require("../constants/reges.enum");
+const {ADMIN, USER} = require("../constants/role.enum");
 
 module.exports = {
     checkIsDataValid: async (req, res, next) => {

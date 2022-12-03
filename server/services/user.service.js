@@ -2,12 +2,12 @@ const {Op} = require("sequelize");
 const uuid = require('uuid');
 
 const {User} = require("../models/user.model");
-const {ADMIN} = require('../configs/config');
+const {ADMIN} = require('../constants/role.enum');
 const {tokenService} = require("./token.service");
 const ApiError = require("../error/apiError");
 const {sendEmail} = require("./email.service");
-const e = require("express");
 const {authService} = require("./auth.service");
+const {ACTIVATION_LINK} = require("../constants/emailAction.enum");
 
 const userService = {
     registration: async (email, role, password) => {
@@ -20,12 +20,12 @@ const userService = {
             throw ApiError.internal('Failed to register');
         }
 
-        await sendEmail(email, 'activation_link', {activation_link: activationLink});
+        await sendEmail(email, ACTIVATION_LINK, {activation_link: activationLink});
 
         if (isAdmin) {
-            return  User.create({email, role, password: hashPassword, activation_link: activationLink});
+            return User.create({email, role, password: hashPassword, activation_link: activationLink});
         } else {
-            return  User.create({email, role: ADMIN, password: hashPassword, activation_link: activationLink});
+            return User.create({email, role: ADMIN, password: hashPassword, activation_link: activationLink});
         }
     },
 

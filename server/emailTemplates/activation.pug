@@ -2,5 +2,5 @@ extends container
 
 block content
     div
-        p Best regards,
-        p Your Epic Sneakers
+        h3 In order to verify your email address, please open the following link:
+        a(href=`${serverURL}/api/user/activate/${activation_link}`) Click to activate

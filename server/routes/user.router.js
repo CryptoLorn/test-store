@@ -3,10 +3,11 @@ const Router = require('express');
 const router = new Router();
 
 const userController = require('../controllers/user.controller');
-const {checkIsAuth} = require("../middlewares/auth.middleware");
-const {checkRole} = require("../middlewares/checkRole.middleware");
 const userMiddleware = require("../middlewares/user.middleware");
-const {ADMIN} = require('../configs/config');
+const authMiddleware = require("../middlewares/auth.middleware");
+const checkRoleMiddleware = require("../middlewares/checkRole.middleware");
+const {ADMIN} = require('../constants/role.enum');
+const {FORGOT_PASSWORD_TOKEN} = require("../constants/tokenType.enum");
 
 router.post('/registration',
     userMiddleware.checkIsDataValid,
@@ -22,14 +23,22 @@ router.get('/refresh', userController.refresh);
 router.post('/logout', userController.logout);
 router.get('/activate/:link', userController.activation);
 router.get('/:id',
-    checkIsAuth,
-    checkRole(ADMIN),
+    authMiddleware.checkIsAuth,
+    checkRoleMiddleware.checkRole(ADMIN),
     userController.getAll
 );
 router.put('/:id',
-    checkRole(ADMIN),
+    checkRoleMiddleware.checkRole(ADMIN),
     userMiddleware.checkIsBodyValid,
     userController.updateById
+);
+router.post('/password/forgot',
+    userMiddleware.isUserPresent,
+    userController.forgotPassword
+);
+router.put('/password/forgot',
+    authMiddleware.checkActionToken(FORGOT_PASSWORD_TOKEN),
+    userController.setNewPassword
 );
 
 module.exports = router;

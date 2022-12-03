@@ -1,7 +1,7 @@
 const {DataTypes} = require("sequelize");
 
 const sequelize = require("../db");
-const {USER} = require('../configs/config');
+const {USER} = require("../constants/role.enum");
 
 const User = sequelize.define('user', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
