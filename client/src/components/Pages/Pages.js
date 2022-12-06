@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {Pagination} from "react-bootstrap";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {setPage} from "../../store/page.slice";
+import {setPage} from "../../store/slices/page.slice";
 
 const Pages = () => {
     const {page} = useSelector(state => state.pageReducer);

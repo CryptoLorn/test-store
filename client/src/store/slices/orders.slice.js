@@ -1,6 +1,6 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 
-import {ordersService} from "../services/orders.service";
+import {ordersService} from "../../services/orders.service";
 
 export const getAllOrdersByBasketId = createAsyncThunk(
     'ordersSlice/getAllOrdersByBasketId',

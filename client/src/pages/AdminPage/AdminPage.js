@@ -7,7 +7,7 @@ import './AdminPage.css';
 import AddSneaker from "../../components/Modals/AddSneakers/AddSneakers";
 import AddBrand from "../../components/Modals/AddBrand/AddBrand";
 import AddType from "../../components/Modals/AddType/AddType";
-import {setTypeVisible, setBrandVisible} from "../../store/visible.slice";
+import {setTypeVisible, setBrandVisible} from "../../store/slices/visible.slice";
 
 const Admin = () => {
     const {typeVisible, brandVisible} = useSelector(state => state.visibleReducer);

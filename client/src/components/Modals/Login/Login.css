@@ -57,7 +57,5 @@
 }
 
 .login_button:hover {
-    border: 1px solid black;
     background-color: black;
-    color: white;
 }

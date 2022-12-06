@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 
 import "./SneakersCard.css";
 import baseURL from "../../configs/urls";
-import {updateAnalyticsById} from "../../store/analytics.slice";
+import {updateAnalyticsById} from "../../store/slices/analytics.slice";
 
 const SneakersCard = ({sneaker: {id, model, price, img, brand_name}}) => {
     const {analytics} = useSelector(state => state.analyticsReducer);

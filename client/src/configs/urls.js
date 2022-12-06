@@ -6,6 +6,7 @@ export const urls = {
     logout: 'api/user/logout',
     auth: 'api/user/auth',
     refresh: 'api/user/refresh',
+    forgotPassword: 'api/user/password/forgot',
     users: 'api/user',
     baskets: 'api/basket',
     sneakers: 'api/sneakers',

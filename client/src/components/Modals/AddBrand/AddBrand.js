@@ -5,9 +5,9 @@ import {Button, Form, FormControl, Modal} from "react-bootstrap";
 import {joiResolver} from "@hookform/resolvers/joi";
 
 import "../../../validators/validator.css";
-import {createBrand} from "../../../store/brand.slice";
+import {createBrand} from "../../../store/slices/brand.slice";
 import {TypeBrandValidator} from "../../../validators/typeBrand.validator";
-import {setBrandVisible} from "../../../store/visible.slice";
+import {setBrandVisible} from "../../../store/slices/visible.slice";
 
 const AddBrand = ({show, onHide}) => {
     const {handleSubmit, register, reset, formState: {errors}} = useForm({resolver: joiResolver(TypeBrandValidator)});

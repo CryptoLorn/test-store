@@ -4,7 +4,7 @@ import {Button, Modal} from "react-bootstrap";
 
 import "./Basket.css";
 import Orders from "../../Orders/Orders";
-import {getAllAnalytics, updateAnalyticsById} from "../../../store/analytics.slice";
+import {getAllAnalytics, updateAnalyticsById} from "../../../store/slices/analytics.slice";
 
 const Basket = ({show, onHide}) => {
     const {orders} = useSelector(state => state.ordersReducer);

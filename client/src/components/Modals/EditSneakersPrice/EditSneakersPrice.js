@@ -5,8 +5,8 @@ import {joiResolver} from "@hookform/resolvers/joi";
 import {Button, Form, Modal} from "react-bootstrap";
 
 import "../../../validators/validator.css";
-import {setEditVisible} from "../../../store/visible.slice";
-import {updateSneakersById, sneakersToUpdate} from "../../../store/sneakers.slice";
+import {setEditVisible} from "../../../store/slices/visible.slice";
+import {updateSneakersById, sneakersToUpdate} from "../../../store/slices/sneakers.slice";
 import {EditSneakersPriceValidator} from "../../../validators/editSneakersPrice.validator";
 
 const EditSneakersPrice = () => {

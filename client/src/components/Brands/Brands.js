@@ -2,8 +2,8 @@ import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 
 import "./Brands.css"
-import {getAll, setSelectedBrand, setElementBrand} from "../../store/brand.slice";
-import {setPage} from "../../store/page.slice";
+import {getAll, setSelectedBrand, setElementBrand} from "../../store/slices/brand.slice";
+import {setPage} from "../../store/slices/page.slice";
 
 const Brands = () => {
     const {brands, elementBrand, status} = useSelector(state => state.brandReducer);

@@ -7,13 +7,13 @@ import HomePage from "./pages/HomePage/HomePage";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import Layout from "./components/Layout/Layout";
 import SneakerDetailsPage from "./pages/SneakerDetailsPage/SneakerDetailsPage";
-import {isAuth} from "./store/user.slice";
+import {isAuth} from "./store/slices/user.slice";
 import AboutPage from "./pages/AboutPage/AboutPage";
 import AdminPage from "./pages/AdminPage/AdminPage";
 import Users from "./components/Users/Users";
 import Analytics from "./components/Analytics/Analytics";
 import RequireAuth from "./hooc/RequireAuth";
-import ForgotPasswordPage from "./pages/ForgotPasswordPage/ForgotPasswordPage";
+import RestorePasswordPage from "./pages/RestorePasswordPage/RestorePasswordPage";
 
 function App() {
     const [loading, setLoading] = useState(true);
@@ -44,7 +44,7 @@ function App() {
                         <Route path={'analytics'} element={<Analytics/>}/>
                     </Route>
                 <Route path={':name/:id'} element={<SneakerDetailsPage/>}/>
-                <Route path={'password/forgot/:token'} element={<ForgotPasswordPage/>}/>
+                <Route path={'password/forgot/:token'} element={<RestorePasswordPage/>}/>
                 <Route path={'about'} element={<AboutPage/>}/>
                 <Route path={'*'} element={<NotFoundPage/>}/>
             </Route>

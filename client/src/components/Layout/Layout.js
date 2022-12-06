@@ -7,22 +7,23 @@ import "./Layout.css";
 import BasketVisible from "../BasketVisible/BasketVisible";
 import Login from "../Modals/Login/Login";
 import Registration from "../Modals/Registration/Registration";
-import {setUser} from "../../store/user.slice";
-import {setLoginVisible, setRegistrationVisible} from "../../store/visible.slice";
-import {setSelectedType, setElementType} from "../../store/type.slice";
-import {setSelectedBrand, setElementBrand} from "../../store/brand.slice";
-import {setPage} from "../../store/page.slice";
-import {getBasketById} from "../../store/basket.slice";
-import {getAllOrdersByBasketId, setSelectedSize, setError} from "../../store/orders.slice";
-import {setSneakersFound} from "../../store/sneakers.slice";
+import {setUser} from "../../store/slices/user.slice";
+import {setLoginVisible, setRegistrationVisible, setForgotPasswordVisible} from "../../store/slices/visible.slice";
+import {setSelectedType, setElementType} from "../../store/slices/type.slice";
+import {setSelectedBrand, setElementBrand} from "../../store/slices/brand.slice";
+import {setPage} from "../../store/slices/page.slice";
+import {getBasketById} from "../../store/slices/basket.slice";
+import {getAllOrdersByBasketId, setSelectedSize, setError} from "../../store/slices/orders.slice";
+import {setSneakersFound} from "../../store/slices/sneakers.slice";
 import Footer from "../Footer/Footer";
 import Dropdown from "react-bootstrap/Dropdown";
 import {Role} from "../../enum/enum";
 import {userService} from "../../services/user.service";
+import ForgotPassword from "../Modals/ForgotPassword/ForgotPassword";
 
 const Layout = () => {
     const {user, basketId} = useSelector(state => state.userReducer);
-    const {loginVisible, registrationVisible} = useSelector(state => state.visibleReducer);
+    const {loginVisible, registrationVisible, forgotPasswordVisible} = useSelector(state => state.visibleReducer);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -47,7 +48,6 @@ const Layout = () => {
         dispatch(setLoginVisible(false));
         dispatch(setRegistrationVisible(false));
         dispatch(setUser(null));
-        // localStorage.removeItem('access_token');
         defaultValue();
         navigate('/');
     }
@@ -104,6 +104,7 @@ const Layout = () => {
                             <div onClick={() => dispatch(setRegistrationVisible(true))}><span>Register</span></div>
                             <Login show={loginVisible} onHide={() => dispatch(setLoginVisible(false))}/>
                             <Registration show={registrationVisible} onHide={() => dispatch(setRegistrationVisible(false))}/>
+                            <ForgotPassword show={forgotPasswordVisible} onHide={() => dispatch(setForgotPasswordVisible(false))}/>
                         </div>
                     }
                 </>

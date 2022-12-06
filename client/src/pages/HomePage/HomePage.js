@@ -10,7 +10,7 @@ import SneakersCard from "../../components/SneakersCard/SneakersCard";
 import Brands from "../../components/Brands/Brands";
 import Pages from "../../components/Pages/Pages";
 import Type from "../../components/Types/Types";
-import {getAllSneakers, getAllSneakersWithParams, getAllFromSearch, setSneakersFound} from "../../store/sneakers.slice";
+import {getAllSneakers, getAllSneakersWithParams, getAllFromSearch, setSneakersFound} from "../../store/slices/sneakers.slice";
 import {SearchValidator} from "../../validators/search.validator";
 
 const HomePage = () => {

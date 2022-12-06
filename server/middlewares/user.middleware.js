@@ -72,7 +72,7 @@ module.exports = {
             const user = await userService.findOneByEmail(email);
 
             if (!user) {
-                return next(ApiError.internal('No found user with this name'));
+                return next(ApiError.internal('No found user with this email'));
             }
 
             req.user = user;

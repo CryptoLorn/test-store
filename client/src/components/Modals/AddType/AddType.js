@@ -6,10 +6,10 @@ import {joiResolver} from "@hookform/resolvers/joi/dist/joi";
 import {useNavigate} from "react-router-dom";
 
 import "../../../validators/validator.css";
-import {createType} from "../../../store/type.slice";
+import {createType} from "../../../store/slices/type.slice";
 import {TypeBrandValidator} from "../../../validators/typeBrand.validator";
 
-import {setTypeVisible} from "../../../store/visible.slice";
+import {setTypeVisible} from "../../../store/slices/visible.slice";
 
 const AddType = ({show, onHide}) => {
     const {handleSubmit, register, reset, formState: {errors}} = useForm({resolver: joiResolver(TypeBrandValidator)});

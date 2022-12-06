@@ -4,8 +4,8 @@ import {FaTrashAlt} from "react-icons/fa";
 
 import './Orders.css';
 import baseURL from "../../configs/urls";
-import {deleteById} from "../../store/orders.slice";
-import {getAllAnalytics, updateAnalyticsById} from "../../store/analytics.slice";
+import {deleteById} from "../../store/slices/orders.slice";
+import {getAllAnalytics, updateAnalyticsById} from "../../store/slices/analytics.slice";
 
 const Orders = ({order: {id, brand_name, model, price, img, size, sneakerId}}) => {
     // const {analytics} = useSelector(state => state.analyticsReducer);

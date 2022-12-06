@@ -95,9 +95,8 @@ module.exports = {
 
     setNewPassword: async (req, res, next) => {
         try {
-            const {userId} = req.tokenInfo;
+            const {userId, token} = req.tokenInfo;
             const {password} = req.body;
-            const token = req.get(AUTHORIZATION);
 
             await tokenService.deleteMany(userId);
             await actionTokenService.deleteOne(token);

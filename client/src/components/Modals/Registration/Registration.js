@@ -8,8 +8,8 @@ import "./Registration.css";
 import "../../../validators/validator.css";
 import Login from "../Login/Login";
 import {AuthValidator} from "../../../validators/auth.validator";
-import {registration} from "../../../store/user.slice";
-import {setLoginVisible, setRegistrationVisible} from "../../../store/visible.slice";
+import {registration} from "../../../store/slices/user.slice";
+import {setLoginVisible, setRegistrationVisible} from "../../../store/slices/visible.slice";
 
 
 const Registration = ({show, onHide}) => {

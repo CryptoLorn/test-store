@@ -29,9 +29,14 @@ module.exports = {
     checkActionToken: (tokenType) => async (req, res, next) => {
         try {
             const token = req.get(AUTHORIZATION);
+            const {password} = req.body;
 
             if (!token) {
                 return next(ApiError.internal('No token'));
+            }
+
+            if (password.length < 3 || password.length > 15) {
+                return next(ApiError.badRequest('password length must be from 3-15 characters'));
             }
 
             tokenService.checkToken(token);

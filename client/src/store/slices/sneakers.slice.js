@@ -1,6 +1,6 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 
-import {sneakersService} from "../services/sneaker.service";
+import {sneakersService} from "../../services/sneaker.service";
 
 export const getAllSneakers = createAsyncThunk(
     'sneakersSlice/getAllSneakers',

@@ -1,6 +1,6 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 
-import {analyticsService} from "../services/analytics.service";
+import {analyticsService} from "../../services/analytics.service";
 
 export const getAllAnalytics = createAsyncThunk(
     'analyticsSlice/getAllAnalytics',

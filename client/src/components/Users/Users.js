@@ -5,7 +5,7 @@ import {FaEdit} from "react-icons/fa";
 import {joiResolver} from "@hookform/resolvers/joi/dist/joi";
 
 import "./Users.css";
-import {getAllUsers, updateUserById, userToUpdate, setError} from "../../store/user.slice";
+import {getAllUsers, updateUserById, userToUpdate, setError} from "../../store/slices/user.slice";
 import {Role} from "../../enum/enum";
 import {EditUserValidator} from "../../validators/editUser.validator";
 

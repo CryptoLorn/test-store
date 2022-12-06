@@ -8,8 +8,8 @@ import "./Login.css";
 import "../../../validators/validator.css";
 import Registration from "../Registration/Registration";
 import {AuthValidator} from "../../../validators/auth.validator";
-import {login} from "../../../store/user.slice";
-import {setLoginVisible, setRegistrationVisible} from "../../../store/visible.slice";
+import {login} from "../../../store/slices/user.slice";
+import {setLoginVisible, setRegistrationVisible, setForgotPasswordVisible} from "../../../store/slices/visible.slice";
 
 const Login = ({show, onHide}) => {
     const {registrationVisible} = useSelector(state => state.visibleReducer);
@@ -26,6 +26,11 @@ const Login = ({show, onHide}) => {
     const registrationRedirect = () => {
         dispatch(setLoginVisible(false));
         dispatch(setRegistrationVisible(true));
+    }
+
+    const forgotPasswordRedirect = () => {
+        dispatch(setLoginVisible(false));
+        dispatch(setForgotPasswordVisible(true));
     }
 
     return (
@@ -63,7 +68,10 @@ const Login = ({show, onHide}) => {
                                     {error&& <span className={'validation'}>{error}</span>}
 
                                     <div className={'login_info'}>
-                                        <div>No account? <span onClick={() => registrationRedirect()}>Registration</span></div>
+                                        <div>
+                                            <div onClick={() => forgotPasswordRedirect()}><span>Forgot password?</span></div>
+                                            <div>No account? <span onClick={() => registrationRedirect()}>Registration</span></div>
+                                        </div>
                                         <Registration show={registrationVisible} onHide={() => dispatch(setRegistrationVisible(false))}/>
 
                                         <div className={'login_button'} onClick={handleSubmit(submit)}>Log In</div>

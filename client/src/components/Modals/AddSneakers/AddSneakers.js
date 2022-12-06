@@ -7,11 +7,11 @@ import {Button, Dropdown, Form, Modal} from "react-bootstrap";
 import DropdownItem from "react-bootstrap/DropdownItem";
 
 import "../../../validators/validator.css";
-import {createSneakers} from "../../../store/sneakers.slice";
+import {createSneakers} from "../../../store/slices/sneakers.slice";
 import {SneakersValidator} from "../../../validators/sneakers.validator";
 import AddType from "../AddType/AddType";
 import AddBrand from "../AddBrand/AddBrand";
-import {setTypeVisible, setBrandVisible} from "../../../store/visible.slice";
+import {setTypeVisible, setBrandVisible} from "../../../store/slices/visible.slice";
 
 const AddSneakers = ({show, onHide}) => {
     const [selectedTypeAdd, setSelectedTypeAdd] = useState(null);

@@ -2,7 +2,7 @@ import React from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Navigate} from "react-router-dom";
 
-import {setLoginVisible} from "../store/visible.slice";
+import {setLoginVisible} from "../store/slices/visible.slice";
 import {Role} from "../enum/enum";
 
 const RequireAuth = ({children}) => {

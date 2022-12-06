@@ -4,8 +4,8 @@ import {useNavigate, useParams} from "react-router-dom";
 import Modal from 'react-bootstrap/Modal';
 
 import "./Confirmation.css";
-import {deleteSneakersById} from "../../../store/sneakers.slice";
-import {setConfirmationVisible} from "../../../store/visible.slice";
+import {deleteSneakersById} from "../../../store/slices/sneakers.slice";
+import {setConfirmationVisible} from "../../../store/slices/visible.slice";
 
 const Confirmation = () => {
     const {id} = useParams();

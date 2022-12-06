@@ -6,9 +6,9 @@ import {Spinner} from "react-bootstrap";
 
 import "./SneakerDetailsPage.css";
 import baseURL from "../../configs/urls";
-import {createOrders, setSelectedSize} from "../../store/orders.slice";
-import {getSneakersById, sneakersToUpdate} from "../../store/sneakers.slice";
-import {setLoginVisible, setConfirmationVisible} from "../../store/visible.slice";
+import {createOrders, setSelectedSize} from "../../store/slices/orders.slice";
+import {getSneakersById, sneakersToUpdate} from "../../store/slices/sneakers.slice";
+import {setLoginVisible, setConfirmationVisible} from "../../store/slices/visible.slice";
 import Confirmation from "../../components/Modals/Confirmation/Confirmation";
 import EditSneakersPrice from "../../components/Modals/EditSneakersPrice/EditSneakersPrice";
 import {Role} from "../../enum/enum";

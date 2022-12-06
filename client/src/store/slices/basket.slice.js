@@ -1,6 +1,6 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 
-import {basketService} from "../services/basket.service";
+import {basketService} from "../../services/basket.service";
 
 export const getBasketById = createAsyncThunk(
     'basketSlice/getBasketById',

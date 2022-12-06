@@ -1,48 +1,48 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 
-import {brandsService} from "../services/brand.service";
+import {typeService} from "../../services/type.service";
 
 export const getAll = createAsyncThunk(
-    'brandSlice/getAll',
+    'typeSlice/getAll',
     async (_, {rejectWithValue}) => {
         try {
-            return await brandsService.getAll();
+            return await typeService.getAll();
         } catch (e) {
             return rejectWithValue(e.message);
         }
     }
 )
 
-export const createBrand = createAsyncThunk(
-    'brandSlice/createBrand',
+export const createType = createAsyncThunk(
+    'typeSlice/createType',
     async ({data}, {dispatch, rejectWithValue}) => {
         try {
-            const newBrand = await brandsService.create(data);
-            dispatch(addBrand({data: newBrand}));
+            const newType = await typeService.create(data);
+            dispatch(addType({data: newType}));
         } catch (e) {
             return rejectWithValue(e.response.data.message);
         }
     }
 )
 
-const brandSlice = createSlice({
-    name: 'brandSlice',
+const typeSlice = createSlice({
+    name: 'typeSlice',
     initialState: {
-        brands: [],
-        selectedBrand: {},
+        types: [],
+        selectedType: {},
         elementBrand: null,
         status: null,
         error: null
     },
     reducers: {
-        addBrand: (state, action) => {
-            state.brands.push(action.payload.data);
+        addType: (state, action) => {
+            state.types.push(action.payload.data);
         },
-        setSelectedBrand: (state, action) => {
-            state.selectedBrand = action.payload;
+        setSelectedType: (state, action) => {
+            state.selectedType = action.payload;
         },
-        setElementBrand: (state, action) => {
-            state.elementBrand = action.payload;
+        setElementType: (state, action) => {
+            state.elementType = action.payload;
         }
     },
     extraReducers: {
@@ -52,20 +52,20 @@ const brandSlice = createSlice({
         },
         [getAll.fulfilled]: (state, action) => {
             state.status = 'fulfilled';
-            state.brands = action.payload;
+            state.types = action.payload;
         },
         [getAll.rejected]: (state, action) => {
             state.status = 'rejected';
             state.error = action.payload;
         },
-        [createBrand.rejected]: (state, action) => {
+        [createType.rejected]: (state, action) => {
             state.status = 'rejected';
             state.error = action.payload;
         }
     }
 })
 
-const brandReducer = brandSlice.reducer;
+const typeReducer = typeSlice.reducer;
 
-export const {addBrand, setSelectedBrand, setElementBrand} = brandSlice.actions;
-export default brandReducer;
+export const {addType, setSelectedType, setElementType} = typeSlice.actions;
+export default typeReducer;

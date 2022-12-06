@@ -2,8 +2,8 @@ import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 
 import "./Types.css";
-import {setPage} from "../../store/page.slice";
-import {getAll, setSelectedType, setElementType} from "../../store/type.slice";
+import {setPage} from "../../store/slices/page.slice";
+import {getAll, setSelectedType, setElementType} from "../../store/slices/type.slice";
 
 const Type = () => {
     const {types, elementType, status, error} = useSelector(state => state.typeReducer);

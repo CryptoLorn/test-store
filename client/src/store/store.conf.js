@@ -1,17 +1,19 @@
 import {configureStore} from "@reduxjs/toolkit";
 
-import userReducer from "./user.slice";
-import brandReducer from "./brand.slice";
-import typeReducer from "./type.slice";
-import pageReducer from "./page.slice";
-import visibleReducer from "./visible.slice";
-import ordersReducer from "./orders.slice";
-import sneakersReducer from "./sneakers.slice";
-import basketReducer from "./basket.slice";
-import analyticsReducer from "./analytics.slice";
+import authReducer from "./slices/auth.slice";
+import userReducer from "./slices/user.slice";
+import brandReducer from "./slices/brand.slice";
+import typeReducer from "./slices/type.slice";
+import pageReducer from "./slices/page.slice";
+import visibleReducer from "./slices/visible.slice";
+import ordersReducer from "./slices/orders.slice";
+import sneakersReducer from "./slices/sneakers.slice";
+import basketReducer from "./slices/basket.slice";
+import analyticsReducer from "./slices/analytics.slice";
 
 const store = configureStore({
     reducer: {
+        authReducer,
         userReducer,
         brandReducer,
         typeReducer,
