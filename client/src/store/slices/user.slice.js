@@ -8,7 +8,6 @@ export const login = createAsyncThunk(
         try {
             await userService.login(data.email, data.password).then(data => {
                 dispatch(setUser(data));
-                dispatch(setBasketId(data.id));
 
                 if (data) {
                     dispatch(setError(null));
@@ -26,7 +25,6 @@ export const registration = createAsyncThunk(
         try {
             await userService.registration(data.email, data.password).then(data => {
                 dispatch(setUser(data));
-                dispatch(setBasketId(data.id));
 
                 if (data) {
                     dispatch(setError(null));
@@ -42,10 +40,9 @@ export const isAuth = createAsyncThunk(
     'userSlice/isAuth',
     async (_, {dispatch, rejectWithValue}) => {
         try {
-            await userService.checkIsAuth().then(value => {
-                dispatch(setUser(value.data.user));
+            await userService.checkIsAuth().then(data => {
+                dispatch(setUser(data));
                 dispatch(setIsAuth(true));
-                dispatch(setBasketId(value.data.user.id));
             })
         } catch (e) {
             return rejectWithValue(e.response.data.message);
@@ -82,7 +79,6 @@ const userSlice = createSlice({
         user: null,
         users: [],
         isAuth: null,
-        basketId: null,
         status: null,
         error: null,
         userForUpdate: null
@@ -96,9 +92,6 @@ const userSlice = createSlice({
         },
         setIsAuth: (state, action) => {
             state.isAuth = action.payload;
-        },
-        setBasketId: (state, action) => {
-            state.basketId = action.payload;
         },
         userToUpdate: (state, action) => {
             state.userForUpdate = action.payload;
@@ -129,5 +122,5 @@ const userSlice = createSlice({
 
 const userReducer = userSlice.reducer;
 
-export const {setUser, setUsers, setIsAuth, setBasketId, updateUser, userToUpdate, setError} = userSlice.actions;
+export const {setUser, setUsers, setIsAuth, updateUser, userToUpdate, setError} = userSlice.actions;
 export default userReducer;

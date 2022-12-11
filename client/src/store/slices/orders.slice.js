@@ -4,8 +4,8 @@ import {ordersService} from "../../services/orders.service";
 
 export const getAllOrdersByBasketId = createAsyncThunk(
     'ordersSlice/getAllOrdersByBasketId',
-    async ({data}, {dispatch}) => {
-        await ordersService.getAllById(data).then(data => dispatch(setOrders([...data])));
+    async ({id}, {dispatch}) => {
+        await ordersService.getAllById(id).then(data => dispatch(setOrders([...data])));
     }
 )
 

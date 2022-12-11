@@ -1,37 +1,36 @@
-const {Orders} = require("../models/orders.model");
 const ApiError = require('../error/apiError');
+const {ordersService} = require("../services/orders.service");
 
-class OrdersController {
-    async create(req, res, next) {
+const ordersController = {
+    create: async (req, res, next) => {
         try {
-            let {basketId, sneakerId, brand_name, model, price, img, size} = req.body;
-            const orders = await Orders.create({basketId, sneakerId, brand_name, model, price, img, size});
+            const {basketId, sneakerId, brand_name, model, price, img, size} = req.body;
+
+            const orders = await ordersService.create({basketId, sneakerId, brand_name, model, price, img, size});
 
             return res.json(orders);
         } catch (e) {
             next(ApiError.badRequest(e.message));
         }
-    };
+    },
 
-    async getAll(req, res, next) {
+    getAll: async (req, res, next) => {
         try {
-            let {basketId} = req.query;
-            let orders;
+            const {basketId} = req.query;
 
-            if (basketId) {
-                orders = await Orders.findAll({where: {basketId}});
-            }
+            const orders = await ordersService.getAll(basketId);
 
             return res.json(orders);
         } catch (e) {
             next(ApiError.badRequest(e.message));
         }
-    };
+    },
 
-    async deleteById(req, res, next) {
+    deleteById: async (req, res, next) => {
         try {
-            let {id} = req.params;
-            const orders = await Orders.destroy({where: {id}});
+            const {id} = req.params;
+
+            const orders = await ordersService.deleteById(id);
 
             return res.json(orders);
         } catch (e) {
@@ -40,4 +39,4 @@ class OrdersController {
     }
 }
 
-module.exports = new OrdersController();
+module.exports = {ordersController};

@@ -2,8 +2,8 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const ApiError = require("../error/apiError");
-const {ACCESS_KEY, REFRESH_KEY, ACTION_TOKEN_SECRET} = require('../configs/config');
 const {Auth} = require("../models/auth.model");
+const {ACCESS_KEY, REFRESH_KEY, ACTION_TOKEN_SECRET} = require('../configs/config');
 const {FORGOT_PASSWORD_TOKEN} = require("../constants/tokenType.enum");
 
 const tokenService = {

@@ -22,15 +22,15 @@ import {userService} from "../../services/user.service";
 import ForgotPassword from "../Modals/ForgotPassword/ForgotPassword";
 
 const Layout = () => {
-    const {user, basketId} = useSelector(state => state.userReducer);
+    const {user} = useSelector(state => state.userReducer);
     const {loginVisible, registrationVisible, forgotPasswordVisible} = useSelector(state => state.visibleReducer);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     useEffect(() => {
-        dispatch(getBasketById({id: user?.id}));
-        dispatch(getAllOrdersByBasketId({data: basketId}));
-    }, [basketId])
+        dispatch(getBasketById({id: user?.basket.id}));
+        dispatch(getAllOrdersByBasketId({id: user?.basket.id}));
+    }, [user?.basket.id])
 
     const defaultValue = () => {
         dispatch(setSelectedType(false));

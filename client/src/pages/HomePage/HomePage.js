@@ -10,7 +10,7 @@ import SneakersCard from "../../components/SneakersCard/SneakersCard";
 import Brands from "../../components/Brands/Brands";
 import Pages from "../../components/Pages/Pages";
 import Type from "../../components/Types/Types";
-import {getAllSneakers, getAllSneakersWithParams, getAllFromSearch, setSneakersFound} from "../../store/slices/sneakers.slice";
+import {getAllSneakers, getAllSneakersWithParams, getAllBySearching, setSneakersFound} from "../../store/slices/sneakers.slice";
 import {SearchValidator} from "../../validators/search.validator";
 
 const HomePage = () => {
@@ -28,7 +28,7 @@ const HomePage = () => {
         dispatch(getAllSneakers());
 
         if (query.get('title') && query.get('title') !== '') {
-            dispatch(getAllFromSearch()).then(value => {
+            dispatch(getAllBySearching()).then(value => {
                 const title = query.get('title');
                 let filter = [...value.payload];
 
@@ -42,7 +42,13 @@ const HomePage = () => {
     }, [query])
 
     useEffect(() => {
-        dispatch(getAllSneakersWithParams({data: {selectedType: selectedType.id, selectedBrand: selectedBrand.id, page}}));
+        dispatch(getAllSneakersWithParams(
+            {data:
+                    {
+                        selectedType: selectedType.id,
+                        selectedBrand: selectedBrand.id,
+                        page
+                    }}));
     }, [page, selectedType, selectedBrand]);
 
     const submit = (data) => {

@@ -1,24 +1,27 @@
-const {Type} = require("../models/type.model");
-const ApiError = require("../error/apiError");
+const {typeService} = require("../services/type.service");
 
-class TypeController {
-    async create(req, res, next) {
-        const {name} = req.body;
+const typeController = {
+    create: async (req, res, next) => {
+        try {
+            const {name} = req.body;
 
-        if (name.length < 2 || name.length > 30) {
-            return next(ApiError.badRequest('name length must be from 2-30 characters'));
+            const type = await typeService.create(name);
+
+            return res.json(type);
+        } catch (e) {
+            next(e);
         }
+    },
 
-        const type = await Type.create({name});
+    getAll: async (req, res, next) => {
+        try {
+            const types = await typeService.getAll();
 
-        return res.json(type);
-    };
+            return res.json(types);
+        } catch (e) {
+            next(e);
+        }
+    }
+};
 
-    async getAll(req, res) {
-        const types = await Type.findAll();
-
-        return res.json(types);
-    };
-}
-
-module.exports = new TypeController();
+module.exports = {typeController};

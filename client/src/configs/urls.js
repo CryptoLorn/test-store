@@ -1,11 +1,10 @@
 const baseURL = 'http://localhost:5000/' //api
 
 export const urls = {
-    registration: 'api/user/registration', //remove all api
-    login: 'api/user/login',
-    logout: 'api/user/logout',
-    auth: 'api/user/auth',
-    refresh: 'api/user/refresh',
+    registration: 'api/auth/registration', //remove all api
+    login: 'api/auth/login',
+    refresh: 'api/auth/refresh',
+    logout: 'api/auth/logout',
     forgotPassword: 'api/user/password/forgot',
     users: 'api/user',
     baskets: 'api/basket',

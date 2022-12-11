@@ -30,11 +30,11 @@ export const getAllSneakersWithParams = createAsyncThunk(
     }
 )
 
-export const getAllFromSearch = createAsyncThunk(
+export const getAllBySearching = createAsyncThunk(
     'searchSlice/getAllFromSearch',
     async (_, {rejectWithValue}) => {
         try {
-            return await sneakersService.getAllFromSearch();
+            return await sneakersService.getAllBySearching();
         } catch (e) {
             return rejectWithValue(e.message);
         }

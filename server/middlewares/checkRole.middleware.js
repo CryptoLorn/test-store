@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 
 const {ACCESS_KEY} = require('../configs/config');
 
-module.exports = {
+const checkRoleMiddleware = {
     checkRole: (role) => async (req, res, next) => {
         try {
             const token = req.headers.authorization.split(' ')[1];
@@ -24,3 +24,5 @@ module.exports = {
         }
     }
 }
+
+module.exports = {checkRoleMiddleware};

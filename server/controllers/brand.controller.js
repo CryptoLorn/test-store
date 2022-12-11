@@ -1,22 +1,27 @@
-const ApiError = require('../error/apiError');
-const {Brand} = require("../models/brand.model");
+const {brandService} = require("../services/brand.service");
 
-class BrandController {
-    async create(req, res, next) {
-        const {name} = req.body;
+const brandController = {
+    create: async (req, res, next) => {
+        try {
+            const {name} = req.body;
 
-        if (name.length < 2 || name.length > 30) {
-            return next(ApiError.badRequest('name length must be from 2-30 characters'));
+            const brand = await brandService.create(name);
+
+            return res.json(brand);
+        } catch (e) {
+            next(e);
         }
+    },
 
-        const brand = await Brand.create({name});
-        return res.json(brand);
-    };
+    getAll: async (req, res, next) => {
+        try {
+            const brands = await brandService.getAll();
 
-    async getAll(req, res) {
-        const brands = await Brand.findAll();
-        return res.json(brands);
-    };
-}
+            return res.json(brands);
+        } catch (e) {
+            next(e);
+        }
+    }
+};
 
-module.exports = new BrandController();
+module.exports = {brandController};

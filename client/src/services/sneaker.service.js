@@ -6,6 +6,6 @@ export const sneakersService = {
     getAll: (typeId, brandId, page) => axiosService.get(urls.sneakers, {params: {typeId, brandId, page}}).then(value => value.data),
     getById: (id) => axiosService.get(`${urls.sneakers}/${id}`).then(value => value.data),
     deleteById: (id) => authAxiosService.delete(`${urls.sneakers}/${id}`),
-    getAllFromSearch: () => axiosService.get(urls.search).then(value => value.data),
+    getAllBySearching: () => axiosService.get(urls.search).then(value => value.data),
     updateById: (id, sneaker) => authAxiosService.put(`${urls.sneakers}/${id}`, sneaker).then(value => value.data)
 }

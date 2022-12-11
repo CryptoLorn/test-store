@@ -1,12 +1,17 @@
-const {Basket} = require("../models/basket.model");
+const {basketService} = require("../services/basket.service");
 
-class BasketController {
-    async getById(req, res) {
-        let {id} = req.params;
-        const basket = await Basket.findOne({where: {id}});
+const basketController = {
+    getById: async (req, res, next) => {
+        try {
+            let {id} = req.params;
 
-        return res.json(basket);
-    };
-}
+            const basket = await basketService.getById(id);
 
-module.exports = new BasketController();
+            return res.json(basket);
+        } catch (e) {
+            next(e);
+        }
+    }
+};
+
+module.exports = {basketController};

@@ -1,15 +1,26 @@
 const Router = require('express');
 
-const sneakersController = require('../controllers/sneakers.controller');
-const {checkRole} = require("../middlewares/checkRole.middleware");
-const {ADMIN} = require('../configs/config');
+const {sneakersController} = require("../controllers/sneakers.controller");
+const {checkRoleMiddleware} = require("../middlewares/checkRole.middleware");
+const {sneakersMiddleware} = require("../middlewares/sneakers.middleware");
+const {ADMIN} = require("../constants/role.enum");
 
 const router = new Router();
 
 router.get('/', sneakersController.getAll);
 router.get('/:id', sneakersController.getById);
-router.post('/', checkRole(ADMIN), sneakersController.create);
-router.delete('/:id', checkRole(ADMIN), sneakersController.deleteById);
-router.put('/:id', checkRole(ADMIN), sneakersController.updateById);
+router.post('/',
+    checkRoleMiddleware.checkRole(ADMIN),
+    sneakersMiddleware.checkIsBodyValid,
+    sneakersController.create
+);
+router.put('/:id',
+    checkRoleMiddleware.checkRole(ADMIN),
+    sneakersController.updateById
+);
+router.delete('/:id',
+    checkRoleMiddleware.checkRole(ADMIN),
+    sneakersController.deleteById
+);
 
 module.exports = router;

@@ -1,5 +1,6 @@
 const Router = require('express');
 
+const authRouter = require('./auth.router');
 const userRouter = require('./user.router');
 const sneakersRouter = require('./sneakers.router');
 const brandRouter = require('./brand.router');
@@ -11,6 +12,7 @@ const analyticsRouter = require('./analytics.router');
 
 const router = new Router();
 
+router.use('/auth', authRouter);
 router.use('/user', userRouter);
 router.use('/basket', basketRouter);
 router.use('/types', typeRouter);

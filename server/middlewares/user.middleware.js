@@ -2,10 +2,10 @@ const {isEmpty} = require("validator");
 
 const ApiError = require("../error/apiError");
 const {userService} = require("../services/user.service");
-const {REGEX} = require("../constants/reges.enum");
+const {EMAIL_REGEX} = require("../constants/regex.enum");
 const {ADMIN, USER} = require("../constants/role.enum");
 
-module.exports = {
+const userMiddleware = {
     checkIsDataValid: async (req, res, next) => {
         try {
             const {email, password} = req.body;
@@ -14,7 +14,7 @@ module.exports = {
                 return next(ApiError.badRequest('Invalid email or password'));
             }
 
-            let isValid = REGEX.test(email);
+            let isValid = EMAIL_REGEX.test(email);
             if (!isValid) {
                 return next(ApiError.internal('Invalid email or password'));
             }
@@ -49,7 +49,7 @@ module.exports = {
         try {
             const {email, role} = req.body;
 
-            let isValid = REGEX.test(email);
+            let isValid = EMAIL_REGEX.test(email);
 
             if (!isValid) {
                 return next(ApiError.internal('Invalid email'));
@@ -82,3 +82,5 @@ module.exports = {
         }
     }
 }
+
+module.exports = {userMiddleware};

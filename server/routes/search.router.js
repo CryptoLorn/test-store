@@ -1,9 +1,9 @@
 const Router = require('express');
 
-const searchController = require('../controllers/search.controller');
+const {sneakersController} = require("../controllers/sneakers.controller");
 
 const router = new Router();
 
-router.get('/', searchController.getAllFromSearch);
+router.get('/', sneakersController.getAllBySearching);
 
 module.exports = router;

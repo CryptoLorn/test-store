@@ -1,9 +1,9 @@
-const {tokenService} = require("../services/token.service");
-const {AUTHORIZATION} = require("../constants/constant");
 const ApiError = require("../error/apiError");
+const {tokenService} = require("../services/token.service");
 const {actionTokenService} = require("../services/actionToken.service");
+const {AUTHORIZATION} = require("../constants/constant");
 
-module.exports = {
+const authMiddleware = {
     checkIsAuth: async (req, res, next) => {
         try {
             const token = req.headers.authorization.split(' ')[1];
@@ -54,3 +54,5 @@ module.exports = {
         }
     }
 }
+
+module.exports = {authMiddleware};

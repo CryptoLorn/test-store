@@ -1,78 +1,13 @@
 const ApiError = require('../error/apiError');
 const {userService} = require("../services/user.service");
 const {tokenService} = require("../services/token.service");
-const {authService} = require("../services/auth.service");
-const {CLIENT_URL} = require("../configs/config");
-const {REFRESH_TOKEN, FORGOT_PASSWORD_TOKEN} = require("../constants/tokenType.enum");
-const {FORGOT_PASS} = require("../constants/emailAction.enum");
-const {sendEmail} = require("../services/email.service");
 const {actionTokenService} = require("../services/actionToken.service");
-const {AUTHORIZATION} = require("../constants/constant");
-const {basketService} = require("../services/basket.service");
+const {sendEmail} = require("../services/email.service");
+const {CLIENT_URL} = require("../configs/config");
+const {FORGOT_PASSWORD_TOKEN} = require("../constants/tokenType.enum");
+const {FORGOT_PASS} = require("../constants/emailAction.enum");
 
-module.exports = {
-    registration: async (req, res, next) => {
-        try {
-            const {email, password, role} = req.body;
-
-            const user = await userService.registration(email, role, password);
-
-            await basketService.createBasket(user.id);
-            const tokens = tokenService.generateJwt({id: user.id, email: user.email, role: user.role});
-
-            res.cookie(REFRESH_TOKEN, tokens.refresh_token, {maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true});
-            await authService.saveTokens({...tokens, userId: user.id});
-
-            return res.json({...tokens, user});
-        } catch (e) {
-            next(e);
-        }
-    },
-
-    login: async (req, res, next) => {
-        try {
-            const {password} = req.body;
-            const user = req.user;
-
-            await tokenService.comparePassword(password, user.password);
-            const tokens = tokenService.generateJwt({id: user.id, email: user.email, role: user.role});
-
-            res.cookie(REFRESH_TOKEN, tokens.refresh_token, {maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true});
-            await authService.saveTokens({...tokens, userId: user.id});
-
-            return res.json({...tokens, user});
-        } catch (e) {
-            next(e);
-        }
-    },
-
-    logout: async (req, res, next) => {
-        try {
-            const {refresh_token} = req.cookies;
-
-            const token = await tokenService.removeToken(refresh_token);
-            res.clearCookie(REFRESH_TOKEN);
-
-            return res.json(token);
-        } catch (e) {
-            next(e);
-        }
-    },
-
-    refresh: async (req, res, next) => {
-        try {
-            const {refresh_token} = req.cookies;
-
-            const user = await userService.refresh(refresh_token);
-
-            res.cookie(REFRESH_TOKEN, user.refresh_token, {maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true});
-
-            return res.json(user);
-        } catch (e) {
-            next(e);
-        }
-    },
-
+const userController = {
     forgotPassword: async (req, res, next) => {
         try {
             const {email, id} = req.user;
@@ -146,3 +81,5 @@ module.exports = {
         }
     }
 }
+
+module.exports = {userController};

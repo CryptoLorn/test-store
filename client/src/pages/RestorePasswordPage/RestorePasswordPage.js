@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useForm} from "react-hook-form";
 import {useNavigate, useParams} from "react-router-dom";
 import {joiResolver} from "@hookform/resolvers/joi/dist/joi";
+import {FaCheckCircle} from "react-icons/fa";
 
 import './RestorePasswordPage.css';
 import {restorePassword} from "../../store/slices/auth.slice";
@@ -34,8 +35,8 @@ const RestorePasswordPage = () => {
         }, 4000)
 
         return (
-            <div className={'restore_password_wrapper'}>
-                <div className={'restore_password_message'}>{message}</div>
+            <div className={'successfully_password_changed'}>
+                <div><FaCheckCircle/></div><span className={'restore_password_message'}>{message}</span>
             </div>
         )
     }

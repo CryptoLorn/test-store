@@ -1,37 +1,41 @@
-const {Analytics} = require("../models/analytics.model");
 const ApiError = require("../error/apiError");
+const {analyticsService} = require("../services/analytics.service");
 
-class AnalyticsController {
-    async getAll(req, res) {
-        const analytics = await Analytics.findAll();
+const analyticsController = {
+    getAll: async (req, res, next) => {
+        try {
+            const analytics = await analyticsService.getAll();
 
-        return res.json(analytics);
-    };
+            return res.json(analytics);
+        } catch (e) {
+            next(e);
+        }
+    },
 
-    async getById(req, res, next) {
+    getById: async (req, res, next) => {
         try {
             const {id} = req.params;
 
-            const analytics = await Analytics.findByPk(id);
+            const analytics = await analyticsService.findOne(id);
 
             return res.json(analytics);
         } catch (e) {
             next(ApiError.badRequest(e.message));
         }
-    }
+    },
 
-    async updateById(req, res, next) {
+    updateById: async (req, res, next) => {
         try {
             let {id} = req.params;
             const {views, bought} = req.body;
 
-            const analytics = await Analytics.update({views, bought}, {where: {id}});
+            const analytics = await analyticsService.updateById({views, bought}, id);
 
             return res.json(analytics);
         } catch (e) {
             next(ApiError.badRequest(e.message));
         }
     }
-}
+};
 
-module.exports = new AnalyticsController();
+module.exports = {analyticsController};
