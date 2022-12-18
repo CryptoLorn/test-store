@@ -2,25 +2,48 @@ import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 
 import {authService} from "../../services/auth.service";
 
-export const sendPasswordResetEmail = createAsyncThunk(
-    'authSlice/sendPasswordResetEmail',
-    async ({email}, {dispatch, rejectWithValue}) => {
+export const login = createAsyncThunk(
+    'authSlice/login',
+    async ({data}, {dispatch, rejectWithValue}) => {
         try {
-            await authService.sendEmail(email);
-            dispatch(setError(null));
+            await authService.login(data.email, data.password).then(data => {
+                dispatch(setUser(data));
+
+                if (data) {
+                    dispatch(setError(null));
+                }
+            })
         } catch (e) {
             return rejectWithValue(e.response.data.message);
         }
     }
 )
 
-export const restorePassword = createAsyncThunk(
-    'authSlice/restorePassword',
+export const registration = createAsyncThunk(
+    'authSlice/registration',
     async ({data}, {dispatch, rejectWithValue}) => {
         try {
-            await authService.restorePassword(data.password, data.token);
-            dispatch(setError(null));
-            dispatch(setMessage('Password has been successfully changed!'));
+            await authService.registration(data.email, data.password).then(data => {
+                dispatch(setUser(data));
+
+                if (data) {
+                    dispatch(setError(null));
+                }
+            })
+        } catch (e) {
+            return rejectWithValue(e.response.data.message);
+        }
+    }
+)
+
+export const isAuth = createAsyncThunk(
+    'authSlice/isAuth',
+    async (_, {dispatch, rejectWithValue}) => {
+        try {
+            await authService.checkIsAuth().then(data => {
+                dispatch(setUser(data));
+                dispatch(setIsAuth(true));
+            })
         } catch (e) {
             return rejectWithValue(e.response.data.message);
         }
@@ -30,23 +53,28 @@ export const restorePassword = createAsyncThunk(
 const authSlice = createSlice({
     name: 'authSlice',
     initialState: {
-        error: null,
-        message: null
+        user: null,
+        isAuth: null,
+        status: null,
+        error: null
     },
     reducers: {
+        setUser: (state, action) => {
+            state.user = action.payload;
+        },
+        setIsAuth: (state, action) => {
+            state.isAuth = action.payload;
+        },
         setError: (state, action) => {
             state.error = action.payload;
-        },
-        setMessage: (state, action) => {
-            state.message = action.payload;
         }
     },
     extraReducers: {
-        [sendPasswordResetEmail.rejected]: (state, action) => {
+        [login.rejected]: (state, action) => {
             state.status = 'rejected';
             state.error = action.payload;
         },
-        [restorePassword.rejected]: (state, action) => {
+        [registration.rejected]: (state, action) => {
             state.status = 'rejected';
             state.error = action.payload;
         }
@@ -55,5 +83,5 @@ const authSlice = createSlice({
 
 const authReducer = authSlice.reducer;
 
-export const {setError, setMessage} = authSlice.actions;
+export const {setUser, setIsAuth, setError} = authSlice.actions;
 export default authReducer;

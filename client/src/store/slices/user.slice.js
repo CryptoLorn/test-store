@@ -2,48 +2,25 @@ import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 
 import {userService} from "../../services/user.service";
 
-export const login = createAsyncThunk(
-    'userSlice/login',
-    async ({data}, {dispatch, rejectWithValue}) => {
+export const sendPasswordResetEmail = createAsyncThunk(
+    'userSlice/sendPasswordResetEmail',
+    async ({email}, {dispatch, rejectWithValue}) => {
         try {
-            await userService.login(data.email, data.password).then(data => {
-                dispatch(setUser(data));
-
-                if (data) {
-                    dispatch(setError(null));
-                }
-            })
+            await userService.sendEmail(email);
+            dispatch(setError(null));
         } catch (e) {
             return rejectWithValue(e.response.data.message);
         }
     }
 )
 
-export const registration = createAsyncThunk(
-    'userSlice/registration',
+export const restorePassword = createAsyncThunk(
+    'userSlice/restorePassword',
     async ({data}, {dispatch, rejectWithValue}) => {
         try {
-            await userService.registration(data.email, data.password).then(data => {
-                dispatch(setUser(data));
-
-                if (data) {
-                    dispatch(setError(null));
-                }
-            })
-        } catch (e) {
-            return rejectWithValue(e.response.data.message);
-        }
-    }
-)
-
-export const isAuth = createAsyncThunk(
-    'userSlice/isAuth',
-    async (_, {dispatch, rejectWithValue}) => {
-        try {
-            await userService.checkIsAuth().then(data => {
-                dispatch(setUser(data));
-                dispatch(setIsAuth(true));
-            })
+            await userService.restorePassword(data.password, data.token);
+            dispatch(setError(null));
+            dispatch(setMessage('Password has been successfully changed!'));
         } catch (e) {
             return rejectWithValue(e.response.data.message);
         }
@@ -73,25 +50,29 @@ export const updateUserById = createAsyncThunk(
     }
 )
 
+export const deleteUserById = createAsyncThunk(
+    'userSlice/deleteUserById',
+    async ({id}, {dispatch, rejectWithValue}) => {
+        try {
+            await userService.deleteById(id);
+            dispatch(deleteUser({id}));
+        } catch (e) {
+            return rejectWithValue(e.response.data.message);
+        }
+    }
+)
+
 const userSlice = createSlice({
     name: 'userSlice',
     initialState: {
-        user: null,
         users: [],
-        isAuth: null,
-        status: null,
+        userForUpdate: null,
         error: null,
-        userForUpdate: null
+        message: null
     },
     reducers: {
-        setUser: (state, action) => {
-            state.user = action.payload;
-        },
         setUsers: (state, action) => {
             state.users = action.payload;
-        },
-        setIsAuth: (state, action) => {
-            state.isAuth = action.payload;
         },
         userToUpdate: (state, action) => {
             state.userForUpdate = action.payload;
@@ -100,16 +81,22 @@ const userSlice = createSlice({
             const index = state.users.findIndex(user => user.id === action.payload.user.id);
             state.users[index] = action.payload.user;
         },
+        deleteUser: (state, action) => {
+            state.users = state.users.filter(user => user.id !== action.payload.id);
+        },
         setError: (state, action) => {
             state.error = action.payload;
+        },
+        setMessage: (state, action) => {
+            state.message = action.payload;
         }
     },
     extraReducers: {
-        [login.rejected]: (state, action) => {
+        [sendPasswordResetEmail.rejected]: (state, action) => {
             state.status = 'rejected';
             state.error = action.payload;
         },
-        [registration.rejected]: (state, action) => {
+        [restorePassword.rejected]: (state, action) => {
             state.status = 'rejected';
             state.error = action.payload;
         },
@@ -122,5 +109,5 @@ const userSlice = createSlice({
 
 const userReducer = userSlice.reducer;
 
-export const {setUser, setUsers, setIsAuth, updateUser, userToUpdate, setError} = userSlice.actions;
+export const {setUsers, updateUser, userToUpdate, deleteUser, setError, setMessage} = userSlice.actions;
 export default userReducer;

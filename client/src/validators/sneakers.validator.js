@@ -1,16 +1,14 @@
 import Joi from "joi";
 
+import {MODEL_REGEX} from "../constants/regex.enum";
+
 export const SneakersValidator = Joi.object({
     model: Joi.string()
-        .regex(/^[a-zA-Z0-9-:!#$%^&*() ]+$/)
-        .min(2)
-        .max(30)
+        .regex(MODEL_REGEX)
         .required()
         .messages({
-            'string.pattern.base': 'please use only Latin letters',
-            'string.empty': 'model cannot be empty',
-            'string.min': 'model length must be from 2-30 characters',
-            'string.max': 'model can be a max of 30 characters'
+            'string.pattern.base': 'please use only Latin letters and length must be from 2-30 characters',
+            'string.empty': 'model cannot be empty'
         }),
     price: Joi.number()
         .min(0)

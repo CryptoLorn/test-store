@@ -1,16 +1,18 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {useForm} from "react-hook-form";
-import {FaEdit} from "react-icons/fa";
 import {joiResolver} from "@hookform/resolvers/joi/dist/joi";
 
 import "./Users.css";
 import {getAllUsers, updateUserById, userToUpdate, setError} from "../../store/slices/user.slice";
-import {Role} from "../../enum/enum";
+import {ADMIN, USER} from "../../constants/role.enum";
 import {EditUserValidator} from "../../validators/editUser.validator";
+import {ACTIVE, BLOCKED} from "../../constants/status.enum";
+import User from "../User/User";
 
 const Users = () => {
-    const {users, user, userForUpdate, error} = useSelector(state => state.userReducer);
+    const {user} = useSelector(state => state.authReducer);
+    const {users, userForUpdate, error} = useSelector(state => state.userReducer);
     const dispatch = useDispatch();
     const {handleSubmit, register, setValue, reset, formState: {errors}} = useForm({resolver: joiResolver(EditUserValidator)});
 
@@ -20,11 +22,12 @@ const Users = () => {
         if (userForUpdate) {
             setValue('email', userForUpdate.email);
             setValue('role', userForUpdate.role);
+            setValue('status', userForUpdate.status);
         }
     }, [userForUpdate])
 
-    const updateUser = async (email, role) => {
-        await dispatch(updateUserById({id: userForUpdate.id, user: email, role}));
+    const updateUser = async (email, role, status) => {
+        await dispatch(updateUserById({id: userForUpdate.id, user: email, role, status}));
         dispatch(userToUpdate(null));
         reset();
 
@@ -44,30 +47,23 @@ const Users = () => {
             <div className={'user_wrapper'}>
                 <form className={userForUpdate ? '' : 'hidden'}>
                     <input type={'email'} {...register('email')}/>
-                    {errors.email && <span className={'validation'}>{errors.email.message}</span>}<br/>
+                    {errors.email && <span className={'validation'}>{errors.email.message}</span>}
+                    <br/>
                     <select {...register('role')}>
-                        <option value={Role.ADMIN}>ADMIN</option>
-                        <option value={Role.USER}>USER</option>
+                        <option value={ADMIN}>ADMIN</option>
+                        <option value={USER}>USER</option>
+                    </select>
+                    <br/>
+                    <select {...register('status')}>
+                        <option value={ACTIVE}>ACTIVE</option>
+                        <option value={BLOCKED}>BLOCKED</option>
                     </select>
                     {errors.role && <span className={'validation'}>{errors.role.message}</span>}<br/>
                     <div className={'user_edit_button'} onClick={handleSubmit(updateUser)}>Update</div>
                 </form>
                 {error&& <span className={'validation'}>{error}</span>}
 
-                {users.map(user =>
-                    <div key={user.id} className={'user_details'}>
-                        <div>
-                            <b>Email:</b> {user.email}<br/>
-                            <b>Role:</b> {user.role}<br/>
-                        </div>
-                        <div
-                            className={'user_edit'}
-                            onClick={() => dispatch(userToUpdate(user))}
-                        >
-                            <FaEdit/>
-                        </div>
-                    </div>
-                )}
+                {users.map(user => <User key={user.id} user={user}/>)}
             </div>
         </div>
     );

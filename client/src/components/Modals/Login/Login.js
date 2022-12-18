@@ -8,12 +8,12 @@ import "./Login.css";
 import "../../../validators/validator.css";
 import Registration from "../Registration/Registration";
 import {AuthValidator} from "../../../validators/auth.validator";
-import {login} from "../../../store/slices/user.slice";
+import {login} from "../../../store/slices/auth.slice";
 import {setLoginVisible, setRegistrationVisible, setForgotPasswordVisible} from "../../../store/slices/visible.slice";
 
 const Login = ({show, onHide}) => {
     const {registrationVisible} = useSelector(state => state.visibleReducer);
-    const {error} = useSelector(state => state.userReducer);
+    const {error} = useSelector(state => state.authReducer);
     const {register, handleSubmit, formState: {errors}} = useForm({resolver: joiResolver(AuthValidator)});
     const dispatch = useDispatch();
     const [email, setEmail] = useState('');

@@ -28,5 +28,9 @@ router.put('/password/forgot',
     authMiddleware.checkActionToken(FORGOT_PASSWORD_TOKEN),
     userController.setNewPassword
 );
+router.delete('/:id',
+    checkRoleMiddleware.checkRole(ADMIN),
+    userController.deleteById
+);
 
 module.exports = router;

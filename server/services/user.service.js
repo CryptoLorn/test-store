@@ -4,6 +4,8 @@ const {User} = require("../models/user.model");
 const {Basket} = require("../models/basket.model");
 const ApiError = require("../error/apiError");
 const {ADMIN} = require('../constants/role.enum');
+const {basketService} = require("./basket.service");
+const {tokenService} = require("./token.service");
 
 const userService = {
     activate: async (activationLink) => {
@@ -31,6 +33,13 @@ const userService = {
 
     updateById: (user, id) => {
         return User.update(user, {where: {id}});
+    },
+
+    deleteById: async (id) => {
+        await basketService.deleteById(id);
+        await tokenService.deleteById(id);
+
+        return User.destroy({where: {id}});
     }
 }
 

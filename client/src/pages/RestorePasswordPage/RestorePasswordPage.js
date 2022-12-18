@@ -6,11 +6,11 @@ import {joiResolver} from "@hookform/resolvers/joi/dist/joi";
 import {FaCheckCircle} from "react-icons/fa";
 
 import './RestorePasswordPage.css';
-import {restorePassword} from "../../store/slices/auth.slice";
+import {restorePassword} from "../../store/slices/user.slice";
 import {PasswordValidator} from "../../validators/password.validator";
 
 const RestorePasswordPage = () => {
-    const {error, message} = useSelector(state => state.authReducer);
+    const {error, message} = useSelector(state => state.userReducer);
     const [compareMessage, setCompareMessage] = useState(null);
     const {register, handleSubmit, formState: {errors}} = useForm({resolver: joiResolver(PasswordValidator)});
     const {token} = useParams();

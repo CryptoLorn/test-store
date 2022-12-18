@@ -7,7 +7,7 @@ import HomePage from "./pages/HomePage/HomePage";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import Layout from "./components/Layout/Layout";
 import SneakerDetailsPage from "./pages/SneakerDetailsPage/SneakerDetailsPage";
-import {isAuth} from "./store/slices/user.slice";
+import {isAuth} from "./store/slices/auth.slice";
 import AboutPage from "./pages/AboutPage/AboutPage";
 import AdminPage from "./pages/AdminPage/AdminPage";
 import Users from "./components/Users/Users";

@@ -2,12 +2,14 @@ import {Link, Outlet, useNavigate} from "react-router-dom";
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {FaUserCircle} from "react-icons/fa";
+import Dropdown from "react-bootstrap/Dropdown";
 
 import "./Layout.css";
 import BasketVisible from "../BasketVisible/BasketVisible";
 import Login from "../Modals/Login/Login";
 import Registration from "../Modals/Registration/Registration";
-import {setUser} from "../../store/slices/user.slice";
+import {setUser} from "../../store/slices/auth.slice";
+import {authService} from "../../services/auth.service";
 import {setLoginVisible, setRegistrationVisible, setForgotPasswordVisible} from "../../store/slices/visible.slice";
 import {setSelectedType, setElementType} from "../../store/slices/type.slice";
 import {setSelectedBrand, setElementBrand} from "../../store/slices/brand.slice";
@@ -16,13 +18,12 @@ import {getBasketById} from "../../store/slices/basket.slice";
 import {getAllOrdersByBasketId, setSelectedSize, setError} from "../../store/slices/orders.slice";
 import {setSneakersFound} from "../../store/slices/sneakers.slice";
 import Footer from "../Footer/Footer";
-import Dropdown from "react-bootstrap/Dropdown";
-import {Role} from "../../enum/enum";
-import {userService} from "../../services/user.service";
+import {ADMIN} from "../../constants/role.enum";
 import ForgotPassword from "../Modals/ForgotPassword/ForgotPassword";
 
 const Layout = () => {
-    const {user} = useSelector(state => state.userReducer);
+    const {user} = useSelector(state => state.authReducer);
+    const {sneakers} = useSelector(state => state.sneakersReducer);
     const {loginVisible, registrationVisible, forgotPasswordVisible} = useSelector(state => state.visibleReducer);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -30,7 +31,7 @@ const Layout = () => {
     useEffect(() => {
         dispatch(getBasketById({id: user?.basket.id}));
         dispatch(getAllOrdersByBasketId({id: user?.basket.id}));
-    }, [user?.basket.id])
+    }, [user?.basket.id, sneakers])
 
     const defaultValue = () => {
         dispatch(setSelectedType(false));
@@ -44,7 +45,7 @@ const Layout = () => {
     }
 
     const logOut = async () => {
-        await userService.logout();
+        await authService.logout();
         dispatch(setLoginVisible(false));
         dispatch(setRegistrationVisible(false));
         dispatch(setUser(null));
@@ -65,7 +66,7 @@ const Layout = () => {
                     {user?
                         <div>
                             {
-                                user.role === Role.ADMIN?
+                                user.role === ADMIN?
                                 <div className={'navigation'}>
                                     <BasketVisible/>
                                     <div>

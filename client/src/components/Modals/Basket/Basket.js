@@ -7,6 +7,7 @@ import Orders from "../../Orders/Orders";
 import {getAllAnalytics, updateAnalyticsById} from "../../../store/slices/analytics.slice";
 
 const Basket = ({show, onHide}) => {
+    const {user} = useSelector(state => state.authReducer);
     const {orders} = useSelector(state => state.ordersReducer);
     const {analytics} = useSelector(state => state.analyticsReducer);
     const dispatch = useDispatch();
@@ -16,7 +17,7 @@ const Basket = ({show, onHide}) => {
     }, [orders])
 
     const toOrder = () => {
-        alert('Sorry, this functionality is not implemented!');
+        alert('Thank you for your purchase!');
 
         orders.forEach(order => {
             analytics.forEach(analytic => {
@@ -28,7 +29,6 @@ const Basket = ({show, onHide}) => {
             })
         })
     }
-
 
     let sum = 0;
     orders.forEach(el => sum += Number.parseFloat(el.price));
@@ -61,7 +61,18 @@ const Basket = ({show, onHide}) => {
                 </div>
             </Modal.Body>
             <Modal.Footer>
-                <Button className={'order_button'} onClick={toOrder}>Order</Button>
+                {orders.length !== 0 ?
+                    <span>
+                        {
+                            user.is_activated === true ?
+                            <Button className={'order_button'} onClick={toOrder}>Order</Button>
+                            :
+                            <span>To continue, please activate your account</span>
+                        }
+                    </span>
+                :
+                null
+                }
             </Modal.Footer>
         </Modal>
     );

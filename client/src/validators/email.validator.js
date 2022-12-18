@@ -1,8 +1,10 @@
 import Joi from "joi";
 
+import {EMAIL_REGEX} from "../constants/regex.enum";
+
 export const EmailValidator = Joi.object({
     email: Joi.string()
-        .regex(new RegExp('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$'))
+        .regex(new RegExp(EMAIL_REGEX))
         .required()
         .messages({
             'string.empty': '"email" cannot be empty',

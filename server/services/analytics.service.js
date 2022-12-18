@@ -9,12 +9,12 @@ const analyticsService = {
         return Analytics.findAll();
     },
 
-    findOne: (id) => {
-        return Analytics.findByPk(id);
-    },
-
     updateById: (analytics, id) => {
         return Analytics.update(analytics, {where: {id}});
+    },
+
+    deleteById: (id) => {
+        return Analytics.destroy({where: {sneakerId: id}});
     }
 }
 

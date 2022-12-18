@@ -23,7 +23,6 @@ const HomePage = () => {
     const [query, setQuery] = useSearchParams();
     const {handleSubmit, register, reset, formState: {errors}} = useForm({resolver: joiResolver(SearchValidator)});
 
-
     useEffect(() => {
         dispatch(getAllSneakers());
 
@@ -34,6 +33,12 @@ const HomePage = () => {
 
                 if (title) {
                     filter = (value.payload).filter(sneaker => sneaker.model.includes(title));
+                }
+
+                if (filter.length === 0) {
+                    setNotFoundMessageVisible(true);
+                } else {
+                    setNotFoundMessageVisible(false);
                 }
 
                 (dispatch(setSneakersFound(filter)));
@@ -53,7 +58,6 @@ const HomePage = () => {
 
     const submit = (data) => {
         setQuery({title: data.search});
-        setNotFoundMessageVisible(true);
         reset();
     }
 

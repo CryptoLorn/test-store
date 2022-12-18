@@ -11,13 +11,13 @@ import {getSneakersById, sneakersToUpdate} from "../../store/slices/sneakers.sli
 import {setLoginVisible, setConfirmationVisible} from "../../store/slices/visible.slice";
 import Confirmation from "../../components/Modals/Confirmation/Confirmation";
 import EditSneakersPrice from "../../components/Modals/EditSneakersPrice/EditSneakersPrice";
-import {Role} from "../../enum/enum";
+import {ADMIN} from "../../constants/role.enum";
 
 const SneakerDetailsPage = () => {
     const {id} = useParams();
     const {sneaker, sneakers} = useSelector(state => state.sneakersReducer);
     const {editVisible} = useSelector(state => state.visibleReducer);
-    const {user} = useSelector(state => state.userReducer);
+    const {user} = useSelector(state => state.authReducer);
     const {selectedSize, error} = useSelector(state => state.ordersReducer);
     const dispatch = useDispatch();
 
@@ -108,7 +108,7 @@ const SneakerDetailsPage = () => {
                             {
                                 user ?
                                     <div className={'options'}>
-                                        {user.role === Role.ADMIN ?
+                                        {user.role === ADMIN ?
                                             <div className={'admin_options'}>
                                                 <div className={'update_price_button'}
                                                      onClick={() => dispatch(sneakersToUpdate(sneaker))}>

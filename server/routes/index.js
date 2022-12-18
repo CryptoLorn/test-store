@@ -13,7 +13,7 @@ const analyticsRouter = require('./analytics.router');
 const router = new Router();
 
 router.use('/auth', authRouter);
-router.use('/user', userRouter);
+router.use('/users', userRouter);
 router.use('/basket', basketRouter);
 router.use('/types', typeRouter);
 router.use('/brands', brandRouter);

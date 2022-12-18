@@ -12,18 +12,6 @@ const analyticsController = {
         }
     },
 
-    getById: async (req, res, next) => {
-        try {
-            const {id} = req.params;
-
-            const analytics = await analyticsService.findOne(id);
-
-            return res.json(analytics);
-        } catch (e) {
-            next(ApiError.badRequest(e.message));
-        }
-    },
-
     updateById: async (req, res, next) => {
         try {
             let {id} = req.params;

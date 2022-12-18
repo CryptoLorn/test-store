@@ -3,16 +3,16 @@ import {useDispatch, useSelector} from "react-redux";
 import {Navigate} from "react-router-dom";
 
 import {setLoginVisible} from "../store/slices/visible.slice";
-import {Role} from "../enum/enum";
+import {ADMIN} from "../constants/role.enum";
 
 const RequireAuth = ({children}) => {
-    const {user} = useSelector(state => state.userReducer);
+    const {user} = useSelector(state => state.authReducer);
     const dispatch = useDispatch();
 
     if (!user) {
         dispatch(setLoginVisible(true));
         return <Navigate to={'/'}/>
-    } else if (user.role !== Role.ADMIN) {
+    } else if (user.role !== ADMIN) {
         return <Navigate to={'/'}/>
     }
 

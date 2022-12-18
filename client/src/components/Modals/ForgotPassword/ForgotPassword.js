@@ -5,11 +5,11 @@ import Modal from "react-bootstrap/Modal";
 import {joiResolver} from "@hookform/resolvers/joi/dist/joi";
 
 import './ForgotPassword.css';
-import {sendPasswordResetEmail} from "../../../store/slices/auth.slice";
+import {sendPasswordResetEmail} from "../../../store/slices/user.slice";
 import {EmailValidator} from "../../../validators/email.validator";
 
 const ForgotPassword = ({show, onHide}) => {
-    const {error} = useSelector(state => state.authReducer);
+    const {error} = useSelector(state => state.userReducer);
     const [message, setMessage] = useState(null);
     const {register, handleSubmit, formState: {errors}} = useForm({resolver: joiResolver(EmailValidator)});
     const dispatch = useDispatch();

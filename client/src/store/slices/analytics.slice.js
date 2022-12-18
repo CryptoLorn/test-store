@@ -9,13 +9,6 @@ export const getAllAnalytics = createAsyncThunk(
     }
 )
 
-export const getAnalyticsById = createAsyncThunk(
-    'analyticsSlice/getAnalyticsById',
-    async ({id}, {dispatch}) => {
-        await analyticsService.getById(id).then(value => dispatch(setAnalytic({...value})));
-    }
-)
-
 export const updateAnalyticsById = createAsyncThunk(
     'analyticsSlice/updateAnalyticsById',
     async ({id, analytic}, {dispatch,rejectWithValue}) => {

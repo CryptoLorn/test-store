@@ -1,4 +1,5 @@
 const {Basket} = require("../models/basket.model");
+const {ordersService} = require("./orders.service");
 
 const basketService = {
     create: (userId) => {
@@ -7,6 +8,12 @@ const basketService = {
 
     getById: (id) => {
         return Basket.findOne({where: {id}});
+    },
+
+    deleteById: async (id) => {
+        await ordersService.deleteAllByBasketId(id);
+
+        return Basket.destroy({where: {userId: id}});
     }
 };
 

@@ -47,7 +47,7 @@ const tokenService = {
         return await Auth.destroy({where: {refresh_token: refreshToken}});
     },
 
-    deleteMany: (id) => {
+    deleteById: (id) => {
         return Auth.destroy({where: {userId: id}});
     },
 

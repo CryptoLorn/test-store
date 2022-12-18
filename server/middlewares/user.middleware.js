@@ -4,6 +4,7 @@ const ApiError = require("../error/apiError");
 const {userService} = require("../services/user.service");
 const {EMAIL_REGEX} = require("../constants/regex.enum");
 const {ADMIN, USER} = require("../constants/role.enum");
+const {BLOCKED} = require("../constants/status.enum");
 
 const userMiddleware = {
     checkIsDataValid: async (req, res, next) => {
@@ -73,6 +74,8 @@ const userMiddleware = {
 
             if (!user) {
                 return next(ApiError.internal('No found user with this email'));
+            } else if (user.status === BLOCKED) {
+                return next(ApiError.internal('Account has been blocked'));
             }
 
             req.user = user;

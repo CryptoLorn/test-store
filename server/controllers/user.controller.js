@@ -1,4 +1,4 @@
-const ApiError = require('../error/apiError');
+const ApiError = require("../error/apiError");
 const {userService} = require("../services/user.service");
 const {tokenService} = require("../services/token.service");
 const {actionTokenService} = require("../services/actionToken.service");
@@ -33,7 +33,7 @@ const userController = {
             const {userId, token} = req.tokenInfo;
             const {password} = req.body;
 
-            await tokenService.deleteMany(userId);
+            await tokenService.deleteById(userId);
             await actionTokenService.deleteOne(token);
 
             const hashPassword = await tokenService.hashPassword(password);
@@ -71,13 +71,25 @@ const userController = {
 
     updateById: async (req, res, next) => {
         try {
-            let {id} = req.params;
+            const {id} = req.params;
 
             const user = await userService.updateById(req.body, id);
 
             return res.json(user);
         } catch (e) {
             next(ApiError.badRequest(e.message));
+        }
+    },
+
+    deleteById: async (req, res, next) => {
+        try {
+            const {id} = req.params;
+
+            await userService.deleteById(id);
+
+            return res.json('ok');
+        } catch (e) {
+            next(e);
         }
     }
 }
