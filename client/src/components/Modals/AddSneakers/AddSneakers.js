@@ -71,6 +71,7 @@ const AddSneakers = ({show, onHide}) => {
                             )}
                         </Dropdown.Menu>
                     </Dropdown>
+                    {errors.type && <span className={'validation'}>{errors.type.message}</span>}
 
                     <Dropdown className={'mt-2 mb-2'}>
                         <Dropdown.Toggle>{selectedBrandAdd?.name || 'Select brand'}</Dropdown.Toggle>
@@ -87,6 +88,7 @@ const AddSneakers = ({show, onHide}) => {
                             )}
                         </Dropdown.Menu>
                     </Dropdown>
+                    {errors.brand && <span className={'validation'}>{errors.brand.message}</span>}
                     <Form.Control
                         className={'my-3'}
                         type={'text'}
@@ -130,7 +132,11 @@ const AddSneakers = ({show, onHide}) => {
                 </Form>
             </Modal.Body>
             <Modal.Footer>
-                <Button onClick={handleSubmit(addSneakers)}>Add</Button>
+                {selectedTypeAdd && selectedBrandAdd?
+                    <Button disabled={false} onClick={handleSubmit(addSneakers)}>Add</Button>
+                :
+                    <Button disabled={true} onClick={handleSubmit(addSneakers)}>Add</Button>
+                }
             </Modal.Footer>
             <AddType show={typeVisible} onHide={() => setTypeVisible(false)}/>
             <AddBrand show={brandVisible} onHide={() => setBrandVisible(false)}/>
